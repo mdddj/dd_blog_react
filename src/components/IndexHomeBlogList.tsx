@@ -3,7 +3,7 @@ import {useRequest} from "@@/plugin-request/request";
 import {getBlogList} from "@/service/Blog";
 import {Blog} from "@/model/BlogModel";
 import BlogCardLayout from "@/components/BlogCardLayout";
-import {Container} from "@material-ui/core";
+import {Card, Container} from "@material-ui/core";
 
 const IndexHomeBlogList: React.FC<{}> = (params) => {
 
@@ -21,9 +21,11 @@ const IndexHomeBlogList: React.FC<{}> = (params) => {
 
 
   return <Container maxWidth={"md"}>
-    {
-      blogList.map(item => <BlogCardLayout key={item.id} blog={item}/>)
-    }
+    <Card style={{marginTop: 30}}>
+      {
+        blogList.map(item => <BlogCardLayout key={item.id} blog={item}/>)
+      }
+    </Card>
   </Container>
 }
 
