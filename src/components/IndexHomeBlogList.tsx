@@ -3,27 +3,28 @@ import {useRequest} from "@@/plugin-request/request";
 import {getBlogList} from "@/service/Blog";
 import {Blog} from "@/model/BlogModel";
 import BlogCardLayout from "@/components/BlogCardLayout";
+import {Container} from "@material-ui/core";
 
 const IndexHomeBlogList: React.FC<{}> = (params) => {
 
 
-  const {data,loading} = useRequest(()=>getBlogList(1,10))
+  const {data, loading} = useRequest(() => getBlogList(1, 10))
 
   console.log(data)
   console.log(loading)
 
-  if(loading){
+  if (loading) {
     return <>加载中</>
   }
 
   const blogList = data.list as Blog[]
 
 
-  return <>
+  return <Container>
     {
-      blogList.map(item=><BlogCardLayout blog={item}/>)
+      blogList.map(item => <BlogCardLayout key={item.id} blog={item}/>)
     }
-  </>
+  </Container>
 }
 
 export default IndexHomeBlogList
