@@ -1,8 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import {Blog} from "@/model/BlogModel";
-import {Avatar, Button, Chip, Divider, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import {Button, } from "@material-ui/core";
 
 
 const useStyles = makeStyles({
