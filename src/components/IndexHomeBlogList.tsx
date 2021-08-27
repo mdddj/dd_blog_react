@@ -20,7 +20,7 @@ const IndexHomeBlogList: React.FC<{}> = (params) => {
   const blogList = data.list as Blog[]
 
 
-  return <Container>
+  return <Container maxWidth={"md"}>
     {
       blogList.map(item => <BlogCardLayout key={item.id} blog={item}/>)
     }
