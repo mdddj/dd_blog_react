@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { styled, alpha } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+import { Link } from 'umi';
 import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { AppBar } from '@material-ui/core';
+
+const Title = styled('div')(({ theme }) => ({
+  color: 'white',
+}));
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,23 +59,16 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            梁典典的博客
-          </Typography>
+          <Link to={'/'}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            >
+              <Title>梁典典的博客</Title>
+            </Typography>
+          </Link>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

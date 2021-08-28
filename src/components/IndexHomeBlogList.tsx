@@ -3,22 +3,26 @@ import { getBlogList } from '@/service/Blog';
 import { Blog } from '@/model/BlogModel';
 import BlogCardLayout from '@/components/BlogCardLayout';
 import Pager from '@/components/Pager';
-import { useMount } from '@umijs/hooks';
-import { Card, Page } from '@geist-ui/react';
+import { useBoolean, useMount } from '@umijs/hooks';
 import { responseIsSuccess } from '@/model/Result';
-import { Container } from '@material-ui/core';
+import { CircularProgress, Container } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import styles from './components.less';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [maxCount, setMaxCount] = useState<number>(0);
+  const { state, setTrue, setFalse } = useBoolean(true);
 
   // 加载数据
   const fetchData = async (page: number) => {
+    setTrue();
     const result = await getBlogList(page, 4);
     if (responseIsSuccess(result)) {
       setBlogs(result.data.list);
       setMaxCount(result.data.page.maxPage);
     }
+    setFalse();
   };
 
   // 组件挂载生命周期
@@ -29,9 +33,16 @@ const IndexHomeBlogList: React.FC = () => {
   return (
     <Container maxWidth={'lg'}>
       <div style={{ marginTop: 30, marginBottom: 30 }}>
-        {blogs.map((item) => (
-          <BlogCardLayout key={item.id} blog={item} />
-        ))}
+        {!state &&
+          blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
+
+        {state ? (
+          <Box sx={{ display: 'flex' }} className={styles.loading}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <span />
+        )}
 
         {
           <div style={{ textAlign: 'center', padding: 12 }}>
