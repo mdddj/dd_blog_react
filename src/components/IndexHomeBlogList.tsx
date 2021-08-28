@@ -6,6 +6,7 @@ import Pager from '@/components/Pager';
 import { useMount } from '@umijs/hooks';
 import { Card, Page } from '@geist-ui/react';
 import { responseIsSuccess } from '@/model/Result';
+import { Container } from '@material-ui/core';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -26,7 +27,7 @@ const IndexHomeBlogList: React.FC = () => {
   });
 
   return (
-    <Page>
+    <Container maxWidth={'lg'}>
       <div style={{ marginTop: 30, marginBottom: 30 }}>
         {blogs.map((item) => (
           <BlogCardLayout key={item.id} blog={item} />
@@ -44,7 +45,7 @@ const IndexHomeBlogList: React.FC = () => {
           </div>
         }
       </div>
-    </Page>
+    </Container>
   );
 };
 

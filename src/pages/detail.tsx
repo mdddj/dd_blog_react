@@ -5,8 +5,10 @@ import { useMount, useRequest } from '@umijs/hooks';
 import { getBlogDetailById } from '@/service/Blog';
 import { Result } from '@/model/Result';
 import { Blog } from '@/model/BlogModel';
-import { Page } from '@geist-ui/react';
 import { BlogPreview } from '@/components/MarkdownPreview';
+import { Card, CardContent, Container, ThemeProvider } from '@material-ui/core';
+import styles from './index.less';
+import { whiteTheme } from '@/config/theme';
 
 const BlogDetailPage: React.FC = () => {
   const {
@@ -35,20 +37,20 @@ const BlogDetailPage: React.FC = () => {
   const blog: Blog | undefined = data?.data;
 
   return (
-    <>
+    <ThemeProvider theme={whiteTheme}>
       <BlogAppBar />
-
+      <div className={styles.ribbon} />
       {blog && (
-        <Page>
-          <Page.Header>
-            <h2>{blog.title}</h2>
-          </Page.Header>
-          <Page.Content>
-            <BlogPreview content={blog.content} />
-          </Page.Content>
-        </Page>
+        <Container maxWidth={'lg'} className={styles.detailBody}>
+          <Card className={styles.detailCard}>
+            <CardContent>
+              <h2>{blog.title}</h2>
+              <BlogPreview content={blog.content} />
+            </CardContent>
+          </Card>
+        </Container>
       )}
-    </>
+    </ThemeProvider>
   );
 };
 
