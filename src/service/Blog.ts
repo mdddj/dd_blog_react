@@ -1,7 +1,7 @@
 import { request } from '@@/plugin-request/request';
 import { serverHost } from '@/config/server';
 import { Result } from '@/model/Result';
-import { BlogListData } from '@/model/BlogModel';
+import { Blog, BlogListData } from '@/model/BlogModel';
 
 /**
  * 获取博客列表
@@ -15,4 +15,12 @@ export async function getBlogList(
   return request<Result<BlogListData>>(
     serverHost + '/api/blog/list?page=' + page + '&pageSize=' + pageSize,
   );
+}
+
+/**
+ * 获取博客详情
+ * @param blogId  博客id
+ */
+export async function getBlogDetailById(blogId: number): Promise<Result<Blog>> {
+  return request<Result<Blog>>(`${serverHost}/api/blog/get/${blogId}`);
 }
