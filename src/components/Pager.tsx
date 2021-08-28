@@ -1,6 +1,6 @@
-import React from "react";
-import {Pagination} from "@material-ui/lab";
-import {PagerModel} from "@/model/PagerModel";
+import React from 'react';
+import { PagerModel } from '@/model/PagerModel';
+import { Pagination } from '@geist-ui/react';
 
 /**
  * 分类组件
@@ -8,13 +8,27 @@ import {PagerModel} from "@/model/PagerModel";
  * @param onChangePage  当分页被改变时的操作
  * @constructor
  */
-const Pager: React.FC<{ model: PagerModel, onChangePage?: (page: number) => void }> = ({model, onChangePage}) => {
-  return <Pagination count={model.maxPage} page={model.currentPage} onChange={(event, page) => {
-    if (onChangePage) {
-      onChangePage(page)
-    }
-  }
-  }/>
-}
+const Pager: React.FC<{
+  count: number;
+  onChangePage?: (page: number) => void;
+}> = ({ count, onChangePage }) => {
+  return (
+    <Pagination
+      count={count}
+      onChange={(page) => {
+        if (onChangePage) {
+          onChangePage(page);
+        }
+      }}
+    >
+      <Pagination.Previous>
+        <span>上一页</span>
+      </Pagination.Previous>
+      <Pagination.Next>
+        <span>下一页</span>
+      </Pagination.Next>
+    </Pagination>
+  );
+};
 
-export default Pager
+export default Pager;

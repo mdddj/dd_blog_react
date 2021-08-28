@@ -1,60 +1,51 @@
-import React, {useState} from "react";
-import {useRequest} from "@@/plugin-request/request";
-import {getBlogList} from "@/service/Blog";
-import {Blog} from "@/model/BlogModel";
-import BlogCardLayout from "@/components/BlogCardLayout";
-import {Card, Container} from "@material-ui/core";
-import Pager from "@/components/Pager";
-import {useMount} from "@umijs/hooks";
-import {PagerModel} from "@/model/PagerModel";
+import React, { useState } from 'react';
+import { getBlogList } from '@/service/Blog';
+import { Blog } from '@/model/BlogModel';
+import BlogCardLayout from '@/components/BlogCardLayout';
+import Pager from '@/components/Pager';
+import { useMount } from '@umijs/hooks';
+import { Card, Page } from '@geist-ui/react';
+import { responseIsSuccess } from '@/model/Result';
 
 const IndexHomeBlogList: React.FC = () => {
-
-  const [blogs, setBlogs] = useState<Blog[]>([])
-  const [pager, setPager] = useState<PagerModel>()
-  const [page, setPage] = useState<number>(1)
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [maxCount, setMaxCount] = useState<number>(0);
 
   // 加载数据
-  const fetchData = (page: number) => {
-    return getBlogList(page, 4);
-  }
-
-
-  const {loading, run} = useRequest(fetchData, {
-    manual: true,
-    onSuccess: (result, param) => {
-      console.log(result)
-      setBlogs(result.list as Blog[])
-      setPager(result.page as PagerModel)
+  const fetchData = async (page: number) => {
+    const result = await getBlogList(page, 4);
+    if (responseIsSuccess(result)) {
+      setBlogs(result.data.list);
+      setMaxCount(result.data.page.maxPage);
     }
-  })
+  };
 
-
+  // 组件挂载生命周期
   useMount(async () => {
-    await run(page)
-  })
+    await fetchData(1);
+  });
 
-  if (loading) {
-    return <>加载中</>
-  }
+  return (
+    <Page>
+      <div style={{ marginTop: 30, marginBottom: 30 }}>
+        {blogs.map((item) => (
+          <BlogCardLayout key={item.id} blog={item} />
+        ))}
 
+        {
+          <div style={{ textAlign: 'center', padding: 12 }}>
+            <Pager
+              count={maxCount}
+              onChangePage={async (page) => {
+                console.log(page);
+                await fetchData(page);
+              }}
+            />
+          </div>
+        }
+      </div>
+    </Page>
+  );
+};
 
-  return <Container maxWidth={"md"}>
-    <Card style={{marginTop: 30, marginBottom: 30}}>
-      {
-        blogs.map(item => <BlogCardLayout key={item.id} blog={item}/>)
-      }
-
-      {
-        pager && <div style={{textAlign: "center", padding: 12}}>
-          <Pager model={pager} onChangePage={page => {
-            run(page).then(r => {
-            })
-          }}/>
-        </div>
-      }
-    </Card>
-  </Container>
-}
-
-export default IndexHomeBlogList
+export default IndexHomeBlogList;

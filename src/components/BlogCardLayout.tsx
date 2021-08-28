@@ -1,52 +1,33 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import {Blog} from "@/model/BlogModel";
-import {Button, } from "@material-ui/core";
-
-
-const useStyles = makeStyles({
-  root: {
-    paddingTop: 30,
-    paddingBottom: 30,
-    marginBottom: -1,
-    background: 'white',
-    borderTop: '1px solid rgb(238, 238, 238)',
-    borderBottom: '1px solid rgb(238, 238, 238)',
-    "&:hover": {
-      boxShadow: 'rgb(0 0 0 / 4%) 0px 5px 40px'
-    }
-  },
-  title: {
-    fontSize: 18,
-    color: 'rgba(0,0,0,.87)',
-    fontWeight: 700
-  },
-  wrap: {
-    padding: '0px 30px',
-    margin: '0px auto'
-  },
-  dateString: {
-    color: 'rgb(105, 105, 105)',
-    marginTop: 12,
-    marginBottom: 30
-  }
-});
+import { Blog } from '@/model/BlogModel';
+import { history } from 'umi';
+import styles from './components.less';
+import { Button } from '@geist-ui/react/esm';
+import { Card } from '@geist-ui/react';
 
 /**
  * 首页博客卡片布局
  * @param blog  博客数据
  * @constructor
  */
-const BlogCardLayout: React.FC<{ blog: Blog }> = ({blog}) => {
-  const classes = useStyles();
+const BlogCardLayout: React.FC<{ blog: Blog }> = ({ blog }) => {
+  return (
+    <Card className={styles.blogRoot} hoverable={true}>
+      <div className={styles.blogWrap}>
+        <div className={styles.blogTitle}>{blog.title}</div>
+        <div className={styles.blogDataString}>
+          {blog.category.name} · {blog.dateString}
+        </div>
+        <Button
+          onClick={() => {
+            history.push('/detail?id=' + blog.id);
+          }}
+        >
+          继续阅读
+        </Button>
+      </div>
+    </Card>
+  );
+};
 
-  return <div className={classes.root}>
-    <div className={classes.wrap}>
-      <div className={classes.title}>{blog.title}</div>
-      <div className={classes.dateString}>{blog.category.name} · {blog.dateString}</div>
-      <Button variant="outlined">继续阅读</Button>
-    </div>
-  </div>
-}
-
-export default BlogCardLayout
+export default BlogCardLayout;

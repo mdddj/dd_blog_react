@@ -1,25 +1,32 @@
+import { PagerModel } from '@/model/PagerModel';
+
 export interface Blog {
-  id:          number;
-  title:       string;
-  content:     string;
-  createTime:  number;
-  category:    Category;
-  author:      string;
-  thumbnail:   null;
-  dateString:  Date;
-  tags:        Tag[];
+  id: number;
+  title: string;
+  content: string;
+  createTime: number;
+  category: Category;
+  author: string;
+  thumbnail: null;
+  dateString: Date;
+  tags: Tag[];
   aliasString: string;
 }
 
 export interface Category {
-  id:         number;
-  name:       string;
-  logo:       string;
-  intro:      string;
+  id: number;
+  name: string;
+  logo: string;
+  intro: string;
   createTime: number;
 }
 
 export interface Tag {
-  id:   number;
+  id: number;
   name: string;
+}
+
+export interface BlogListData {
+  page: PagerModel;
+  list: Array<Blog>;
 }
