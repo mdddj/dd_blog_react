@@ -3,7 +3,7 @@ import React from 'react';
 const BlogAppBar: React.FC<{}> = () => {
   return (
     <>
-      <div></div>
+      <div>导航条</div>
     </>
   );
 };
