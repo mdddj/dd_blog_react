@@ -37,7 +37,7 @@ const BlogDetailPage: React.FC = () => {
   const blog: Blog | undefined = data?.data;
 
   return (
-    <ThemeProvider theme={whiteTheme}>
+    <>
       <BlogAppBar />
       <div className={styles.ribbon} />
       {blog && (
@@ -50,7 +50,7 @@ const BlogDetailPage: React.FC = () => {
           </Card>
         </Container>
       )}
-    </ThemeProvider>
+    </>
   );
 };
 
