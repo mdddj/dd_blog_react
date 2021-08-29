@@ -19,7 +19,6 @@ const BlogCardLayout: React.FC<{ blog: Blog }> = ({ blog }) => {
             {blog.category.name} · {blog.dateString}
           </div>
         </CardContent>
-
         <CardActions>
           <Button
             size="small"

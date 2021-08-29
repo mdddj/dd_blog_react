@@ -2,6 +2,7 @@ import { request } from '@@/plugin-request/request';
 import { serverHost } from '@/config/server';
 import { Result } from '@/model/Result';
 import { Blog, BlogListData } from '@/model/BlogModel';
+import { ArchiveModel } from '@/model/ArchiveModel';
 
 /**
  * 获取博客列表
@@ -23,4 +24,11 @@ export async function getBlogList(
  */
 export async function getBlogDetailById(blogId: number): Promise<Result<Blog>> {
   return request<Result<Blog>>(`${serverHost}/api/blog/get/${blogId}`);
+}
+
+/**
+ * 获取博客归档数据
+ */
+export async function getArchives(): Promise<Result<ArchiveModel>> {
+  return request<Result<ArchiveModel>>(`${serverHost}/api/blog/statistics`);
 }
