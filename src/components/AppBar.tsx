@@ -16,6 +16,16 @@ export default function BlogAppBar() {
     history.push('/category');
   };
 
+  // 跳转到归档页面
+  const toArchive = () => {
+    history.push('/archive');
+  };
+
+  // 跳转到标签页面
+  const toTags = () => {
+    history.push('/tags');
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -29,8 +39,12 @@ export default function BlogAppBar() {
           <Button color="inherit" onClick={toCategory}>
             分类
           </Button>
-          <Button color="inherit">归档</Button>
-          <Button color="inherit">标签</Button>
+          <Button color="inherit" onClick={toArchive}>
+            归档
+          </Button>
+          <Button color="inherit" onClick={toTags}>
+            标签
+          </Button>
           <Button color="inherit">关于</Button>
           <Button color="inherit">Github</Button>
         </Toolbar>

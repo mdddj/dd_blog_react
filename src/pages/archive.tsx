@@ -1,23 +1,20 @@
 import React from 'react';
 import BlogAppBar from '@/components/AppBar';
 import { Container } from '@material-ui/core';
-import styles from './index.less';
+import styles from '@/pages/index.less';
 import ArchiveShow, { ArchiveShowType } from '@/components/ArchiveShow';
 
-/**
- * 分类页面
- * @constructor
- */
-const CategoryPage: React.FC = () => {
+//归档页面
+const ArchivePage: React.FC = () => {
   return (
     <>
       <BlogAppBar />
 
       <Container maxWidth={'lg'} className={styles.bodyCard}>
-        <ArchiveShow title={'分类'} type={ArchiveShowType.Category} />
+        <ArchiveShow title={'归档'} type={ArchiveShowType.Archive} />
       </Container>
     </>
   );
 };
 
-export default CategoryPage;
+export default ArchivePage;
