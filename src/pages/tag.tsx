@@ -8,7 +8,7 @@ import ArchiveShow, { ArchiveShowType } from '@/components/ArchiveShow';
 const TagPage: React.FC = () => {
   return (
     <>
-      <BlogAppBar />
+      <BlogAppBar current="tags" />
 
       <Container maxWidth={'lg'} className={styles.bodyCard}>
         <ArchiveShow title={'标签'} type={ArchiveShowType.Tag} />

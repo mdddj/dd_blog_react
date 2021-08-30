@@ -5,7 +5,7 @@ import IndexHomeBlogList from '@/components/IndexHomeBlogList';
 export default function IndexPage() {
   return (
     <>
-      <BlogAppBar />
+      <BlogAppBar current="index" />
       <IndexHomeBlogList />
       <div style={{ height: 50 }} />
     </>

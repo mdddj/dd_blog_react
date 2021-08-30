@@ -11,7 +11,7 @@ import ArchiveShow, { ArchiveShowType } from '@/components/ArchiveShow';
 const CategoryPage: React.FC = () => {
   return (
     <>
-      <BlogAppBar />
+      <BlogAppBar current="category" />
 
       <Container maxWidth={'lg'} className={styles.bodyCard}>
         <ArchiveShow title={'分类'} type={ArchiveShowType.Category} />

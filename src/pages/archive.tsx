@@ -8,7 +8,7 @@ import ArchiveShow, { ArchiveShowType } from '@/components/ArchiveShow';
 const ArchivePage: React.FC = () => {
   return (
     <>
-      <BlogAppBar />
+      <BlogAppBar current="archive" />
 
       <Container maxWidth={'lg'} className={styles.bodyCard}>
         <ArchiveShow title={'归档'} type={ArchiveShowType.Archive} />

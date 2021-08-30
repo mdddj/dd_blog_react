@@ -5,7 +5,11 @@ import { history } from 'umi';
 import Typography from '@material-ui/core/Typography';
 import { AppBar, Button } from '@material-ui/core';
 
-export default function BlogAppBar() {
+/**
+ * 通用导航栏组件
+ * @returns
+ */
+const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
   // 跳转首页
   const toIndex = () => {
     history.push('/');
@@ -33,16 +37,32 @@ export default function BlogAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             典典博客
           </Typography>
-          <Button color="inherit" onClick={toIndex}>
+          <Button
+            onClick={toIndex}
+            color={current && current === 'index' ? undefined : 'inherit'}
+            variant={current && current === 'index' ? 'contained' : 'text'}
+          >
             首页
           </Button>
-          <Button color="inherit" onClick={toCategory}>
+          <Button
+            color={current && current === 'category' ? undefined : 'inherit'}
+            variant={current && current === 'category' ? 'contained' : 'text'}
+            onClick={toCategory}
+          >
             分类
           </Button>
-          <Button color="inherit" onClick={toArchive}>
+          <Button
+            color={current && current === 'archive' ? undefined : 'inherit'}
+            variant={current && current === 'archive' ? 'contained' : 'text'}
+            onClick={toArchive}
+          >
             归档
           </Button>
-          <Button color="inherit" onClick={toTags}>
+          <Button
+            color={current && current === 'tags' ? undefined : 'inherit'}
+            variant={current && current === 'tags' ? 'contained' : 'text'}
+            onClick={toTags}
+          >
             标签
           </Button>
           <Button color="inherit">关于</Button>
@@ -51,4 +71,5 @@ export default function BlogAppBar() {
       </AppBar>
     </Box>
   );
-}
+};
+export default BlogAppBar;
