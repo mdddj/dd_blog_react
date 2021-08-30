@@ -4,12 +4,13 @@ import { Result } from '@/model/Result';
 import { ArchiveModel } from '@/model/ArchiveModel';
 import { getArchives } from '@/service/Blog';
 import { Link } from '@material-ui/core';
-
+import styles from '../widgets/widget.less';
 /// 显示类型
 export enum ArchiveShowType {
   Category, // 分类
   Archive, // 日期
   Tag, // 标签
+  All, // 显示全部
 }
 
 /// 分类,归档,标签的显示组件
@@ -38,7 +39,9 @@ const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
 
   return (
     <>
-      <div>{title}</div>
+      {type !== ArchiveShowType.All && (
+        <div className={styles.title}>{title}</div>
+      )}
       <div>
         {type == ArchiveShowType.Category &&
           categoryList?.map((item) => (
@@ -46,11 +49,35 @@ const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
           ))}
         {type == ArchiveShowType.Archive &&
           dates?.map((item) => (
-            <ArchiveItem value={item.months} key={item.months} />
+            <ArchiveItem
+              value={item.months + ' (' + item.count + '篇)'}
+              key={item.months}
+            />
           ))}
         {type == ArchiveShowType.Tag &&
           tags?.map((item) => <ArchiveItem value={item.name} key={item.id} />)}
       </div>
+      {type == ArchiveShowType.All && (
+        <div>
+          <div className={styles.title}>分类</div>
+          {categoryList?.map((item) => (
+            <ArchiveItem value={item.name} key={item.id} />
+          ))}
+
+          <div className={styles.title}>归档</div>
+          {dates?.map((item) => (
+            <ArchiveItem
+              value={item.months + ' (' + item.count + '篇)'}
+              key={item.months}
+            />
+          ))}
+
+          <div className={styles.title}>标签</div>
+          {tags?.map((item) => (
+            <ArchiveItem value={item.name} key={item.id} />
+          ))}
+        </div>
+      )}
     </>
   );
 };
@@ -68,7 +95,7 @@ const ArchiveItem: React.FC<{ value: string; href?: string }> = ({
   href,
 }) => {
   return (
-    <div>
+    <div className={styles.urlLink}>
       <Link href={href}>{value}</Link>
     </div>
   );

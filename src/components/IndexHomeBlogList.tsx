@@ -8,6 +8,7 @@ import { responseIsSuccess } from '@/model/Result';
 import { CircularProgress, Container } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import styles from './components.less';
+import SimpleBlogListItem from './SimpleBlogList';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -31,10 +32,10 @@ const IndexHomeBlogList: React.FC = () => {
   });
 
   return (
-    <Container maxWidth={'lg'}>
-      <div style={{ marginTop: 30, marginBottom: 30 }}>
+    <>
+      <div style={{ marginBottom: 30 }}>
         {!state &&
-          blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
+          blogs.map((item) => <SimpleBlogListItem key={item.id} blog={item} />)}
 
         {state ? (
           <Box sx={{ display: 'flex' }} className={styles.loading}>
@@ -56,7 +57,7 @@ const IndexHomeBlogList: React.FC = () => {
           </div>
         }
       </div>
-    </Container>
+    </>
   );
 };
 

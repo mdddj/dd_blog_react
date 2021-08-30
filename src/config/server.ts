@@ -1,1 +1,1 @@
-export const serverHost = 'https://itbug.shop';
+export const serverHost = 'http://localhost';
