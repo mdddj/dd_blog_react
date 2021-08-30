@@ -7,8 +7,8 @@ import { useMount } from '@umijs/hooks';
 import React from 'react';
 import { useState } from 'react';
 import { useLocation } from 'umi';
-import { SimpleValueModel } from '@model/SimpleValueModel';
 import { message } from 'antd';
+import { SimpleValueModel } from '@/model/SimpleValueModel';
 
 /**
  * 特殊文本页面
@@ -41,10 +41,8 @@ const SimpleTextView: React.FC = () => {
   return (
     <>
       <BlogAppBar />
-      <Container maxWidth={'lg'}>
-        {simpleValue != undefined && (
-          <BlogPreview content={simpleValue.context} />
-        )}
+      <Container maxWidth={'lg'} style={{ marginTop: 30 }}>
+        {simpleValue && <BlogPreview content={simpleValue.context} />}
       </Container>
     </>
   );

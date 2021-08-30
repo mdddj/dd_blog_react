@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useLocation } from 'umi';
 import BlogAppBar from '@/components/AppBar';
 import { getBlogDetailById, getBlogWithAlias } from '@/service/Blog';
-import { Result } from '@/model/Result';
 import { Blog } from '@/model/BlogModel';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Card, CardContent, Container, ThemeProvider } from '@material-ui/core';
+import { Card, CardContent, Container } from '@material-ui/core';
 import styles from './index.less';
 import { useBoolean, useMount } from '@umijs/hooks';
 

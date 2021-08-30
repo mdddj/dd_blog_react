@@ -3,7 +3,7 @@ import { serverHost } from '@/config/server';
 import { Result } from '@/model/Result';
 import { Blog, BlogListData } from '@/model/BlogModel';
 import { ArchiveModel } from '@/model/ArchiveModel';
-import { SimpleValueModel } from '@model/SimpleValueModel';
+import { SimpleValueModel } from '@/model/SimpleValueModel';
 
 /**
  * 获取博客列表
