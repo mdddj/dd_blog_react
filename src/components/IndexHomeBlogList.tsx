@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { getBlogList } from '@/service/Blog';
 import { Blog } from '@/model/BlogModel';
-import BlogCardLayout from '@/components/BlogCardLayout';
-import Pager from '@/components/Pager';
-import { useBoolean, useMount } from '@umijs/hooks';
 import { responseIsSuccess } from '@/model/Result';
-import { CircularProgress, Container } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import styles from './components.less';
 import SimpleBlogListItem from './SimpleBlogList';
+import { useBoolean, useMount } from '@umijs/hooks';
+import Pager from './Pager';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);

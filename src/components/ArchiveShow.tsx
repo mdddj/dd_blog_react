@@ -1,10 +1,11 @@
 import React from 'react';
-import { useRequest } from '@umijs/hooks';
 import { Result } from '@/model/Result';
-import { ArchiveModel } from '@/model/ArchiveModel';
+import { ArchiveModel, MonthsCount } from '@/model/ArchiveModel';
 import { getArchives } from '@/service/Blog';
 import { Link } from '@material-ui/core';
 import styles from '../widgets/widget.less';
+import { Category, Tag } from '@/model/BlogModel';
+import { useRequest } from '@umijs/hooks';
 /// 显示类型
 export enum ArchiveShowType {
   Category, // 分类
@@ -44,28 +45,30 @@ const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
       )}
       <div>
         {type == ArchiveShowType.Category &&
-          categoryList?.map((item) => (
+          categoryList?.map((item: Category) => (
             <ArchiveItem value={item.name} key={item.id} />
           ))}
         {type == ArchiveShowType.Archive &&
-          dates?.map((item) => (
+          dates?.map((item: MonthsCount) => (
             <ArchiveItem
               value={item.months + ' (' + item.count + '篇)'}
               key={item.months}
             />
           ))}
         {type == ArchiveShowType.Tag &&
-          tags?.map((item) => <ArchiveItem value={item.name} key={item.id} />)}
+          tags?.map((item: Tag) => (
+            <ArchiveItem value={item.name} key={item.id} />
+          ))}
       </div>
       {type == ArchiveShowType.All && (
         <div>
           <div className={styles.title}>分类</div>
-          {categoryList?.map((item) => (
+          {categoryList?.map((item: Category) => (
             <ArchiveItem value={item.name} key={item.id} />
           ))}
 
           <div className={styles.title}>归档</div>
-          {dates?.map((item) => (
+          {dates?.map((item: MonthsCount) => (
             <ArchiveItem
               value={item.months + ' (' + item.count + '篇)'}
               key={item.months}
@@ -73,7 +76,7 @@ const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
           ))}
 
           <div className={styles.title}>标签</div>
-          {tags?.map((item) => (
+          {tags?.map((item: Tag) => (
             <ArchiveItem value={item.name} key={item.id} />
           ))}
         </div>
