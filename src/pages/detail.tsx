@@ -1,45 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'umi';
 import BlogAppBar from '@/components/AppBar';
-import { useMount, useRequest } from '@umijs/hooks';
-import { getBlogDetailById } from '@/service/Blog';
+import { getBlogDetailById, getBlogWithAlias } from '@/service/Blog';
 import { Result } from '@/model/Result';
 import { Blog } from '@/model/BlogModel';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { Card, CardContent, Container, ThemeProvider } from '@material-ui/core';
 import styles from './index.less';
-import { whiteTheme } from '@/config/theme';
+import { useBoolean, useMount } from '@umijs/hooks';
 
 const BlogDetailPage: React.FC = () => {
+  const [blog, setBlog] = useState<Blog | undefined>();
+  const { state, setTrue, setFalse } = useBoolean(false);
+
   const {
-    query: { id },
+    query: { id, alias },
   } = useLocation() as any;
 
+  // 根据id
   const fetchBlogData = async (id: number) => {
-    return getBlogDetailById(id);
+    return await getBlogDetailById(id);
   };
 
-  const { run, data, loading } = useRequest<Result<Blog>>(fetchBlogData, {
-    manual: true,
-  });
+  // 根据别名
+  const fetchBlogWithAlias = async (alias: string) => {
+    return await getBlogWithAlias(alias);
+  };
+
+  // 加载数据
+  const fetchData = async () => {
+    let _blog;
+    setTrue();
+    if (id) {
+      _blog = await fetchBlogData(id as number);
+    }
+    if (alias) {
+      _blog = await fetchBlogWithAlias(alias as string);
+    }
+    setBlog(_blog?.data);
+    setFalse();
+  };
 
   // 启动
   useMount(async () => {
-    if (id) {
-      await run(id as number);
-    }
+    await fetchData();
   });
-
-  if (loading) {
-    return <>加载中</>;
-  }
-
-  const blog: Blog | undefined = data?.data;
 
   return (
     <>
       <BlogAppBar />
       <div className={styles.ribbon} />
+
+      {state && <div>加载中</div>}
+
       {blog && (
         <Container maxWidth={'lg'} className={styles.detailBody}>
           <Card className={styles.detailCard}>

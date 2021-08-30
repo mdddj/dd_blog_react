@@ -4,4 +4,5 @@ export default [
   { path: '/category', component: '@/pages/category' },
   { path: '/archive', component: '@/pages/archive' },
   { path: '/tags', component: '@/pages/tag' },
+  { path: '/simple', component: '@/pages/text' },
 ];

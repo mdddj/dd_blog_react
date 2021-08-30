@@ -30,6 +30,11 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
     history.push('/tags');
   };
 
+  // 前往关于页面
+  const toAbout = () => {
+    history.push('/simple?name=about');
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -65,7 +70,9 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
           >
             标签
           </Button>
-          <Button color="inherit">关于</Button>
+          <Button color="inherit" onClick={toAbout}>
+            关于
+          </Button>
           <Button color="inherit">Github</Button>
         </Toolbar>
       </AppBar>
