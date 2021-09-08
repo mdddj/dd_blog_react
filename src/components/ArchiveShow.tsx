@@ -1,11 +1,15 @@
 import React from 'react';
 import { Result } from '@/model/Result';
-import { ArchiveModel, MonthsCount } from '@/model/ArchiveModel';
-import { getArchives } from '@/service/Blog';
 import { Link } from '@material-ui/core';
 import styles from '../widgets/widget.less';
-import { Category, Tag } from '@/model/BlogModel';
 import { useRequest } from '@umijs/hooks';
+import {
+  ArchiveModel,
+  MonthsCount,
+  Tag,
+} from 'dd_server_api/apis/model/ArchiveModel';
+import { blogApi } from '@/util/request';
+import { Category } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
 /// 显示类型
 export enum ArchiveShowType {
   Category, // 分类
@@ -20,7 +24,7 @@ const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
   type,
 }) => {
   const { loading, data, error } = useRequest<Result<ArchiveModel>>(() =>
-    getArchives(),
+    blogApi().getArchives(),
   );
 
   if (loading) {

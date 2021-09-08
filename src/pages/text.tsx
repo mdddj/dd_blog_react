@@ -1,7 +1,6 @@
 import BlogAppBar from '@/components/AppBar';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { responseIsSuccess } from '@/model/Result';
-import { getTextByName } from '@/service/Blog';
 import { Container } from '@material-ui/core';
 import { useMount } from '@umijs/hooks';
 import React from 'react';
@@ -9,6 +8,7 @@ import { useState } from 'react';
 import { useLocation } from 'umi';
 import { message } from 'antd';
 import { SimpleValueModel } from '@/model/SimpleValueModel';
+import { blogApi } from '@/util/request';
 
 /**
  * 特殊文本页面
@@ -23,7 +23,7 @@ const SimpleTextView: React.FC = () => {
 
   // 加载数据
   const fetchData = async () => {
-    const result = await getTextByName(name as string);
+    const result = await blogApi().getTextByName(name as string);
     if (responseIsSuccess(result)) {
       setSimpleValue(result.data);
     } else {

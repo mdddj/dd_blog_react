@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useLocation } from 'umi';
 import BlogAppBar from '@/components/AppBar';
-import { getBlogDetailById, getBlogWithAlias } from '@/service/Blog';
-import { Blog } from '@/model/BlogModel';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { Card, CardContent, Container } from '@material-ui/core';
 import styles from './index.less';
 import { useBoolean, useMount } from '@umijs/hooks';
+import { blogApi } from '@/util/request';
+import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
+
+const api = blogApi();
 
 const BlogDetailPage: React.FC = () => {
-  const [blog, setBlog] = useState<Blog | undefined>();
+  const [blog, setBlog] = useState<BlogData | undefined>();
   const { state, setTrue, setFalse } = useBoolean(false);
 
   const {
@@ -18,12 +20,12 @@ const BlogDetailPage: React.FC = () => {
 
   // 根据id
   const fetchBlogData = async (id: number) => {
-    return await getBlogDetailById(id);
+    return await api.getBlogDetailById(id);
   };
 
   // 根据别名
   const fetchBlogWithAlias = async (alias: string) => {
-    return await getBlogWithAlias(alias);
+    return await api.getBlogWithAlias(alias);
   };
 
   // 加载数据

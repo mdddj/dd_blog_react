@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { getBlogList } from '@/service/Blog';
-import { Blog } from '@/model/BlogModel';
 import { responseIsSuccess } from '@/model/Result';
 import { CircularProgress } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
@@ -8,19 +6,21 @@ import styles from './components.less';
 import SimpleBlogListItem from './SimpleBlogList';
 import { useBoolean, useMount } from '@umijs/hooks';
 import Pager from './Pager';
+import { blogApi } from '@/util/request';
+import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
 
 const IndexHomeBlogList: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [blogs, setBlogs] = useState<BlogData[]>([]);
   const [maxCount, setMaxCount] = useState<number>(0);
   const { state, setTrue, setFalse } = useBoolean(true);
 
   // 加载数据
   const fetchData = async (page: number) => {
     setTrue();
-    const result = await getBlogList(page, 4);
+    const result = await blogApi().getBlogList(page, 4);
     if (responseIsSuccess(result)) {
-      setBlogs(result.data.list);
-      setMaxCount(result.data.page.maxPage);
+      setBlogs(result.data?.list ?? []);
+      setMaxCount(result.data?.page.maxPage ?? 0);
     }
     setFalse();
   };

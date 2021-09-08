@@ -1,15 +1,15 @@
 import React from 'react';
-import { Blog } from '@/model/BlogModel';
 import { history } from 'umi';
 import styles from './components.less';
 import { Button, Card, CardActions, CardContent } from '@material-ui/core';
+import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
 
 /**
  * 首页博客卡片布局
  * @param blog  博客数据
  * @constructor
  */
-const BlogCardLayout: React.FC<{ blog: Blog }> = ({ blog }) => {
+const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
   return (
     <Card className={styles.blogRoot}>
       <div className={styles.blogWrap}>
