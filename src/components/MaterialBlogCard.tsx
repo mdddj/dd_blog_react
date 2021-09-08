@@ -39,7 +39,7 @@ const MaterialBlogCard: React.FC<{ blog: BlogData }> = ({ blog }) => {
               src={
                 'https://static.saintic.com/picbed/huang/2021/09/08/1631083085280.jpg'
               }
-            ></Avatar>
+            />
           }
           title={blog.author}
           subheader={blog.dateString}

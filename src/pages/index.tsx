@@ -6,6 +6,7 @@ import HomeAbout from '@/widgets/HomeAbout';
 import { Container, Grid } from '@material-ui/core';
 import MeituanCoupon from '@/components/ad/meituan';
 import { KeepAlive } from '@@/core/umiExports';
+import WeChatApp from '@/components/ad/xcx';
 
 export default function IndexPage() {
   return (
@@ -21,6 +22,7 @@ export default function IndexPage() {
           </Grid>
           <Grid item xs={4}>
             <HomeAbout />
+            <WeChatApp />
             <ArchiveWidget />
             <MeituanCoupon />
           </Grid>
