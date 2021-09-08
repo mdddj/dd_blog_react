@@ -4,6 +4,7 @@ import IndexHomeBlogList from '@/components/IndexHomeBlogList';
 import ArchiveWidget from '@/widgets/ArchiveWidget';
 import HomeAbout from '@/widgets/HomeAbout';
 import { Container, Grid } from '@material-ui/core';
+import MeituanCoupon from '@/components/ad/meituan';
 
 export default function IndexPage() {
   return (
@@ -18,6 +19,7 @@ export default function IndexPage() {
           <Grid item xs={4}>
             <HomeAbout />
             <ArchiveWidget />
+            <MeituanCoupon />
           </Grid>
         </Grid>
       </Container>
