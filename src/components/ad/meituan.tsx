@@ -24,7 +24,7 @@ const MeituanCoupon: React.FC = () => {
   return (
     <>
       <MyCard title={'美团饿了么'}>
-        {mtData && <a href={mtData.data}>美团领券</a>}
+        {mtData && <a href={mtData.data}>美团领券(每天都能领)</a>}
       </MyCard>
     </>
   );

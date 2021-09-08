@@ -8,7 +8,7 @@ import styles from './widget.less';
  */
 const MyCard: React.FC<{ title: string }> = ({ title, children }) => {
   return (
-    <div>
+    <div style={{ marginTop: 30 }}>
       <div className={styles.title}>{title}</div>
 
       {children}

@@ -9,10 +9,10 @@ $ yarn
 ```
 
 
-找到`config/server.ts`文件将常量`serverHost`替换成服务器地址
+找到`src/util/request.ts`文件将常量`host`替换成服务器地址
 
 ```bash
-export const serverHost = 'https://itbug.shop'; // api接口服务器
+const host = 'https://itbug.shop'; // api接口服务器
 ```
 
 启动服务

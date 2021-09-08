@@ -3,10 +3,11 @@ import BlogAppBar from '@/components/AppBar';
 import IndexHomeBlogList from '@/components/IndexHomeBlogList';
 import ArchiveWidget from '@/widgets/ArchiveWidget';
 import HomeAbout from '@/widgets/HomeAbout';
-import { Container, Grid } from '@material-ui/core';
+import { Alert, AlertTitle, Container, Grid } from '@material-ui/core';
 import MeituanCoupon from '@/components/ad/meituan';
 import { KeepAlive } from '@@/core/umiExports';
 import WeChatApp from '@/components/ad/xcx';
+import WebSiteResource from '@/widgets/WebSiteResource';
 
 export default function IndexPage() {
   return (
@@ -25,6 +26,7 @@ export default function IndexPage() {
             <WeChatApp />
             <ArchiveWidget />
             <MeituanCoupon />
+            <WebSiteResource />
           </Grid>
         </Grid>
       </Container>

@@ -1,7 +1,7 @@
 import TaokeApi from 'dd_server_api/apis/taoke';
 import DdTaokeSdk from 'dd_server_api/apis';
 
-const host = 'http://localhost';
+const host = 'https://itbug.shop';
 /**
  * 淘客api接口
  */
