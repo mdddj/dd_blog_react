@@ -5,6 +5,7 @@ import ArchiveWidget from '@/widgets/ArchiveWidget';
 import HomeAbout from '@/widgets/HomeAbout';
 import { Container, Grid } from '@material-ui/core';
 import MeituanCoupon from '@/components/ad/meituan';
+import { KeepAlive } from '@@/core/umiExports';
 
 export default function IndexPage() {
   return (
@@ -13,7 +14,9 @@ export default function IndexPage() {
       <Container style={{ marginTop: 30 }}>
         <Grid container spacing={2}>
           <Grid item xs={8}>
-            <IndexHomeBlogList />
+            <KeepAlive>
+              <IndexHomeBlogList />
+            </KeepAlive>
             <div style={{ height: 50 }} />
           </Grid>
           <Grid item xs={4}>
