@@ -8,6 +8,7 @@ import { useBoolean, useMount } from '@umijs/hooks';
 import Pager from './Pager';
 import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
+import MaterialBlogCard from '@/components/MaterialBlogCard';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
@@ -33,8 +34,11 @@ const IndexHomeBlogList: React.FC = () => {
   return (
     <>
       <div style={{ marginBottom: 30 }}>
+        {/*{!state &&*/}
+        {/*  blogs.map((item) => <SimpleBlogListItem key={item.id} blog={item} />)}*/}
+
         {!state &&
-          blogs.map((item) => <SimpleBlogListItem key={item.id} blog={item} />)}
+          blogs.map((item) => <MaterialBlogCard key={item.id} blog={item} />)}
 
         {state ? (
           <Box sx={{ display: 'flex' }} className={styles.loading}>
