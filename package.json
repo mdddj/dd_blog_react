@@ -27,7 +27,7 @@
     "@material-ui/core": "^5.0.0-beta.5",
     "@material-ui/icons": "^5.0.0-beta.5",
     "@umijs/hooks": "^1.9.3",
-    "dd_server_api": "^1.2.7",
+    "dd_server_api": "^1.2.9",
     "github-markdown-css": "^4.0.0",
     "react": "17.x",
     "react-dom": "17.x",

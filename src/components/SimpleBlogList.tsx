@@ -1,4 +1,3 @@
-import { Blog } from '@/model/BlogModel';
 import {
   Card,
   CardActionArea,
@@ -6,9 +5,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
+import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
 
 //  博客布局,简单版本
-const SimpleBlogListItem: React.FC<{ blog: Blog }> = ({ blog }) => {
+const SimpleBlogListItem: React.FC<{ blog: BlogData }> = ({ blog }) => {
   return (
     <CardActionArea
       style={{ marginBottom: 30 }}
