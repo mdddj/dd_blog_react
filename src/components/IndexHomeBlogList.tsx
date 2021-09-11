@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { responseIsSuccess } from '@/model/Result';
 import { CircularProgress } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import styles from './components.less';
-import SimpleBlogListItem from './SimpleBlogList';
 import { useBoolean, useMount } from '@umijs/hooks';
 import Pager from './Pager';
 import { blogApi } from '@/util/request';
-import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
 import MaterialBlogCard from '@/components/MaterialBlogCard';
+import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
+import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);

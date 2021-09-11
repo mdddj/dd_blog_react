@@ -1,6 +1,5 @@
 import BlogAppBar from '@/components/AppBar';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { responseIsSuccess } from '@/model/Result';
 import { Container } from '@material-ui/core';
 import { useMount } from '@umijs/hooks';
 import React from 'react';
@@ -9,6 +8,7 @@ import { useLocation } from 'umi';
 import { message } from 'antd';
 import { SimpleValueModel } from '@/model/SimpleValueModel';
 import { blogApi } from '@/util/request';
+import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
 
 /**
  * 特殊文本页面
