@@ -6,7 +6,7 @@ import { Card, CardContent, Container } from '@material-ui/core';
 import styles from './index.less';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
-import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
+import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 
 const api = blogApi();
 
@@ -50,12 +50,9 @@ const BlogDetailPage: React.FC = () => {
   return (
     <>
       <BlogAppBar />
-      <div className={styles.ribbon} />
-
-      {state && <div>加载中</div>}
-
       {blog && (
         <Container maxWidth={'lg'} className={styles.detailBody}>
+          {state && <div>加载中</div>}
           <Card className={styles.detailCard}>
             <CardContent>
               <h2>{blog.title}</h2>

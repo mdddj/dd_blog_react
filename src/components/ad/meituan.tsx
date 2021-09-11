@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMount } from '@umijs/hooks';
 import { taokeApi } from '@/util/request';
-import { TMeituanData } from 'dd_server_api/apis/model/tk/MeituanData';
 import MyCard from '@/widgets/MyCard';
+import { TMeituanData } from 'dd_server_api_web/apis/model/tk/MeituanData';
 
 let api = taokeApi();
 
