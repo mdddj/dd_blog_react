@@ -9,9 +9,9 @@ import {
   CardMedia,
   Typography,
 } from '@material-ui/core';
-import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
 import { red } from '@material-ui/core/colors';
 import { history } from 'umi';
+import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 
 const MaterialBlogCard: React.FC<{ blog: BlogData }> = ({ blog }) => {
   const generSummary = (): string => {

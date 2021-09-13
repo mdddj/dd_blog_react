@@ -1,8 +1,8 @@
 import React from 'react';
 import { history } from 'umi';
 import styles from './components.less';
-import { Button, Card, CardActions, CardContent } from '@material-ui/core';
-import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
+import { Button, CardActions, CardContent } from '@material-ui/core';
+import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 
 /**
  * 首页博客卡片布局
@@ -11,7 +11,7 @@ import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData'
  */
 const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
   return (
-    <Card className={styles.blogRoot}>
+    <div className={styles.blogRoot}>
       <div className={styles.blogWrap}>
         <CardContent>
           <div className={styles.blogTitle}>{blog.title}</div>
@@ -30,7 +30,7 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
           </Button>
         </CardActions>
       </div>
-    </Card>
+    </div>
   );
 };
 

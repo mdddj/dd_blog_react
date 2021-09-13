@@ -5,9 +5,9 @@ import styles from './components.less';
 import { useBoolean, useMount } from '@umijs/hooks';
 import Pager from './Pager';
 import { blogApi } from '@/util/request';
-import MaterialBlogCard from '@/components/MaterialBlogCard';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
+import BlogCardLayout from '@/components/BlogCardLayout';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
@@ -17,7 +17,7 @@ const IndexHomeBlogList: React.FC = () => {
   // 加载数据
   const fetchData = async (page: number) => {
     setTrue();
-    const result = await blogApi().getBlogList(page, 4);
+    const result = await blogApi().getBlogList(page, 10);
     if (responseIsSuccess(result)) {
       setBlogs(result.data?.list ?? []);
       setMaxCount(result.data?.page.maxPage ?? 0);
@@ -37,7 +37,7 @@ const IndexHomeBlogList: React.FC = () => {
         {/*  blogs.map((item) => <SimpleBlogListItem key={item.id} blog={item} />)}*/}
 
         {!state &&
-          blogs.map((item) => <MaterialBlogCard key={item.id} blog={item} />)}
+          blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
 
         {state ? (
           <Box sx={{ display: 'flex' }} className={styles.loading}>

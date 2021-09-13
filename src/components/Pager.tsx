@@ -1,6 +1,5 @@
 import React from 'react';
-import { PagerModel } from '@/model/PagerModel';
-import { Pagination } from '@geist-ui/react';
+import { Pagination } from '@material-ui/core';
 
 /**
  * 分类组件
@@ -15,20 +14,30 @@ const Pager: React.FC<{
   return (
     <Pagination
       count={count}
-      onChange={(page) => {
-        if (onChangePage) {
-          onChangePage(page);
-        }
+      size={'large'}
+      onChange={(_, p) => {
+        onChangePage?.(p);
       }}
-    >
-      <Pagination.Previous>
-        <span>上一页</span>
-      </Pagination.Previous>
-      <Pagination.Next>
-        <span>下一页</span>
-      </Pagination.Next>
-    </Pagination>
+    />
   );
+
+  // return (
+  //   <Pagination
+  //     count={count}
+  //     onChange={(page) => {
+  //       if (onChangePage) {
+  //         onChangePage(page);
+  //       }
+  //     }}
+  //   >
+  //     <Pagination.Previous>
+  //       <span>上一页</span>
+  //     </Pagination.Previous>
+  //     <Pagination.Next>
+  //       <span>下一页</span>
+  //     </Pagination.Next>
+  //   </Pagination>
+  // );
 };
 
 export default Pager;
