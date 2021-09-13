@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
-import { useLocation } from 'umi';
+import { history, useLocation } from 'umi';
 import BlogAppBar from '@/components/AppBar';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Card, CardContent, Container } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+} from '@material-ui/core';
 import styles from './index.less';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
+import BaseLayout from '@/components/BaseLayout';
+import SizedBox from '@/widgets/SizedBox';
+import CustomLoading from '@/widgets/CustomLoading';
 
 const api = blogApi();
 
@@ -48,10 +57,26 @@ const BlogDetailPage: React.FC = () => {
   });
 
   return (
-    <>
-      <BlogAppBar />
+    <BaseLayout>
+      {!state && (
+        <div>
+          <div>
+            <Button
+              onClick={() => {
+                history.goBack();
+              }}
+            >
+              返回
+            </Button>
+          </div>
+          <SizedBox height={12} />
+        </div>
+      )}
+
+      {state && <CustomLoading />}
+
       {blog && (
-        <Container maxWidth={'lg'} className={styles.detailBody}>
+        <>
           {state && <div>加载中</div>}
           <Card className={styles.detailCard}>
             <CardContent>
@@ -59,9 +84,9 @@ const BlogDetailPage: React.FC = () => {
               <BlogPreview content={blog.content} />
             </CardContent>
           </Card>
-        </Container>
+        </>
       )}
-    </>
+    </BaseLayout>
   );
 };
 

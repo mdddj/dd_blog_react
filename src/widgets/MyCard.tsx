@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import CardFooter from '@geist-ui/react/dist/card/card-footer';
+import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
 
 /**
  * 简单卡片
@@ -21,7 +20,7 @@ const MyCard: React.FC<{ title: string; footChildren?: React.ReactNode }> = ({
           <Typography variant={'h5'}>{title}</Typography>
           {children}
         </CardContent>
-        {footChildren && <CardFooter>{footChildren}</CardFooter>}
+        {footChildren && <CardActions>{footChildren}</CardActions>}
       </Card>
     </div>
   );

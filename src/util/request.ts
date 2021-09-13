@@ -1,8 +1,8 @@
 import DdServerApiByWeb from 'dd_server_api_web/apis';
 import TaokeApi from 'dd_server_api_web/apis/taoke';
 
-// const host = 'https://itbug.shop';
-const host = 'http://localhost';
+const host = 'https://itbug.shop';
+// const host = 'http://localhost';
 /**
  * 淘客api接口
  */

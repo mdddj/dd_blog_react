@@ -11,7 +11,7 @@ const BaseLayout: React.FC<{
   return (
     <div>
       <BlogAppBar current={appbarCurrent} />
-      <Container style={{ marginTop: 30 }}>
+      <Container style={{ marginTop: 30, minHeight: 500 }}>
         <Grid container spacing={3}>
           <Grid item xs={8}>
             {children}
