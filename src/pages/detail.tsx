@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { history, useLocation } from 'umi';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Avatar, Button, Typography } from '@material-ui/core';
+import { Avatar, Button, Divider, Typography } from '@material-ui/core';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
@@ -9,6 +9,7 @@ import BaseLayout from '@/components/BaseLayout';
 import SizedBox from '@/widgets/SizedBox';
 import CustomLoading from '@/widgets/CustomLoading';
 import { ArrowBackIos } from '@material-ui/icons';
+// @ts-ignore
 import ava from '/src/assets/ava.jpg';
 
 const api = blogApi();
@@ -78,14 +79,6 @@ const BlogDetailPage: React.FC = () => {
 
           <div>
             <Typography
-              style={{
-                color: '#2F3A45',
-              }}
-            >
-              {blog?.dateString}
-            </Typography>
-
-            <Typography
               variant={'h3'}
               style={{ fontWeight: 800, marginBottom: 32, marginTop: 16 }}
             >
@@ -100,7 +93,16 @@ const BlogDetailPage: React.FC = () => {
               }}
             >
               <Avatar alt="梁典典" src={ava} sx={{ width: 36, height: 36 }} />
-              <span style={{ marginLeft: 12, fontWeight: 500 }}>梁典典</span>
+
+              <Typography
+                style={{
+                  color: 'rgb(105, 105, 105)',
+                  marginLeft: 5,
+                }}
+              >
+                <span style={{ marginRight: 12, fontWeight: 500 }}>梁典典</span>{' '}
+                发布于 {blog?.dateString}
+              </Typography>
             </div>
 
             <BlogPreview content={blog.content} />
