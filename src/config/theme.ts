@@ -1,9 +1,10 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
+import { blue } from '@material-ui/core/colors';
 
-export const whiteTheme = createTheme({
+const theme = createTheme({
   palette: {
-    primary: {
-      main: '#ffffff',
-    },
+    primary: blue,
   },
 });
+
+export default theme;

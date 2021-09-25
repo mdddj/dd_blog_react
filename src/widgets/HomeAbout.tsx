@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './widget.less';
-import { Divider, IconButton, Stack } from '@material-ui/core';
+import { Divider, IconButton, Paper, Stack } from '@material-ui/core';
 import { GithubFilled, QqCircleFilled, WechatFilled } from '@ant-design/icons';
 
 // 首页关于我的小卡片
@@ -10,7 +10,7 @@ const HomeAbout: React.FC = () => {
   };
 
   return (
-    <div className={styles.about}>
+    <Paper className={styles.about} elevation={3}>
       <h6 className={styles.title}>关于我</h6>
       <p className={styles.aboutDesc}>
         梁典典,目前在广州做全职Flutter开发,会一点java和前端
@@ -30,7 +30,7 @@ const HomeAbout: React.FC = () => {
           <GithubFilled />
         </IconButton>
       </Stack>
-    </div>
+    </Paper>
   );
 };
 

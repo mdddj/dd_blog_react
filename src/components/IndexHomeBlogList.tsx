@@ -17,7 +17,7 @@ const IndexHomeBlogList: React.FC = () => {
   // 加载数据
   const fetchData = async (page: number) => {
     setTrue();
-    const result = await blogApi().getBlogList(page, 10);
+    const result = await blogApi().getBlogList(page, 20);
     if (responseIsSuccess(result)) {
       setBlogs(result.data?.list ?? []);
       setMaxCount(result.data?.page.maxPage ?? 0);

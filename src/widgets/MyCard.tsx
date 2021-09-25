@@ -1,5 +1,13 @@
 import React from 'react';
-import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Divider,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 
 /**
  * 简单卡片
@@ -14,15 +22,24 @@ const MyCard: React.FC<{ title: string; footChildren?: React.ReactNode }> = ({
   footChildren,
 }) => {
   return (
-    <div style={{ marginTop: 30 }}>
+    <Paper elevation={3} style={{ marginTop: 30 }}>
       <Card>
-        <CardContent>
-          <Typography variant={'h5'}>{title}</Typography>
-          {children}
+        <CardContent style={{ padding: 0 }}>
+          <div style={{ padding: 16 }}>
+            <Typography
+              variant={'h5'}
+              color={'text.secondary'}
+              component={'div'}
+            >
+              {title}
+            </Typography>
+          </div>
+          <Divider />
+          <div style={{ padding: 16 }}>{children}</div>
         </CardContent>
         {footChildren && <CardActions>{footChildren}</CardActions>}
       </Card>
-    </div>
+    </Paper>
   );
 };
 

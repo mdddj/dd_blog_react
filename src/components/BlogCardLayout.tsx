@@ -1,7 +1,7 @@
 import React from 'react';
 import { history } from 'umi';
 import styles from './components.less';
-import { Button, CardActions, CardContent } from '@material-ui/core';
+import { Button, CardActions, CardContent, Paper } from '@material-ui/core';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 
 /**

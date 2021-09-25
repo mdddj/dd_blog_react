@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import { history, useLocation } from 'umi';
-import BlogAppBar from '@/components/AppBar';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import {
-  Button,
-  Card,
-  CardContent,
-  CircularProgress,
-  Container,
-} from '@material-ui/core';
-import styles from './index.less';
+import { Avatar, Button, Typography } from '@material-ui/core';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import BaseLayout from '@/components/BaseLayout';
 import SizedBox from '@/widgets/SizedBox';
 import CustomLoading from '@/widgets/CustomLoading';
+import { ArrowBackIos } from '@material-ui/icons';
+import ava from '/src/assets/ava.jpg';
 
 const api = blogApi();
 
@@ -57,7 +51,7 @@ const BlogDetailPage: React.FC = () => {
   });
 
   return (
-    <BaseLayout>
+    <BaseLayout hideRight={true}>
       {!state && (
         <div>
           <div>
@@ -65,6 +59,9 @@ const BlogDetailPage: React.FC = () => {
               onClick={() => {
                 history.goBack();
               }}
+              startIcon={<ArrowBackIos />}
+              color={'secondary'}
+              style={{ marginBottom: 32, color: 'blue' }}
             >
               返回
             </Button>
@@ -78,12 +75,36 @@ const BlogDetailPage: React.FC = () => {
       {blog && (
         <>
           {state && <div>加载中</div>}
-          <Card className={styles.detailCard}>
-            <CardContent>
-              <h2>{blog.title}</h2>
-              <BlogPreview content={blog.content} />
-            </CardContent>
-          </Card>
+
+          <div>
+            <Typography
+              style={{
+                color: '#2F3A45',
+              }}
+            >
+              {blog?.dateString}
+            </Typography>
+
+            <Typography
+              variant={'h3'}
+              style={{ fontWeight: 800, marginBottom: 32, marginTop: 16 }}
+            >
+              {blog.title}
+            </Typography>
+
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: 38,
+              }}
+            >
+              <Avatar alt="梁典典" src={ava} sx={{ width: 36, height: 36 }} />
+              <span style={{ marginLeft: 12, fontWeight: 500 }}>梁典典</span>
+            </div>
+
+            <BlogPreview content={blog.content} />
+          </div>
         </>
       )}
     </BaseLayout>

@@ -18,7 +18,6 @@ export default function IndexPage() {
         <>
           <HomeAbout />
           <WeChatApp />
-          <ArchiveWidget />
           <MeituanCoupon />
           <WebSiteResource />
         </>
