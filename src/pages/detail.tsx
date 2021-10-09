@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { history, useLocation } from 'umi';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Avatar, Button, Divider, Typography } from '@material-ui/core';
+import { Avatar, Button, Paper, Typography } from '@material-ui/core';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
@@ -11,6 +11,7 @@ import CustomLoading from '@/widgets/CustomLoading';
 import { ArrowBackIos } from '@material-ui/icons';
 // @ts-ignore
 import ava from '/src/assets/ava.jpg';
+import { defaultElevation } from '../../config/config';
 
 const api = blogApi();
 
@@ -54,7 +55,7 @@ const BlogDetailPage: React.FC = () => {
   return (
     <BaseLayout hideRight={true}>
       {!state && (
-        <div>
+        <Paper elevation={defaultElevation}>
           <div>
             <Button
               onClick={() => {
@@ -68,13 +69,13 @@ const BlogDetailPage: React.FC = () => {
             </Button>
           </div>
           <SizedBox height={12} />
-        </div>
+        </Paper>
       )}
 
       {state && <CustomLoading />}
 
       {blog && (
-        <>
+        <Paper elevation={defaultElevation}>
           {state && <div>加载中</div>}
 
           <div>
@@ -107,7 +108,7 @@ const BlogDetailPage: React.FC = () => {
 
             <BlogPreview content={blog.content} />
           </div>
-        </>
+        </Paper>
       )}
     </BaseLayout>
   );
