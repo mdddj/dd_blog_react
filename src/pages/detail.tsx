@@ -11,7 +11,7 @@ import CustomLoading from '@/widgets/CustomLoading';
 import { ArrowBackIos } from '@material-ui/icons';
 // @ts-ignore
 import ava from '/src/assets/ava.jpg';
-import { defaultElevation } from '../../config/config';
+import { defaultElevation } from '@/config/server';
 
 const api = blogApi();
 
@@ -55,27 +55,30 @@ const BlogDetailPage: React.FC = () => {
   return (
     <BaseLayout hideRight={true}>
       {!state && (
-        <Paper elevation={defaultElevation}>
-          <div>
-            <Button
-              onClick={() => {
-                history.goBack();
-              }}
-              startIcon={<ArrowBackIos />}
-              color={'secondary'}
-              style={{ marginBottom: 32, color: 'blue' }}
-            >
-              返回
-            </Button>
-          </div>
+        <div>
+          <Button
+            onClick={() => {
+              history.goBack();
+            }}
+            startIcon={<ArrowBackIos />}
+            color={'secondary'}
+            style={{ marginBottom: 32, color: 'blue' }}
+          >
+            返回
+          </Button>
           <SizedBox height={12} />
-        </Paper>
+        </div>
       )}
 
       {state && <CustomLoading />}
 
       {blog && (
-        <Paper elevation={defaultElevation}>
+        <Paper
+          elevation={defaultElevation}
+          style={{
+            padding: 20,
+          }}
+        >
           {state && <div>加载中</div>}
 
           <div>

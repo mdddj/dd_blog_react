@@ -1,10 +1,4 @@
-import {
-  Box,
-  Container,
-  CssBaseline,
-  Link,
-  Typography,
-} from '@material-ui/core';
+import { Box, Container, Link, Typography } from '@material-ui/core';
 import * as React from 'react';
 
 function Copyright() {
@@ -27,6 +21,7 @@ export default function StickyFooter() {
         display: 'flex',
         flexDirection: 'column',
       }}
+      style={{ marginTop: 30 }}
     >
       <Box
         component="footer"
