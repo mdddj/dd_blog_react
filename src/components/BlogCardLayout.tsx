@@ -11,26 +11,28 @@ import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultD
  */
 const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
   return (
-    <div className={styles.blogRoot}>
-      <div className={styles.blogWrap}>
-        <CardContent>
-          <div className={styles.blogTitle}>{blog.title}</div>
-          <div className={styles.blogDataString}>
-            {blog.category.name} · {blog.dateString}
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button
-            size="small"
-            onClick={() => {
-              history.push('/detail?id=' + blog.id);
-            }}
-          >
-            阅读全文
-          </Button>
-        </CardActions>
+    <Paper elevation={5} className={styles.blogWrap}>
+      <div className={styles.blogRoot}>
+        <div className={styles.blogWrap}>
+          <CardContent>
+            <div className={styles.blogTitle}>{blog.title}</div>
+            <div className={styles.blogDataString}>
+              {blog.category.name} · {blog.dateString}
+            </div>
+          </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              onClick={() => {
+                history.push('/detail?id=' + blog.id);
+              }}
+            >
+              阅读全文
+            </Button>
+          </CardActions>
+        </div>
       </div>
-    </div>
+    </Paper>
   );
 };
 

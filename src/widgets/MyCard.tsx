@@ -3,7 +3,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   Divider,
   Paper,
   Typography,
@@ -22,7 +21,7 @@ const MyCard: React.FC<{ title: string; footChildren?: React.ReactNode }> = ({
   footChildren,
 }) => {
   return (
-    <Paper elevation={3} style={{ marginTop: 30 }}>
+    <Paper elevation={5} style={{ marginTop: 30 }}>
       <Card>
         <CardContent style={{ padding: 0 }}>
           <div style={{ padding: 16 }}>
