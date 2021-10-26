@@ -7,6 +7,7 @@ import BlogListComponent from '@/components/BlogListComponent';
 import { blogApi } from '@/util/request';
 import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
+import { Page } from 'dd_server_api_web/apis/utils/ResultUtil';
 
 /**
  * 分类页面
@@ -36,12 +37,12 @@ const CategoryPage: React.FC = () => {
             {loaded && (
               <BlogListComponent
                 request={(page) => {
-                  return new Promise<BlogData[]>(async (resolve) => {
+                  return new Promise<Page<BlogData>>(async (resolve) => {
                     const result = await blogApi().getBlogsByCategoryId(
                       cates[0].id,
                       { page: page, pageSize: 12 },
                     );
-                    resolve(result.data?.list ?? []);
+                    resolve(result.data!);
                   });
                 }}
               />
