@@ -34,7 +34,7 @@ const MeituanCoupon: React.FC = () => {
               每天都可以领美团优惠券,大约每单可以优惠4块钱,直接点击下方链接领取或者手机扫码下方二维码
             </span>
             <div>
-              <a href={mtData.data}>点我领取</a>
+              <a href={mtData.data}>点我领取 {'>>'}</a>
             </div>
             <SizedBox height={12} />
             <SizedBox>

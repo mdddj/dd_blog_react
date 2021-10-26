@@ -36,16 +36,18 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
       {!loading &&
         blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
       {pageModel && !loading && (
-        <Pagination
-          count={pageModel.maxPage}
-          page={pageModel.currentPage}
-          defaultPage={1}
-          onChange={async (event, page) => {
-            if (currPage != page) {
-              await fetchData(page);
-            }
-          }}
-        />
+        <div style={{ marginTop: 20 }}>
+          <Pagination
+            count={pageModel.maxPage}
+            page={pageModel.currentPage}
+            defaultPage={1}
+            onChange={async (event, page) => {
+              if (currPage != page) {
+                await fetchData(page);
+              }
+            }}
+          />
+        </div>
       )}
     </div>
   );
