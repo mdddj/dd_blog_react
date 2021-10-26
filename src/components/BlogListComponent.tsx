@@ -14,6 +14,7 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
   const [currPage, setCurrPage] = useState<number>(1);
   const [blogs, setBlogs] = useState<BlogData[]>([]);
   const [pageModel, setPageModel] = useState<PagerModel>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useMount(async () => {
     await fetchData(currPage);
@@ -21,26 +22,28 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
 
   // 加载博客数据
   const fetchData = async (page: number) => {
+    setCurrPage(page);
+    setLoading(true);
     const data = await request(page);
-    console.log(data.list); // 有数据
-    let blogsList = blogs.concat(data.list);
-    console.log(blogs); // 没数据
+    setLoading(false);
+    let blogsList = data.list;
     setPageModel(data.page);
     setBlogs(blogsList);
   };
 
   return (
     <div>
-      {blogs.map((item) => (
-        <BlogCardLayout key={item.id} blog={item} />
-      ))}
-      {pageModel && (
+      {!loading &&
+        blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
+      {pageModel && !loading && (
         <Pagination
           count={pageModel.maxPage}
           page={pageModel.currentPage}
           defaultPage={1}
           onChange={async (event, page) => {
-            await fetchData(page);
+            if (currPage != page) {
+              await fetchData(page);
+            }
           }}
         />
       )}
