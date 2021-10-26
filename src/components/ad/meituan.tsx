@@ -27,13 +27,14 @@ const MeituanCoupon: React.FC = () => {
   if (mtData) {
     return (
       <>
-        <MyCard title={'美团外卖券'}>
+        <MyCard title={'美团外卖优惠券'} tag={'广告赞助'}>
           <div>
-            <div>
+            <span>
+              {' '}
               每天都可以领美团优惠券,大约每单可以优惠4块钱,直接点击下方链接领取或者手机扫码下方二维码
-            </div>
+            </span>
             <div>
-              <a href={mtData.data}>前往领券</a>
+              <a href={mtData.data}>点我领取</a>
             </div>
             <SizedBox height={12} />
             <SizedBox>

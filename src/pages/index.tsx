@@ -15,7 +15,7 @@ export default function IndexPage() {
       rightContainer={
         <>
           <HomeAbout />
-          <WeChatApp />
+          {/*<WeChatApp />*/}
           <MeituanCoupon />
           <WebSiteResource />
         </>

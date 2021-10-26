@@ -81,7 +81,7 @@ const BlogDetailPage: React.FC = () => {
         >
           {state && <div>加载中</div>}
 
-          <div>
+          <div style={{ padding: 0 }}>
             <Typography
               variant={'h3'}
               style={{ fontWeight: 800, marginBottom: 32, marginTop: 16 }}

@@ -1,2 +1,2 @@
 export const serverHost = 'http://localhost';
-export const defaultElevation = 12; // 阴影大小
+export const defaultElevation = 0; // 阴影大小
