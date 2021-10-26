@@ -23,11 +23,10 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
   const fetchData = async (page: number) => {
     const data = await request(page);
     console.log(data.list); // 有数据
-    let blogsList = data.list;
-    blogs.concat(blogsList);
+    let blogsList = blogs.concat(data.list);
     console.log(blogs); // 没数据
     setPageModel(data.page);
-    setBlogs(blogs);
+    setBlogs(blogsList);
   };
 
   return (
@@ -39,6 +38,7 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
         <Pagination
           count={pageModel.maxPage}
           page={pageModel.currentPage}
+          defaultPage={1}
           onChange={async (event, page) => {
             await fetchData(page);
           }}
