@@ -5,7 +5,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import { BlogData } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
+import { User } from '@geist-ui/react';
+import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 
 //  博客布局,简单版本
 const SimpleBlogListItem: React.FC<{ blog: BlogData }> = ({ blog }) => {
@@ -21,7 +22,7 @@ const SimpleBlogListItem: React.FC<{ blog: BlogData }> = ({ blog }) => {
             {blog.title}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary">
-            {blog.dateString}
+            <User src="/images/avatar.png" name="Witt" /> {blog.dateString}
           </Typography>
           <Typography variant="subtitle1" color="primary">
             阅读全文

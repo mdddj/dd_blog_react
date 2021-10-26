@@ -21,7 +21,7 @@ const MyCard: React.FC<{ title: string; footChildren?: React.ReactNode }> = ({
   footChildren,
 }) => {
   return (
-    <Paper elevation={5} style={{ marginTop: 30 }}>
+    <Paper style={{ marginTop: 30 }}>
       <Card>
         <CardContent style={{ padding: 0 }}>
           <div style={{ padding: 16 }}>
