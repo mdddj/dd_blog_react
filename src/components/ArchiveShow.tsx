@@ -1,15 +1,16 @@
 import React from 'react';
-import { Result } from '@/model/Result';
 import { Link } from '@material-ui/core';
 import styles from '../widgets/widget.less';
 import { useRequest } from '@umijs/hooks';
+import { blogApi } from '@/util/request';
 import {
   ArchiveModel,
   MonthsCount,
   Tag,
-} from 'dd_server_api/apis/model/ArchiveModel';
-import { blogApi } from '@/util/request';
-import { Category } from 'dd_server_api/apis/model/result/BlogPushNewResultData';
+} from 'dd_server_api_web/apis/model/ArchiveModel';
+import { Result } from 'dd_server_api_web/apis/utils/ResultUtil';
+import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
+
 /// 显示类型
 export enum ArchiveShowType {
   Category, // 分类
@@ -19,12 +20,20 @@ export enum ArchiveShowType {
 }
 
 /// 分类,归档,标签的显示组件
-const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
-  title,
-  type,
-}) => {
-  const { loading, data, error } = useRequest<Result<ArchiveModel>>(() =>
-    blogApi().getArchives(),
+const ArchiveShow: React.FC<{
+  title: string;
+  type: ArchiveShowType;
+  onLoad?: (datas: ArchiveModel | undefined) => void;
+}> = ({ title, type, onLoad }) => {
+  const { loading, data, error } = useRequest<Result<ArchiveModel>>(
+    () => blogApi().getArchives(),
+    {
+      onSuccess: (data1: Result<ArchiveModel>, params) => {
+        if (onLoad) {
+          onLoad(data1.data);
+        }
+      },
+    },
   );
 
   if (loading) {
@@ -38,9 +47,9 @@ const ArchiveShow: React.FC<{ title: string; type: ArchiveShowType }> = ({
   if (data?.state !== 200) {
     return <div>加载失败:{data?.message}</div>;
   }
-  const categoryList = data?.data.categoryList;
-  const dates = data?.data.monthsCounts;
-  const tags = data?.data.tags;
+  const categoryList = data?.data?.categoryList ?? [];
+  const dates = data?.data?.monthsCounts ?? [];
+  const tags = data?.data?.tags ?? [];
 
   return (
     <>

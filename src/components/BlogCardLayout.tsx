@@ -16,7 +16,7 @@ import ava from '../assets/ava.jpg';
  */
 const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
   return (
-    <Paper elevation={1} className={styles.blogWrap}>
+    <Paper elevation={0} className={styles.blogWrap}>
       <div className={styles.blogRoot}>
         <div className={styles.blogWrap}>
           <CardContent>

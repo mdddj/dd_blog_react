@@ -21,10 +21,10 @@ const MyCard: React.FC<{ title: string; footChildren?: React.ReactNode }> = ({
   footChildren,
 }) => {
   return (
-    <Paper style={{ marginTop: 30 }}>
-      <Card>
+    <Paper style={{ marginTop: 30 }} elevation={0}>
+      <Card elevation={0}>
         <CardContent style={{ padding: 0 }}>
-          <div style={{ padding: 16 }}>
+          <div style={{ padding: 8 }}>
             <Typography
               variant={'h5'}
               color={'text.secondary'}
@@ -33,8 +33,7 @@ const MyCard: React.FC<{ title: string; footChildren?: React.ReactNode }> = ({
               {title}
             </Typography>
           </div>
-          <Divider />
-          <div style={{ padding: 16 }}>{children}</div>
+          <div style={{ padding: 8 }}>{children}</div>
         </CardContent>
         {footChildren && <CardActions>{footChildren}</CardActions>}
       </Card>
