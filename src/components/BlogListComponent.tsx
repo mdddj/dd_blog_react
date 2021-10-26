@@ -22,7 +22,10 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
   // 加载博客数据
   const fetchData = async (page: number) => {
     const data = await request(page);
-    blogs.concat(data.list);
+    console.log(data.list); // 有数据
+    let blogsList = data.list;
+    blogs.concat(blogsList);
+    console.log(blogs); // 没数据
     setPageModel(data.page);
     setBlogs(blogs);
   };
@@ -33,7 +36,13 @@ const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
         <BlogCardLayout key={item.id} blog={item} />
       ))}
       {pageModel && (
-        <Pagination count={pageModel.maxPage} page={pageModel.currentPage} />
+        <Pagination
+          count={pageModel.maxPage}
+          page={pageModel.currentPage}
+          onChange={async (event, page) => {
+            await fetchData(page);
+          }}
+        />
       )}
     </div>
   );
