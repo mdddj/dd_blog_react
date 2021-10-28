@@ -1,49 +1,47 @@
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
-import React, { useState } from 'react';
-import { useMount } from '@umijs/hooks';
+import React from 'react';
 import BlogCardLayout from '@/components/BlogCardLayout';
-import { Page, PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
+import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { Pagination } from '@material-ui/core';
 
 type BlogListParams = {
-  request: (page: number) => Promise<Page<BlogData>>;
+  /// 要显示的博客列表
+  blogs: BlogData[];
+
+  /// 分页数据
+  pager: PagerModel | undefined;
+
+  /// 页面被切换回调
+  onPageChange: (page: number) => Promise<void>;
+
+  /// 标题
+  title?: string;
 };
 
 /// 博客列表的组件
-const BlogListComponent: React.FC<BlogListParams> = ({ request }) => {
-  const [currPage, setCurrPage] = useState<number>(1);
-  const [blogs, setBlogs] = useState<BlogData[]>([]);
-  const [pageModel, setPageModel] = useState<PagerModel>();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useMount(async () => {
-    await fetchData(currPage);
-  });
-
-  // 加载博客数据
-  const fetchData = async (page: number) => {
-    setCurrPage(page);
-    setLoading(true);
-    const data = await request(page);
-    setLoading(false);
-    let blogsList = data.list;
-    setPageModel(data.page);
-    setBlogs(blogsList);
-  };
-
+const BlogListComponent: React.FC<BlogListParams> = ({
+  blogs,
+  pager,
+  onPageChange,
+  title,
+}) => {
   return (
     <div>
-      {!loading &&
-        blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
-      {pageModel && !loading && (
+      {/*博客列表*/}
+      {blogs.map((item) => (
+        <BlogCardLayout key={item.id} blog={item} />
+      ))}
+
+      {/*分页操作区域*/}
+      {pager && (
         <div style={{ marginTop: 20 }}>
           <Pagination
-            count={pageModel.maxPage}
-            page={pageModel.currentPage}
+            count={pager.maxPage}
+            page={pager.currentPage}
             defaultPage={1}
             onChange={async (event, page) => {
-              if (currPage != page) {
-                await fetchData(page);
+              if (pager?.currentPage != page) {
+                await onPageChange(page);
               }
             }}
           />
