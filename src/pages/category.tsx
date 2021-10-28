@@ -8,6 +8,7 @@ import { blogApi } from '@/util/request';
 import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
+import { Skeleton } from '@mui/material';
 
 /**
  * 分类页面
@@ -15,9 +16,6 @@ import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
  */
 const CategoryPage: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
-
-  /// 存放分类集合
-  const [cates, setCates] = useState<Category[]>([]);
 
   /// 存放博客列表的数据
   const [blogs, setBlogs] = useState<BlogData[]>([]);
@@ -64,6 +62,15 @@ const CategoryPage: React.FC = () => {
             />
           </Grid>
           <Grid item xs={8} md={8} xl={9}>
+            {/*标题*/}
+            {currentCategory && <h1>{currentCategory?.name}</h1>}
+
+            {!loaded && (
+              <>
+                <Skeleton />
+                <Skeleton animation={'pulse'} />
+              </>
+            )}
             {loaded && (
               <BlogListComponent
                 blogs={blogs}
@@ -71,7 +78,6 @@ const CategoryPage: React.FC = () => {
                   await fetchBlogsData(page, currentCategory!.id);
                 }}
                 pager={pager}
-                title={currentCategory?.name}
               />
             )}
           </Grid>

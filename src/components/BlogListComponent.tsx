@@ -14,9 +14,6 @@ type BlogListParams = {
 
   /// 页面被切换回调
   onPageChange: (page: number) => Promise<void>;
-
-  /// 标题
-  title?: string;
 };
 
 /// 博客列表的组件
@@ -24,15 +21,11 @@ const BlogListComponent: React.FC<BlogListParams> = ({
   blogs,
   pager,
   onPageChange,
-  title,
 }) => {
   console.log(pager);
 
   return (
     <div>
-      {/*标题*/}
-      {title && <h1>{title}</h1>}
-
       {/*博客列表*/}
       {blogs.map((item) => (
         <BlogCardLayout key={item.id} blog={item} />
