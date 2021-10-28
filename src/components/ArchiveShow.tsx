@@ -24,7 +24,8 @@ const ArchiveShow: React.FC<{
   title: string;
   type: ArchiveShowType;
   onLoad?: (datas: ArchiveModel | undefined) => void;
-}> = ({ title, type, onLoad }) => {
+  onCategorySelect?: (category: Category) => void;
+}> = ({ title, type, onLoad, onCategorySelect }) => {
   const { loading, data, error } = useRequest<Result<ArchiveModel>>(
     () => blogApi().getArchives(),
     {
@@ -59,7 +60,14 @@ const ArchiveShow: React.FC<{
       <div>
         {type == ArchiveShowType.Category &&
           categoryList?.map((item: Category) => (
-            <ArchiveItem value={item.name} key={item.id} />
+            <div
+              key={item.id}
+              onClick={() => {
+                onCategorySelect && onCategorySelect(item);
+              }}
+            >
+              <ArchiveItem value={item.name} />
+            </div>
           ))}
         {type == ArchiveShowType.Archive &&
           dates?.map((item: MonthsCount) => (
@@ -77,7 +85,14 @@ const ArchiveShow: React.FC<{
         <div>
           <div className={styles.title}>分类</div>
           {categoryList?.map((item: Category) => (
-            <ArchiveItem value={item.name} key={item.id} />
+            <div
+              key={item.id}
+              onClick={() => {
+                onCategorySelect && onCategorySelect(item);
+              }}
+            >
+              <ArchiveItem value={item.name} />
+            </div>
           ))}
 
           <div className={styles.title}>归档</div>

@@ -12,17 +12,15 @@ export default function IndexPage() {
     <BaseLayout
       appbarCurrent={'index'}
       rightContainer={
-        <KeepAlive>
+        <>
           <HomeAbout />
           {/*<WeChatApp />*/}
           <MeituanCoupon />
           <WebSiteResource />
-        </KeepAlive>
+        </>
       }
     >
-      <KeepAlive>
-        <IndexHomeBlogList />
-      </KeepAlive>
+      <IndexHomeBlogList />
     </BaseLayout>
   );
 }

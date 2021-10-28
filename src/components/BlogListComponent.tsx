@@ -3,6 +3,7 @@ import React from 'react';
 import BlogCardLayout from '@/components/BlogCardLayout';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { Pagination } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
 type BlogListParams = {
   /// 要显示的博客列表
@@ -25,8 +26,13 @@ const BlogListComponent: React.FC<BlogListParams> = ({
   onPageChange,
   title,
 }) => {
+  console.log(pager);
+
   return (
     <div>
+      {/*标题*/}
+      {title && <h1>{title}</h1>}
+
       {/*博客列表*/}
       {blogs.map((item) => (
         <BlogCardLayout key={item.id} blog={item} />
@@ -37,10 +43,10 @@ const BlogListComponent: React.FC<BlogListParams> = ({
         <div style={{ marginTop: 20 }}>
           <Pagination
             count={pager.maxPage}
-            page={pager.currentPage}
+            page={pager.currentPage + 1}
             defaultPage={1}
             onChange={async (event, page) => {
-              if (pager?.currentPage != page) {
+              if (pager?.currentPage != page - 1) {
                 await onPageChange(page);
               }
             }}
