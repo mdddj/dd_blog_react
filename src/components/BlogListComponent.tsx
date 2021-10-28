@@ -35,6 +35,10 @@ const BlogListComponent: React.FC<BlogListParams> = ({
       {pager && (
         <div style={{ marginTop: 20 }}>
           <Pagination
+            sx={{
+              mx: 'auto',
+              textAlign: 'center',
+            }}
             count={pager.maxPage}
             page={pager.currentPage + 1}
             defaultPage={1}
