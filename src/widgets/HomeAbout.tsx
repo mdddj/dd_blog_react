@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './widget.less';
-import { Divider, IconButton, Paper, Stack } from '@material-ui/core';
+import { IconButton, Paper, Stack } from '@material-ui/core';
 import { GithubFilled, QqCircleFilled, WechatFilled } from '@ant-design/icons';
 
 // 首页关于我的小卡片
