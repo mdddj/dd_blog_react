@@ -9,6 +9,7 @@ import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultDa
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { Skeleton } from '@mui/material';
+import BaseLayout from '@/components/BaseLayout';
 
 /**
  * 分类页面
@@ -40,50 +41,46 @@ const CategoryPage: React.FC = () => {
   };
 
   return (
-    <>
-      <BlogAppBar current="category" />
+    <BaseLayout
+      appbarCurrent={'category'}
+      rightContainer={
+        <>
+          <ArchiveShow
+            title={'分类'}
+            type={ArchiveShowType.Category}
+            onLoad={async (datas) => {
+              if (datas && datas.categoryList.length != 0) {
+                setCurrentCategory(datas.categoryList[0]);
+                await fetchBlogsData(1, datas.categoryList[0].id);
+              }
+            }}
+            onCategorySelect={async (category) => {
+              setCurrentCategory(category);
+              await fetchBlogsData(1, category.id);
+            }}
+          />
+        </>
+      }
+    >
+      {/*标题*/}
+      {currentCategory && <h1>{currentCategory?.name}</h1>}
 
-      <Container maxWidth={'lg'} className={styles.bodyCard}>
-        <Grid container spacing={2}>
-          <Grid item xs={4} md={4} xl={3}>
-            <ArchiveShow
-              title={'分类'}
-              type={ArchiveShowType.Category}
-              onLoad={async (datas) => {
-                if (datas && datas.categoryList.length != 0) {
-                  setCurrentCategory(datas.categoryList[0]);
-                  await fetchBlogsData(1, datas.categoryList[0].id);
-                }
-              }}
-              onCategorySelect={async (category) => {
-                setCurrentCategory(category);
-                await fetchBlogsData(1, category.id);
-              }}
-            />
-          </Grid>
-          <Grid item xs={8} md={8} xl={9}>
-            {/*标题*/}
-            {currentCategory && <h1>{currentCategory?.name}</h1>}
-
-            {!loaded && (
-              <>
-                <Skeleton />
-                <Skeleton animation={'pulse'} />
-              </>
-            )}
-            {loaded && (
-              <BlogListComponent
-                blogs={blogs}
-                onPageChange={async (page) => {
-                  await fetchBlogsData(page, currentCategory!.id);
-                }}
-                pager={pager}
-              />
-            )}
-          </Grid>
-        </Grid>
-      </Container>
-    </>
+      {!loaded && (
+        <>
+          <Skeleton />
+          <Skeleton animation={'pulse'} />
+        </>
+      )}
+      {loaded && (
+        <BlogListComponent
+          blogs={blogs}
+          onPageChange={async (page) => {
+            await fetchBlogsData(page, currentCategory!.id);
+          }}
+          pager={pager}
+        />
+      )}
+    </BaseLayout>
   );
 };
 

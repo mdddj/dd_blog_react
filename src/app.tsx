@@ -1,10 +1,10 @@
 import { ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
-import { pink } from '@material-ui/core/colors';
+import { purple } from '@material-ui/core/colors';
 
 const theme = createTheme({
   palette: {
-    primary: pink,
+    primary: purple,
   },
   typography: {
     fontFamily: 'LXGW WenKai',

@@ -5,4 +5,6 @@ export default [
   { path: '/archive', component: '@/pages/archive' },
   { path: '/tags', component: '@/pages/tag' },
   { path: '/simple', component: '@/pages/text' },
+  { path: '/login', component: '@/pages/login' },
+  { path: '/r', component: '@/pages/write' },
 ];
