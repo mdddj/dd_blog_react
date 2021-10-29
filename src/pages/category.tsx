@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BlogAppBar from '@/components/AppBar';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, Skeleton } from '@material-ui/core';
 import styles from './index.less';
 import ArchiveShow, { ArchiveShowType } from '@/components/ArchiveShow';
 import BlogListComponent from '@/components/BlogListComponent';
@@ -8,7 +8,6 @@ import { blogApi } from '@/util/request';
 import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
-import { Skeleton } from '@mui/material';
 import BaseLayout from '@/components/BaseLayout';
 
 /**
