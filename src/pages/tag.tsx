@@ -29,7 +29,7 @@ const TagPage: React.FC = () => {
     setLoaded(false);
     const result = await blogApi().getBlogsByTagId(id, {
       page: page,
-      pageSize: 3,
+      pageSize: 10,
     });
     setPager(result.data?.page);
     let data = result.data?.list ?? [];

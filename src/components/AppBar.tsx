@@ -70,7 +70,11 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
           >
             标签
           </Button>
-          <Button color="inherit" onClick={toAbout}>
+          <Button
+            color={current && current === 'about' ? undefined : 'inherit'}
+            variant={current && current === 'about' ? 'contained' : 'text'}
+            onClick={toAbout}
+          >
             关于
           </Button>
           <Button color="inherit">Github</Button>

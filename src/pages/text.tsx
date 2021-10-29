@@ -9,6 +9,7 @@ import { message } from 'antd';
 import { SimpleValueModel } from '@/model/SimpleValueModel';
 import { blogApi } from '@/util/request';
 import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
+import { Card, CardContent, CircularProgress } from '@mui/material';
 
 /**
  * 特殊文本页面
@@ -16,6 +17,7 @@ import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
  */
 const SimpleTextView: React.FC = () => {
   const [simpleValue, setSimpleValue] = useState<SimpleValueModel>();
+  const [loading, setLoading] = useState(true);
 
   const {
     query: { name },
@@ -24,6 +26,7 @@ const SimpleTextView: React.FC = () => {
   // 加载数据
   const fetchData = async () => {
     const result = await blogApi().getTextByName(name as string);
+    setLoading(false);
     if (responseIsSuccess(result)) {
       setSimpleValue(result.data);
     } else {
@@ -40,9 +43,14 @@ const SimpleTextView: React.FC = () => {
 
   return (
     <>
-      <BlogAppBar />
+      <BlogAppBar current={'about'} />
       <Container maxWidth={'lg'} style={{ marginTop: 30 }}>
-        {simpleValue && <BlogPreview content={simpleValue.context} />}
+        <Card>
+          <CardContent>
+            {loading && <CircularProgress />}
+            {simpleValue && <BlogPreview content={simpleValue.context} />}
+          </CardContent>
+        </Card>
       </Container>
     </>
   );
