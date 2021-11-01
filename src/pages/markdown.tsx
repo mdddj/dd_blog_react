@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
-import MdEditor from 'react-markdown-editor-lite';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Button, Input, Stack, TextField } from '@material-ui/core';
-import { blogApi } from '@/util/request';
+import { Button, Stack, TextField } from '@material-ui/core';
 import Editor from 'react-markdown-editor-lite';
 import CustomImageUpload from '@/components/plugin/CustomImageUpload';
+import CustomAuthTip from '@/components/plugin/CustomAuthTip';
+import FlutterPlugin from '@/components/plugin/FlutterPlugin';
 
 Editor.use(CustomImageUpload);
+Editor.use(FlutterPlugin);
+Editor.use(CustomAuthTip);
 
 /// 发布博客页面
 const MarkdownPage: React.FC = () => {
