@@ -9,10 +9,10 @@ import {
   Stack,
   TextField,
 } from '@material-ui/core';
-import { blogApi } from '@/util/request';
-import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
-import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
-import { Loading, useToasts } from '@geist-ui/react';
+import { blogApi, DefaultResult } from '@/util/request';
+import { Loading } from '@geist-ui/react';
+import { Result } from 'dd_server_api_web/apis/utils/ResultUtil';
+import ResultMessageWidget from '@/widgets/ResultMessageWidget';
 
 /// 创建新分类的组件
 const CreateCategoruWidget: React.FC = ({ children }) => {
@@ -22,7 +22,7 @@ const CreateCategoruWidget: React.FC = ({ children }) => {
   const [logo, setLogo] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [submitIng, setSubmitIng] = useState<boolean>(false);
-  const [, setToast] = useToasts();
+  const [serverResult, setServerResult] = useState<Result<any>>(DefaultResult);
 
   return (
     <Box>
@@ -37,7 +37,7 @@ const CreateCategoruWidget: React.FC = ({ children }) => {
       </div>
       {/*  创建分类的弹窗  */}
       <Dialog open={show} onClose={() => setShow(false)}>
-        <DialogTitle>创建分类</DialogTitle>
+        <DialogTitle>{submitIng ? '创建分类中' : '创建分类'}</DialogTitle>
         <DialogContent>
           <Box sx={{ p: 0 }} width={500}>
             <Stack spacing={2}>
@@ -61,6 +61,7 @@ const CreateCategoruWidget: React.FC = ({ children }) => {
                 multiline={true}
                 rows={4}
               />
+              <ResultMessageWidget result={serverResult} />
             </Stack>
           </Box>
         </DialogContent>
@@ -80,18 +81,16 @@ const CreateCategoruWidget: React.FC = ({ children }) => {
             <Button
               onClick={async () => {
                 setSubmitIng(true);
+                setServerResult(DefaultResult);
                 const result = await blogApi().saveAndUpdateBlogCategory({
                   createTime: Date.parse(new Date().toDateString()),
-                  id: 0,
+                  id: -1,
                   intro: desc,
                   logo: logo,
                   name: name,
                 });
+                setServerResult(result);
                 setSubmitIng(false);
-                setToast({
-                  type: result.state === 200 ? 'success' : 'error',
-                  text: result.message,
-                });
               }}
             >
               创建

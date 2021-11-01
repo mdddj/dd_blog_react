@@ -16,6 +16,7 @@ import { blogApi, getAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useState } from 'react';
+import { Loading } from '@geist-ui/react';
 
 /**
  * 通用导航栏组件
@@ -159,14 +160,15 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
             >
               关于
             </Button>
-            {!user && loading && (
+            {!user && !loading && (
               <Button
                 color="inherit"
                 onClick={loading ? undefined : () => history.push('/login')}
               >
-                {loading ? '登录中' : '登录'}
+                登录
               </Button>
             )}
+            {loading && <Loading />}
             {user && (
               <Avatar src={user.picture} onClick={handleProfileMenuOpen} />
             )}
