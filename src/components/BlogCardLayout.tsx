@@ -22,7 +22,11 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
           <CardContent>
             <div className={styles.blogTitle}>{blog.title}</div>
             <div className={styles.blogDataString}>
-              <User src={ava} name="梁典典" style={{ marginLeft: -12 }} />{' '}
+              <User
+                src={'https://i.imgur.com/kbYvbMt.jpeg'}
+                name="梁典典"
+                style={{ marginLeft: -12 }}
+              />{' '}
               <Tag type="lite">{blog.category.name}</Tag> · {blog.dateString}
             </div>
           </CardContent>

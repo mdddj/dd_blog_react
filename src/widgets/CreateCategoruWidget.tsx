@@ -13,6 +13,7 @@ import { blogApi, DefaultResult } from '@/util/request';
 import { Loading } from '@geist-ui/react';
 import { Result } from 'dd_server_api_web/apis/utils/ResultUtil';
 import ResultMessageWidget from '@/widgets/ResultMessageWidget';
+import UserStateTipWidget from '@/widgets/UserStateTipWidget';
 
 /// 创建新分类的组件
 const CreateCategoruWidget: React.FC = ({ children }) => {
@@ -37,6 +38,7 @@ const CreateCategoruWidget: React.FC = ({ children }) => {
       </div>
       {/*  创建分类的弹窗  */}
       <Dialog open={show} onClose={() => setShow(false)}>
+        <UserStateTipWidget />
         <DialogTitle>{submitIng ? '创建分类中' : '创建分类'}</DialogTitle>
         <DialogContent>
           <Box sx={{ p: 0 }} width={500}>

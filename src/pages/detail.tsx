@@ -96,7 +96,11 @@ const BlogDetailPage: React.FC = () => {
                 marginBottom: 38,
               }}
             >
-              <Avatar alt="梁典典" src={ava} sx={{ width: 36, height: 36 }} />
+              <Avatar
+                alt="梁典典"
+                src={'https://i.imgur.com/kbYvbMt.jpeg'}
+                sx={{ width: 36, height: 36 }}
+              />
 
               <Typography
                 style={{

@@ -36,9 +36,7 @@ const MaterialBlogCard: React.FC<{ blog: BlogData }> = ({ blog }) => {
             <Avatar
               sx={{ bgcolor: red[500] }}
               aria-label="recipe"
-              src={
-                'https://static.saintic.com/picbed/huang/2021/09/08/1631083085280.jpg'
-              }
+              src={'https://i.imgur.com/kbYvbMt.jpeg'}
             />
           }
           title={blog.author}
