@@ -1,6 +1,6 @@
-import { PluginComponent } from 'react-markdown-editor-lite';
+import { PluginComponent, PluginProps } from 'react-markdown-editor-lite';
 import * as React from 'react';
-import { CloudUpload } from '@material-ui/icons';
+import UploadImagePanel from '@/widgets/UploadImagePanel';
 
 export default class CustomImageUpload extends PluginComponent {
   // 这里定义插件名称，注意不能重复
@@ -9,11 +9,6 @@ export default class CustomImageUpload extends PluginComponent {
   static align = 'left';
 
   render() {
-    return (
-      <CloudUpload
-        className={'button button-type-clear'}
-        style={{ fontSize: 16 }}
-      />
-    );
+    return <UploadImagePanel />;
   }
 }
