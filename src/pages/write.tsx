@@ -4,11 +4,13 @@ import BaseLayout from '@/components/BaseLayout';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import {
   Autocomplete,
+  Avatar,
   Box,
   Button,
   createFilterOptions,
   Stack,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
@@ -16,6 +18,7 @@ import { ArchiveModel, Tag } from 'dd_server_api_web/apis/model/ArchiveModel';
 import { useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
+import UserStateTipWidget from '@/widgets/UserStateTipWidget';
 
 const filter = createFilterOptions<Category>();
 
@@ -64,99 +67,110 @@ const WriteBlogPage: React.FC = () => {
 
   return (
     <BaseLayout full={true}>
-      {/*标题输入区域*/}
-      <TextField
-        id="standard-basic"
-        label="文章标题"
-        variant="standard"
-        fullWidth={true}
-        onChange={(event) => {
-          console.log(event.target.value);
-          setTitle(event.target.value);
-        }}
-      />
+      <Box sx={{ p: 2 }}>
+        <UserStateTipWidget />
 
-      {/*选择分类或者标签区域*/}
-      <Stack spacing={3} direction={'row'} style={{ padding: '12px 0' }}>
-        {/*分类*/}
-        <Autocomplete<Category>
-          disablePortal
-          id="combo-box-demo"
-          options={categorys}
-          sx={{ width: 300 }}
-          getOptionLabel={(option) => option.name}
-          renderOption={(props, option) => (
-            <Box
-              component="li"
-              sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-              {...props}
-            >
-              <img
-                loading="lazy"
-                width="20"
-                src={option.logo}
-                srcSet={option.logo}
-                alt=""
-              />
-              {option.name}
-            </Box>
-          )}
-          renderInput={(params) => (
-            <TextField {...params} variant="standard" label="文章分类" />
-          )}
-          onChange={(e, v, _, __) => {
-            setSelectCategory(v as Category);
-          }}
-          filterOptions={(options, params) => {
-            /// 如果没有一个分类的时候，通过接口创建一个新的分类
-            const filted = filter(options, params);
-            if (params.inputValue != '') {
-              filted.push({
-                createTime: Date.parse(new Date().toDateString()),
-                id: -1,
-                intro: '',
-                logo: '',
-                name: `${params.inputValue}`,
-              });
-            }
-            return filted;
-          }}
-        />
-        {/*标签*/}
-        <Autocomplete<Tag>
-          id="tags-standard"
-          options={tags}
-          // @ts-ignore
-          multiple
+        {/*标题输入区域*/}
+        <TextField
+          id="standard-basic"
+          label="文章标题"
+          variant="standard"
           fullWidth={true}
-          getOptionLabel={(option) => option.name}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="添加文章标签"
-              placeholder="标签"
-            />
-          )}
-          onChange={(e, v, _, __) => {
-            let tagNames = (v as unknown as Tag[]).map((value) => value.name);
-            setSelectTags(tagNames);
+          onChange={(event) => {
+            console.log(event.target.value);
+            setTitle(event.target.value);
           }}
         />
-      </Stack>
-      {/*正文编辑区域*/}
-      <MdEditor
-        style={{ height: '800px' }}
-        renderHTML={(text) => <BlogPreview content={text} />}
-        onChange={handleEditorChange}
-      />
-      <Button
-        onClick={() => {
-          submit();
-        }}
-      >
-        提交
-      </Button>
+
+        {/*选择分类或者标签区域*/}
+        <Stack spacing={3} direction={'row'} style={{ padding: '12px 0' }}>
+          {/*分类*/}
+          <Autocomplete<Category>
+            disablePortal
+            id="combo-box-demo"
+            options={categorys}
+            sx={{ width: 300 }}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option) => (
+              <Box
+                component="li"
+                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                {...props}
+              >
+                <Stack direction={'row'} spacing={2}>
+                  <span>
+                    {option.logo && option.logo != '' ? (
+                      <Avatar
+                        src={option.logo}
+                        sx={{ width: 30, height: 30 }}
+                      />
+                    ) : (
+                      <Avatar sx={{ width: 30, height: 30, fontSize: 13 }}>
+                        {option.name[0]}
+                      </Avatar>
+                    )}
+                  </span>
+                  <Typography>{option.name}</Typography>
+                </Stack>
+              </Box>
+            )}
+            renderInput={(params) => (
+              <TextField {...params} variant="standard" label="文章分类" />
+            )}
+            onChange={(e, v, _, __) => {
+              setSelectCategory(v as Category);
+            }}
+            filterOptions={(options, params) => {
+              /// 如果没有一个分类的时候，通过接口创建一个新的分类
+              const filted = filter(options, params);
+              if (params.inputValue != '') {
+                filted.push({
+                  createTime: Date.parse(new Date().toDateString()),
+                  id: -1,
+                  intro: '',
+                  logo: '',
+                  name: `${params.inputValue}`,
+                });
+              }
+              return filted;
+            }}
+          />
+          {/*标签*/}
+          <Autocomplete<Tag>
+            id="tags-standard"
+            options={tags}
+            // @ts-ignore
+            multiple
+            fullWidth={true}
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label="添加文章标签"
+                placeholder="标签"
+              />
+            )}
+            onChange={(e, v, _, __) => {
+              let tagNames = (v as unknown as Tag[]).map((value) => value.name);
+              setSelectTags(tagNames);
+            }}
+          />
+        </Stack>
+        {/*正文编辑区域*/}
+        <MdEditor
+          style={{ height: '800px' }}
+          renderHTML={(text) => <BlogPreview content={text} />}
+          onChange={handleEditorChange}
+        />
+        <Button
+          onClick={() => {
+            submit();
+          }}
+        >
+          提交
+        </Button>
+      </Box>
     </BaseLayout>
   );
 };

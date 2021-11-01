@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box } from '@material-ui/core';
+import { Alert, Box } from '@material-ui/core';
 import React, { useState } from 'react';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useMount } from '@umijs/hooks';
@@ -12,7 +12,7 @@ const UserStateTipWidget: React.FC = () => {
   /// 已登录的用户信息
   const [user, setUser] = useState<User | null>(null);
   /// 用户是否已经登录
-  const userIsLoing = loading ? false : user != null;
+  // const userIsLoing = loading ? false : user != null;
   /// 用户的管理权限
   const roles = user?.roles.map((value) => value.name);
 
@@ -32,7 +32,7 @@ const UserStateTipWidget: React.FC = () => {
     setLoading(false);
   });
 
-  if (loading || hasAdminRole) {
+  if (!loading || hasAdminRole) {
     return <></>;
   }
 

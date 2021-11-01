@@ -9,7 +9,6 @@ const theme = createTheme({
   typography: {
     fontFamily: 'LXGW WenKai',
   },
-  components: {},
 });
 
 export function rootContainer(container: JSX.Element): JSX.Element {
