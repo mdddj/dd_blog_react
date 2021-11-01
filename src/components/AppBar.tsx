@@ -11,8 +11,6 @@ import {
   MenuItem,
   Stack,
 } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
-import { IconButton } from '@mui/material';
 import { useMount } from '@umijs/hooks';
 import { blogApi, getAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
@@ -27,7 +25,11 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
   /// 存放用户信息，以此来判断用户是否登录成功
   const [user, setUser] = useState<User>();
 
+  /// 菜单的el节点
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>();
+
+  /// 加载中
+  const [loading, setLoading] = useState<boolean>(false);
 
   /// 当点击头像后弹出更多操作的菜单
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -71,13 +73,13 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'right',
       }}
       id={profilMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'right',
       }}
       open={isMenuOpen}
@@ -98,12 +100,14 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
   const fetchUserInfo = () => {
     let token = getAccessToken();
     if (token.length != 0) {
+      setLoading(true);
       blogApi()
         .getUserInfo(token)
         .then((r) => {
           successResultHandle<User>(r, (data) => {
             setUser(data);
           });
+          setLoading(false);
         });
     }
   };
@@ -155,9 +159,12 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
             >
               关于
             </Button>
-            {!user && (
-              <Button color="inherit" onClick={() => history.push('/login')}>
-                登录
+            {!user && loading && (
+              <Button
+                color="inherit"
+                onClick={loading ? undefined : () => history.push('/login')}
+              >
+                {loading ? '登录中' : '登录'}
               </Button>
             )}
             {user && (

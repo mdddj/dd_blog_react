@@ -2,14 +2,22 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import BaseLayout from '@/components/BaseLayout';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Autocomplete, Box, Button, Stack, TextField } from '@material-ui/core';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  createFilterOptions,
+  Stack,
+  TextField,
+} from '@material-ui/core';
 import React, { useState } from 'react';
 import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultData';
 import { ArchiveModel, Tag } from 'dd_server_api_web/apis/model/ArchiveModel';
 import { useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
-import text from '@/pages/text';
+
+const filter = createFilterOptions<Category>();
 
 /// 发布博客页面
 const WriteBlogPage: React.FC = () => {
@@ -99,11 +107,26 @@ const WriteBlogPage: React.FC = () => {
           onChange={(e, v, _, __) => {
             setSelectCategory(v as Category);
           }}
+          filterOptions={(options, params) => {
+            /// 如果没有一个分类的时候，通过接口创建一个新的分类
+            const filted = filter(options, params);
+            if (params.inputValue != '') {
+              filted.push({
+                createTime: Date.parse(new Date().toDateString()),
+                id: -1,
+                intro: '',
+                logo: '',
+                name: `${params.inputValue}`,
+              });
+            }
+            return filted;
+          }}
         />
         {/*标签*/}
         <Autocomplete<Tag>
           id="tags-standard"
           options={tags}
+          // @ts-ignore
           multiple
           fullWidth={true}
           getOptionLabel={(option) => option.name}

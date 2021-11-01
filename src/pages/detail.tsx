@@ -83,7 +83,7 @@ const BlogDetailPage: React.FC = () => {
 
           <div style={{ padding: 0 }}>
             <Typography
-              variant={'h3'}
+              variant={'h4'}
               style={{ fontWeight: 800, marginBottom: 32, marginTop: 16 }}
             >
               {blog.title}

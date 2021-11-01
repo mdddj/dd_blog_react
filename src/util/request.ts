@@ -3,8 +3,8 @@ import TaokeApi from 'dd_server_api_web/apis/taoke';
 
 const MOOSE_REACT_LEARN_ACCESS_TOKEN = 'auth_token';
 
-const host = 'https://itbug.shop';
-// const host = 'http://localhost';
+// const host = 'https://itbug.shop';
+const host = 'http://localhost';
 /**
  * 淘客api接口
  */

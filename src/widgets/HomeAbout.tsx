@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './widget.less';
-import { IconButton, Paper, Stack } from '@material-ui/core';
+import {
+  IconButton,
+  Paper,
+  Popover,
+  Stack,
+  Typography,
+} from '@material-ui/core';
 import { GithubFilled, QqCircleFilled, WechatFilled } from '@ant-design/icons';
 
 // 首页关于我的小卡片
 const HomeAbout: React.FC = () => {
+  /// 弹窗的html节点
+  const [qqEl, setQqEl] = useState<HTMLButtonElement | null>(null);
+  /// qq号，微信号
+  const [number, setNumber] = useState<string>('');
+
+  const isOpen = Boolean(qqEl);
+  const id = isOpen ? 'qqPop' : undefined;
+
+  /// 跳转到github
   const toGithub = () => {
     window.location.href = 'https://github.com/mdddj';
   };
@@ -20,16 +35,43 @@ const HomeAbout: React.FC = () => {
         spacing={2}
         style={{ textAlign: 'center', marginTop: 12 }}
       >
-        <IconButton color={'info'}>
+        <IconButton
+          color={'info'}
+          onClick={(event) => {
+            setNumber('413153189');
+            setQqEl(event.currentTarget);
+          }}
+        >
           <QqCircleFilled />
         </IconButton>
-        <IconButton color="primary">
+
+        <IconButton
+          color="primary"
+          onClick={(event) => {
+            setNumber('flutter-null');
+            setQqEl(event.currentTarget);
+          }}
+        >
           <WechatFilled />
         </IconButton>
         <IconButton color="secondary" onClick={toGithub}>
           <GithubFilled />
         </IconButton>
       </Stack>
+
+      {/*qq号*/}
+      <Popover
+        open={isOpen}
+        id={id}
+        onClose={() => setQqEl(null)}
+        anchorEl={qqEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Typography>{number}</Typography>
+      </Popover>
     </Paper>
   );
 };

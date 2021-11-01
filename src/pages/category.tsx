@@ -9,6 +9,7 @@ import { Category } from 'dd_server_api_web/src/model/result/BlogPushNewResultDa
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
 import BaseLayout from '@/components/BaseLayout';
+import CreateCategoruWidget from '@/widgets/CreateCategoruWidget';
 
 /**
  * 分类页面
@@ -44,6 +45,11 @@ const CategoryPage: React.FC = () => {
       appbarCurrent={'category'}
       rightContainer={
         <>
+          {/*添加新分类的按钮*/}
+          <CreateCategoruWidget>
+            <span>创建分类</span>
+          </CreateCategoruWidget>
+
           <ArchiveShow
             title={'分类'}
             type={ArchiveShowType.Category}
