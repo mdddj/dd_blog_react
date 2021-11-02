@@ -9,14 +9,13 @@ const BootStrapAppbar: React.FC = () => {
         梁典典的博客
       </h5>
       <nav>
-        <a href="#">首页</a>
-        <a href="#">分类</a>
-        <a href="#">归档</a>
-        <a href="#">关于</a>
+        <a href="/">首页</a>
+        <a href="/category">分类</a>
+        <a href="/archive">归档</a>
+        <a href="/tags">标签</a>
+        <a href="/simple?name=about">关于</a>
       </nav>
-      <a className="btn btn-outline-primary" href="#">
-        登录
-      </a>
+      <a href="/login">登录</a>
     </div>
   );
 };
