@@ -166,13 +166,7 @@ const UploadImagePanel: React.FC = () => {
             {errorMsg != '' && (
               <div style={{ marginTop: 20, color: 'red' }}>{errorMsg}</div>
             )}
-            <SizedBox height={30} />
-            <Stack direction={'row'}>
-              <Button variant={'contained'} onClick={uploadSubmit}>
-                上传
-              </Button>
-              <Button onClick={reSet}>重置</Button>
-            </Stack>
+
             <SizedBox height={12} />
             {uploadIng && <Loading />}
             <ResultMessageWidget result={result} />
@@ -182,6 +176,14 @@ const UploadImagePanel: React.FC = () => {
                 {result.data?.url}
               </div>
             )}
+
+            <SizedBox height={30} />
+            <Stack direction={'row'}>
+              <Button variant={'contained'} onClick={uploadSubmit}>
+                上传
+              </Button>
+              <Button onClick={reSet}>重置</Button>
+            </Stack>
           </Stack>
         </Box>
       </Popover>

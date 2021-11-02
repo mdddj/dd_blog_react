@@ -3,14 +3,7 @@ import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import { history } from 'umi';
 import Typography from '@material-ui/core/Typography';
-import {
-  AppBar,
-  Avatar,
-  Button,
-  Menu,
-  MenuItem,
-  Stack,
-} from '@material-ui/core';
+import { AppBar, Avatar, Menu, MenuItem, Stack } from '@material-ui/core';
 import { useMount } from '@umijs/hooks';
 import { blogApi, getAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
@@ -125,48 +118,43 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
             spacing={2}
             sx={{ display: { xs: 'none', md: 'flex' } }}
           >
-            <Button
+            <span
               onClick={toIndex}
-              color={current && current === 'index' ? undefined : 'inherit'}
-              variant={current && current === 'index' ? 'contained' : 'text'}
+              color={current && current === 'index' ? undefined : 'blue'}
             >
               首页
-            </Button>
-            <Button
-              color={current && current === 'category' ? undefined : 'inherit'}
-              variant={current && current === 'category' ? 'contained' : 'text'}
+            </span>
+            <span
+              color={current && current === 'category' ? undefined : 'blue'}
               onClick={toCategory}
             >
               分类
-            </Button>
-            <Button
-              color={current && current === 'archive' ? undefined : 'inherit'}
-              variant={current && current === 'archive' ? 'contained' : 'text'}
+            </span>
+            <span
+              color={current && current === 'archive' ? undefined : 'blue'}
               onClick={toArchive}
             >
               归档
-            </Button>
-            <Button
-              color={current && current === 'tags' ? undefined : 'inherit'}
-              variant={current && current === 'tags' ? 'contained' : 'text'}
+            </span>
+            <span
+              color={current && current === 'tags' ? undefined : 'blue'}
               onClick={toTags}
             >
               标签
-            </Button>
-            <Button
-              color={current && current === 'about' ? undefined : 'inherit'}
-              variant={current && current === 'about' ? 'contained' : 'text'}
+            </span>
+            <span
+              color={current && current === 'about' ? undefined : 'blue'}
               onClick={toAbout}
             >
               关于
-            </Button>
+            </span>
             {!user && !loading && (
-              <Button
-                color="inherit"
+              <span
+                color="blue"
                 onClick={loading ? undefined : () => history.push('/login')}
               >
                 登录
-              </Button>
+              </span>
             )}
             {loading && <Loading />}
             {user && (

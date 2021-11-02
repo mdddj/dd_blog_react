@@ -1,5 +1,5 @@
 export default [
-  { path: '/', component: '@/pages/index' },
+  { path: '/', component: '@/pages/index', title: '梁典典的博客' },
   { path: '/detail', component: '@/pages/detail' },
   { path: '/category', component: '@/pages/category' },
   { path: '/archive', component: '@/pages/archive' },

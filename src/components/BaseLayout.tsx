@@ -2,6 +2,7 @@ import BlogAppBar from '@/components/AppBar';
 import { Container, Grid } from '@material-ui/core';
 import React, { ReactNode } from 'react';
 import StickyFooter from '@/components/AppFoot';
+import BootStrapAppbar from '@/components/appbar/BootStrapAppbar';
 
 type Props = {
   appbarCurrent?: string;
@@ -38,7 +39,8 @@ const BaseLayout: React.FC<Props> = ({
 
   return (
     <>
-      <BlogAppBar current={appbarCurrent} />
+      {/*<BlogAppBar current={appbarCurrent} />*/}
+      <BootStrapAppbar />
 
       {full && <div>{children}</div>}
       {!full && renderColumnContainer}

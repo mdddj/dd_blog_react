@@ -1,7 +1,7 @@
-@import '~lxgw-wenkai-webfont/style.css';
 body{
   background-color: #fff;
   font-family: "LXGW WenKai", sans-serif;
+  font-size: 1rem;
 }
 
 pre {

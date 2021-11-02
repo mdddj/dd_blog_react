@@ -64,31 +64,10 @@ const BlogDetailPage: React.FC = () => {
         </div>
       }
     >
-      {!state && (
-        <div>
-          <Button
-            onClick={() => {
-              history.goBack();
-            }}
-            startIcon={<ArrowBackIos />}
-            color={'secondary'}
-            style={{ marginBottom: 32, color: 'blue' }}
-          >
-            返回
-          </Button>
-          <SizedBox height={12} />
-        </div>
-      )}
-
       {state && <CustomLoading />}
 
       {blog && (
-        <Paper
-          elevation={defaultElevation}
-          style={{
-            padding: 20,
-          }}
-        >
+        <Paper elevation={defaultElevation}>
           {state && <div>加载中</div>}
 
           <div style={{ padding: 0 }}>
