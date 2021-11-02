@@ -2,6 +2,11 @@ import {
   Alert,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Popover,
   Stack,
@@ -11,23 +16,27 @@ import React, { useState } from 'react';
 import { useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { ResCategory } from 'dd_server_api_web/src/model/ResCategory';
-import { Card, Grid, Loading } from '@geist-ui/react';
+import { Card, Grid, Loading, useClipboard } from '@geist-ui/react';
 import { Add, CloudUpload } from '@material-ui/icons';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import SizedBox from '@/widgets/SizedBox';
 import { fileOpen } from 'browser-fs-access';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
 import ResultMessageWidget from '@/widgets/ResultMessageWidget';
+import { FileInfo } from 'dd_server_api_web/apis/model/FileInfo';
+import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 
 /// 自定义上传图片面板
 const UploadImagePanel: React.FC = () => {
+  const { copy } = useClipboard();
   const [loading, setLoading] = useState(true);
   const [cates, setCates] = useState<ResCategory[]>([]);
   const [el, setEl] = useState<HTMLElement | null>(null);
   const [currCate, setCurrCate] = useState<ResCategory>();
   const [file, setFile] = useState<File | null>();
   const [uploadIng, setUploading] = useState(false);
-  const [result, setResult] = useState<Result<any>>();
+  const [result, setResult] = useState<Result<FileInfo>>();
+  const [errorMsg, setErrorMsg] = useState('');
+  const [dialogState, setDialogState] = useState(false);
 
   const open = Boolean(el);
   const id = open ? 'image-panel' : undefined;
@@ -45,12 +54,38 @@ const UploadImagePanel: React.FC = () => {
     setLoading(false);
   };
 
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+  // 上传图片操作
+  const uploadSubmit = async () => {
+    if (!currCate) {
+      setErrorMsg('请选择上传图片到哪个文件夹');
+      return;
+    }
+    if (file == null) {
+      setErrorMsg('请选择上传的图片');
+      return;
+    }
+    const obj = {} as any;
+    obj.folder = currCate;
+    let formData = new FormData();
+    formData.append('file', file!);
+    formData.append('info', JSON.stringify(obj));
+    setUploading(true);
+    let result = await blogApi().uploadFile(formData);
+    setUploading(false);
+    setResult(result);
+    successResultHandle<FileInfo>(result, (data) => {
+      setDialogState(true);
+      setEl(null);
+    });
+  };
+
+  // 重置操作
+  const reSet = () => {
+    setFile(null);
+    setCurrCate(undefined);
+    setResult(undefined);
+    setErrorMsg('');
+  };
 
   return (
     <>
@@ -87,7 +122,10 @@ const UploadImagePanel: React.FC = () => {
                     width={'100%'}
                     style={{ textAlign: 'center' }}
                     type={currCate?.id == value.id ? 'success' : undefined}
-                    onClick={() => setCurrCate(value)}
+                    onClick={() => {
+                      setCurrCate(value);
+                      setErrorMsg('');
+                    }}
                   >
                     {value.name}
                   </Card>
@@ -100,8 +138,8 @@ const UploadImagePanel: React.FC = () => {
             <Card
               shadow
               style={{
-                paddingTop: 100,
-                paddingBottom: 100,
+                paddingTop: 50,
+                paddingBottom: 50,
                 textAlign: 'center',
               }}
               onClick={async () => {
@@ -109,9 +147,9 @@ const UploadImagePanel: React.FC = () => {
                   multiple: false,
                   mimeTypes: ['image/*'],
                 });
-                console.log(file);
                 if (sf) {
                   setFile(sf);
+                  setErrorMsg('');
                 }
               }}
             >
@@ -120,32 +158,60 @@ const UploadImagePanel: React.FC = () => {
               </div>
               <div>选择图片</div>
             </Card>
-            {file && <Alert security={'success'}>已选择图片</Alert>}
+            {file && (
+              <Alert style={{ marginTop: 20 }} security={'success'}>
+                已选择图片
+              </Alert>
+            )}
+            {errorMsg != '' && (
+              <div style={{ marginTop: 20, color: 'red' }}>{errorMsg}</div>
+            )}
             <SizedBox height={30} />
-            <Box>
-              <Button
-                variant={'contained'}
-                onClick={async () => {
-                  let obj = {} as any;
-                  obj.folder = currCate;
-                  let formData = new FormData();
-                  formData.append('file', file!);
-                  formData.append('info', JSON.stringify(obj));
-                  setUploading(true);
-                  let result = await blogApi().uploadFile(formData);
-                  setUploading(false);
-                  setResult(result);
-                }}
-              >
+            <Stack direction={'row'}>
+              <Button variant={'contained'} onClick={uploadSubmit}>
                 上传
               </Button>
-            </Box>
+              <Button onClick={reSet}>重置</Button>
+            </Stack>
             <SizedBox height={12} />
             {uploadIng && <Loading />}
             <ResultMessageWidget result={result} />
+
+            {result && (
+              <div style={{ marginTop: 12, color: 'green' }}>
+                {result.data?.url}
+              </div>
+            )}
           </Stack>
         </Box>
       </Popover>
+
+      {/*  上传成功的弹窗 */}
+      <Dialog
+        open={dialogState}
+        onClose={() => setDialogState(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'上传成功'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            URL直链: {result?.data?.url}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogState(false)}>关闭</Button>
+          <Button
+            onClick={() => {
+              copy(result?.data?.url ?? '');
+              setDialogState(false);
+            }}
+            autoFocus
+          >
+            复制并关闭
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
