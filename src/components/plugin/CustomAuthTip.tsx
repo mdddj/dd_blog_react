@@ -12,6 +12,7 @@ export default class CustomAuthTip extends PluginComponent {
           <span
             style={{
               color: 'green',
+              marginLeft: 12,
             }}
           >
             管理员
@@ -21,6 +22,7 @@ export default class CustomAuthTip extends PluginComponent {
         <span
           style={{
             color: 'red',
+            marginLeft: 12,
           }}
         >
           鉴权失败

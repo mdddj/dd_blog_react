@@ -7,6 +7,12 @@ export default class FlutterPlugin extends PluginComponent {
   static align = 'left';
 
   render() {
-    return <FlutterPluginAddWidget />;
+    return (
+      <FlutterPluginAddWidget
+        insertText={(val) => {
+          this.editor.insertText(val);
+        }}
+      />
+    );
   }
 }

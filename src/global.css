@@ -56,3 +56,18 @@ code span{
 .markdown-edit {
   height: calc(100vh - 50px);
 }
+
+.box {
+  padding-left: 5px ;
+  padding-right: 5px ;
+  padding-top: 5px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}
+
+.navigation {
+  position: fixed;
+  width: 300px;
+}

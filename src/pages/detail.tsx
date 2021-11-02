@@ -4,6 +4,9 @@ import { BlogPreview } from '@/components/MarkdownPreview';
 import { Avatar, Button, Paper, Typography } from '@material-ui/core';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
+// @ts-ignore
+import MarkdownNavbar from 'markdown-navbar';
+import 'markdown-navbar/dist/navbar.css';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import BaseLayout from '@/components/BaseLayout';
 import SizedBox from '@/widgets/SizedBox';
@@ -53,7 +56,14 @@ const BlogDetailPage: React.FC = () => {
   });
 
   return (
-    <BaseLayout hideRight={true}>
+    <BaseLayout
+      hideRight={false}
+      rightContainer={
+        <div className="navigation mt box">
+          <MarkdownNavbar source={blog?.content} />
+        </div>
+      }
+    >
       {!state && (
         <div>
           <Button
