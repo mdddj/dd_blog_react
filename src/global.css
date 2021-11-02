@@ -66,8 +66,11 @@ code span{
   border: none;
   font-size: 16px;
 }
+/* 博客详情页面替换它的默认字体 */
+.markdown-navigation {
+  font-family: "LXGW WenKai", sans-serif !important;
+}
 
-.navigation {
-  position: fixed;
-  width: 300px;
+.title-anchor {
+  padding-left: 0 !important;
 }

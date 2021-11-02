@@ -8,6 +8,9 @@ const theme = createTheme({
     primary: {
       main: '#007bff',
     },
+    secondary: {
+      main: '#f6f7f9',
+    },
   },
   typography: {
     fontFamily: 'LXGW WenKai',
