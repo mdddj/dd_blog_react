@@ -16,6 +16,7 @@ export default defineConfig({
     'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
     'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
   ],
+  esbuild: {},
   dynamicImport: {
     loading: '@/Loading',
   },
@@ -31,6 +32,7 @@ export default defineConfig({
           cacheGroups: {
             vendor: {
               name: 'vendors',
+              // @ts-ignore
               test({ resource }) {
                 return /[\\/]node_modules[\\/]/.test(resource);
               },
