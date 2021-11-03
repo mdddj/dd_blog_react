@@ -9,16 +9,19 @@ import {
   successResultHandle,
 } from 'dd_server_api_web/apis/utils/ResultUtil';
 import BaseLayout from '@/components/BaseLayout';
-import CreateCategoruWidget from '@/widgets/CreateCategoruWidget';
 import { useLocation } from 'umi';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
-import { Spinner } from '@geist-ui/react';
+import { Loading, Spinner } from '@geist-ui/react';
 
 /**
  * 分类页面
  * @constructor
  */
 const CategoryPage: React.FC = () => {
+  /// 加载分类数据中
+  const [initIng, setInitIng] = useState<boolean>(true);
+
+  /// 加载博客列表中
   const [loading, setLoading] = useState<boolean>(false);
 
   /// 存放博客列表的数据
@@ -95,11 +98,6 @@ const CategoryPage: React.FC = () => {
       appbarCurrent={'category'}
       rightContainer={
         <>
-          {/*添加新分类的按钮*/}
-          <CreateCategoruWidget>
-            <span>创建分类</span>
-          </CreateCategoruWidget>
-
           <ArchiveShow
             title={
               <span>
@@ -125,10 +123,15 @@ const CategoryPage: React.FC = () => {
               let result = await loadPageData(1, m.months);
               resultHandle(result);
             }}
+            onLoad={(_) => {
+              setInitIng(false);
+            }}
           />
         </>
       }
     >
+      {initIng && <Loading />}
+
       {/*博客列表显示区域*/}
       <BlogListComponent
         blogs={blogs}

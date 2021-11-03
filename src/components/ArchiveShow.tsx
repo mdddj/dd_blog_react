@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@material-ui/core';
-import styles from '../widgets/widget.less';
+import '../global.css';
 import { useRequest } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import {
@@ -47,7 +47,7 @@ const ArchiveShow: React.FC<{
   );
 
   if (loading) {
-    return <div>加载中</div>;
+    return <div></div>;
   }
 
   if (error) {
@@ -63,9 +63,7 @@ const ArchiveShow: React.FC<{
 
   return (
     <>
-      {type !== ArchiveShowType.All && (
-        <div className={styles.title}>{title}</div>
-      )}
+      {type !== ArchiveShowType.All && <div className={'title'}>{title}</div>}
       <div>
         {type == ArchiveShowType.Category &&
           categoryList?.map((item: Category) => (
@@ -96,7 +94,7 @@ const ArchiveShow: React.FC<{
       </div>
       {type == ArchiveShowType.All && (
         <div>
-          <div className={styles.title}>分类</div>
+          <div className={'title'}>分类</div>
           {categoryList?.map((item: Category) => (
             <div
               key={item.id}
@@ -108,7 +106,7 @@ const ArchiveShow: React.FC<{
             </div>
           ))}
 
-          <div className={styles.title}>归档</div>
+          <div className={'title'}>归档</div>
           {dates?.map((item: MonthsCount) => (
             <div
               key={item.months}
@@ -118,7 +116,7 @@ const ArchiveShow: React.FC<{
             </div>
           ))}
 
-          <div className={styles.title}>标签</div>
+          <div className={'title'}>标签</div>
           {tags?.map((item: Tag) => (
             <div key={item.id} onClick={() => onTagSelect && onTagSelect(item)}>
               <ArchiveItem value={item.name} />
@@ -143,7 +141,7 @@ const ArchiveItem: React.FC<{ value: string; href?: string }> = ({
   href,
 }) => {
   return (
-    <div className={styles.urlLink}>
+    <div className={'url-link'}>
       <Link href={href}>{value}</Link>
     </div>
   );

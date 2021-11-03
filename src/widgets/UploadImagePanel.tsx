@@ -12,12 +12,14 @@ import {
   Stack,
   Typography,
 } from '@material-ui/core';
+import Cloud from '@geist-ui/react-icons/cloud';
+import File from '@geist-ui/react-icons/file';
+
 import React, { useState } from 'react';
 import { useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { ResCategory } from 'dd_server_api_web/src/model/ResCategory';
 import { Card, Grid, Loading, useClipboard } from '@geist-ui/react';
-import { Add, CloudUpload } from '@material-ui/icons';
 import SizedBox from '@/widgets/SizedBox';
 import { fileOpen } from 'browser-fs-access';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
@@ -93,7 +95,7 @@ const UploadImagePanel: React.FC = () => {
         className={'button button-type-clear'}
         onClick={(e) => setEl(e.currentTarget)}
       >
-        <CloudUpload style={{ fontSize: 16 }} />
+        <Cloud />
       </span>
 
       <Popover
@@ -154,7 +156,7 @@ const UploadImagePanel: React.FC = () => {
               }}
             >
               <div>
-                <Add />
+                <File />
               </div>
               <div>选择图片</div>
             </Card>

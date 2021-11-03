@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './widget.less';
+import '../global.css';
 import {
   IconButton,
   Paper,
@@ -25,9 +25,9 @@ const HomeAbout: React.FC = () => {
   };
 
   return (
-    <Paper className={styles.about} elevation={0}>
-      <h6 className={styles.title}>关于我</h6>
-      <p className={styles.aboutDesc}>
+    <Paper className={'about'} elevation={0}>
+      <h6 className={'title'}>关于我</h6>
+      <p className={'about-desc'}>
         梁典典,目前在广州做全职Flutter开发,会一点java和前端
       </p>
       <Stack

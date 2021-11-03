@@ -1,6 +1,9 @@
 import React from 'react';
 import { history } from 'umi';
 import styles from './components.less';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+
 import {
   Button,
   CardActions,
@@ -10,8 +13,9 @@ import {
 } from '@material-ui/core';
 
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
-import { Tag, User } from '@geist-ui/react';
+import { User } from '@geist-ui/react';
 import Folder from '@geist-ui/react-icons/folder';
+import { SimpleTag, MyTag } from '@/widgets/MyTag';
 
 /**
  * 首页博客卡片布局
@@ -19,6 +23,7 @@ import Folder from '@geist-ui/react-icons/folder';
  * @constructor
  */
 const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
+  let da = dayjs(blog.dateString, 'zh-cn').format('YYYY-MM-DD');
   return (
     <Paper elevation={0} className={styles.blogWrap}>
       <div className={styles.blogRoot}>
@@ -31,15 +36,11 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
                 name="梁典典"
                 style={{ marginLeft: -12 }}
               />{' '}
-              <Tag type="lite">
-                <Folder /> {blog.category.name}
-              </Tag>
+              <MyTag title={blog.category.name} icon={<Folder />} />
               {blog.tags.map((value) => (
-                <Tag key={value.id} type="lite">
-                  {value.name}
-                </Tag>
+                <SimpleTag key={value.id} title={value.name} />
               ))}
-              · {blog.dateString}
+              <SimpleTag title={da} />
             </div>
           </CardContent>
           <CardActions>

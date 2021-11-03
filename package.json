@@ -28,6 +28,7 @@
     "@material-ui/core": "^5.0.0-beta.5",
     "@umijs/hooks": "^1.9.3",
     "browser-fs-access": "^0.21.0",
+    "dayjs": "^1.10.7",
     "dd_server_api_web": "^1.4.1",
     "github-markdown-css": "^4.0.0",
     "markdown-it": "^12.2.0",
