@@ -12,6 +12,7 @@ import BaseLayout from '@/components/BaseLayout';
 import { useLocation } from 'umi';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
 import { Loading, Spinner } from '@geist-ui/react';
+import '../global.css';
 
 /**
  * 分类页面
@@ -51,6 +52,7 @@ const CategoryPage: React.FC = () => {
     }
   };
 
+  /// 页面标题
   const getPageTitle = (): string => {
     let pageType = getPageType();
     switch (pageType) {
@@ -101,7 +103,8 @@ const CategoryPage: React.FC = () => {
           <ArchiveShow
             title={
               <span>
-                {getPageTitle()} {loading && <Spinner />}
+                {getPageTitle()}{' '}
+                {loading && <Spinner className={'loading-flex'} />}
               </span>
             }
             type={getPageType()}

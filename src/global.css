@@ -154,3 +154,8 @@ code span {
   margin: 0 0.25rem;
   font-size: 13px;
 }
+
+/* 使Spinner 加载中组件和span在同一行 */
+.loading-flex {
+  display: inline-flex !important;
+}
