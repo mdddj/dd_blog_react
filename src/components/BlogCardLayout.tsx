@@ -16,6 +16,7 @@ import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultD
 import { User } from '@geist-ui/react';
 import Folder from '@geist-ui/react-icons/folder';
 import { SimpleTag, MyTag } from '@/widgets/MyTag';
+import MyButton from '@/widgets/MyButton';
 
 /**
  * 首页博客卡片布局
@@ -45,14 +46,12 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
           </CardContent>
           <CardActions>
             <Stack direction={'row'} spacing={2}>
-              <Button
-                size="small"
+              <MyButton
                 onClick={() => {
                   history.push('/detail?id=' + blog.id);
                 }}
-              >
-                阅读全文
-              </Button>
+                text="查看博客"
+              />
             </Stack>
           </CardActions>
         </div>

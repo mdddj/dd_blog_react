@@ -6,10 +6,8 @@ import { SimpleTag } from '@/widgets/MyTag';
 const person = {
   name: '梁典典',
   avatar: 'https://i.imgur.com/kbYvbMt.jpeg',
-  desc: '你好陌生人，欢迎来到我的个人博客。我叫梁典典，性别女，19岁，我正在学习swift ui',
-  theme: {
-    backgroundColor: '#fff',
-  },
+  desc: '你好陌生人，欢迎来到我的个人博客。目前在广州一家外贸公司做全职Flutter开发',
+  theme: {},
 };
 
 /// 我的技能
@@ -31,7 +29,7 @@ const HomeAbout: React.FC = () => {
   };
 
   return (
-    <div style={person.theme}>
+    <div style={person.theme} className={'base-card'}>
       <img className="avatar" src={person.avatar} alt={person.name} />
       <h1>{person.name}</h1>
       <p>{person.desc}</p>

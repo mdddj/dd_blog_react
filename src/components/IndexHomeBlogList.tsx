@@ -33,14 +33,12 @@ const IndexHomeBlogList: React.FC = () => {
   return (
     <>
       <div style={{ marginBottom: 30 }}>
-        {/*{!state &&*/}
-        {/*  blogs.map((item) => <SimpleBlogListItem key={item.id} blog={item} />)}*/}
-
         {!state &&
           blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
 
         {state ? (
-          <Box sx={{ display: 'flex' }} className={styles.loading}>
+          <Box className={styles.loading}>
+            加载中
             <Loading />
           </Box>
         ) : (

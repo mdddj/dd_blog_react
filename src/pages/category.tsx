@@ -147,9 +147,19 @@ const CategoryPage: React.FC = () => {
         </>
       }
     >
-      {initIng && <Loading />}
+      {initIng && (
+        <div style={{ textAlign: 'center' }}>
+          <span>加载中</span>
+          <Loading />
+        </div>
+      )}
 
-      {showInfoText && !initIng && <span>{showInfoText}</span>}
+      {showInfoText && !initIng && (
+        <div style={{ textAlign: 'center' }}>
+          <span>{showInfoText}</span>
+          {showInfoText == '加载中...' ? <Loading /> : <></>}
+        </div>
+      )}
 
       {/*博客列表显示区域*/}
       <BlogListComponent
