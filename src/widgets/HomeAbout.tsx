@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../global.css';
 import { SimpleTag } from '@/widgets/MyTag';
+import { IconButton, Stack } from '@material-ui/core';
+import Github from '@geist-ui/react-icons/github';
+import MessageCircle from '@geist-ui/react-icons/messageCircle';
 
 /// 我的信息
 const person = {
@@ -15,27 +18,27 @@ const list = ['Java', 'Flutter', 'Typescript', 'Android'];
 
 // 首页关于我的小卡片
 const HomeAbout: React.FC = () => {
-  /// 弹窗的html节点
-  const [qqEl, setQqEl] = useState<HTMLButtonElement | null>(null);
-  /// qq号，微信号
-  const [number, setNumber] = useState<string>('');
-
-  const isOpen = Boolean(qqEl);
-  const id = isOpen ? 'qqPop' : undefined;
-
   /// 跳转到github
   const toGithub = () => {
     window.location.href = 'https://github.com/mdddj';
   };
 
   return (
-    <div style={person.theme} className={'base-card'}>
+    <div style={person.theme}>
       <img className="avatar" src={person.avatar} alt={person.name} />
       <h1>{person.name}</h1>
       <p>{person.desc}</p>
       {list.map((v) => (
         <SimpleTag title={v} key={v} />
       ))}
+      <Stack direction={'row'} sx={{ mt: 2 }}>
+        <IconButton aria-label="微信">
+          <MessageCircle />
+        </IconButton>
+        <IconButton aria-label="github" onClick={toGithub}>
+          <Github />
+        </IconButton>
+      </Stack>
     </div>
   );
 };

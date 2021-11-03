@@ -31,3 +31,8 @@
   color: #343a40;
   padding: 0.5rem;
 }
+/* 高亮 */
+.nav-active {
+  color: rgba(8, 126, 164, 1) !important;
+  font-weight: 700;
+}

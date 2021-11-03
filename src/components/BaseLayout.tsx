@@ -1,4 +1,3 @@
-import BlogAppBar from '@/components/AppBar';
 import { Container, Grid } from '@material-ui/core';
 import React, { ReactNode } from 'react';
 import StickyFooter from '@/components/AppFoot';
@@ -41,7 +40,7 @@ const BaseLayout: React.FC<Props> = ({
     <>
       <main>
         {/*<BlogAppBar current={appbarCurrent} />*/}
-        <BootStrapAppbar />
+        <BootStrapAppbar current={appbarCurrent} />
 
         {full && <div>{children}</div>}
         {!full && renderColumnContainer}

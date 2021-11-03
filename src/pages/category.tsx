@@ -111,7 +111,7 @@ const CategoryPage: React.FC = () => {
 
   return (
     <BaseLayout
-      appbarCurrent={'category'}
+      appbarCurrent={getPageTitle()}
       rightContainer={
         <>
           <ArchiveShow

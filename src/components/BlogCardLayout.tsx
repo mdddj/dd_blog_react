@@ -4,13 +4,7 @@ import styles from './components.less';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 
-import {
-  Button,
-  CardActions,
-  CardContent,
-  Paper,
-  Stack,
-} from '@material-ui/core';
+import { CardActions, CardContent, Paper, Stack } from '@material-ui/core';
 
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { User } from '@geist-ui/react';
@@ -50,7 +44,7 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
                 onClick={() => {
                   history.push('/detail?id=' + blog.id);
                 }}
-                text="查看博客"
+                text="阅读全文"
               />
             </Stack>
           </CardActions>
