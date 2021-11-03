@@ -21,12 +21,20 @@ export enum ArchiveShowType {
 
 /// 分类,归档,标签的显示组件
 const ArchiveShow: React.FC<{
-  title: string;
+  title: React.ReactNode;
   type: ArchiveShowType;
   onLoad?: (datas: ArchiveModel | undefined) => void;
   onCategorySelect?: (category: Category) => void;
   onTagSelect?: (tag: Tag) => void;
-}> = ({ title, type, onLoad, onCategorySelect, onTagSelect }) => {
+  onArchiveSelect?: (month: MonthsCount) => void;
+}> = ({
+  title,
+  type,
+  onLoad,
+  onCategorySelect,
+  onTagSelect,
+  onArchiveSelect,
+}) => {
   const { loading, data, error } = useRequest<Result<ArchiveModel>>(
     () => blogApi().getArchives(),
     {
@@ -72,10 +80,12 @@ const ArchiveShow: React.FC<{
           ))}
         {type == ArchiveShowType.Archive &&
           dates?.map((item: MonthsCount) => (
-            <ArchiveItem
-              value={item.months + ' (' + item.count + '篇)'}
+            <div
               key={item.months}
-            />
+              onClick={() => onArchiveSelect && onArchiveSelect(item)}
+            >
+              <ArchiveItem value={item.months + ' (' + item.count + '篇)'} />
+            </div>
           ))}
         {type == ArchiveShowType.Tag &&
           tags?.map((item: Tag) => (
@@ -100,10 +110,12 @@ const ArchiveShow: React.FC<{
 
           <div className={styles.title}>归档</div>
           {dates?.map((item: MonthsCount) => (
-            <ArchiveItem
-              value={item.months + ' (' + item.count + '篇)'}
+            <div
               key={item.months}
-            />
+              onClick={() => onArchiveSelect && onArchiveSelect(item)}
+            >
+              <ArchiveItem value={item.months + ' (' + item.count + '篇)'} />
+            </div>
           ))}
 
           <div className={styles.title}>标签</div>

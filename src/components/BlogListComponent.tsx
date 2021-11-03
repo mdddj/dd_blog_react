@@ -3,7 +3,6 @@ import React from 'react';
 import BlogCardLayout from '@/components/BlogCardLayout';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { Pagination } from '@material-ui/core';
-import { Typography } from '@mui/material';
 
 type BlogListParams = {
   /// 要显示的博客列表
@@ -22,8 +21,6 @@ const BlogListComponent: React.FC<BlogListParams> = ({
   pager,
   onPageChange,
 }) => {
-  console.log(pager);
-
   return (
     <div>
       {/*博客列表*/}

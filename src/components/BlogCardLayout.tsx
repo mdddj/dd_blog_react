@@ -1,13 +1,17 @@
 import React from 'react';
 import { history } from 'umi';
 import styles from './components.less';
-import { Button, CardActions, CardContent, Paper } from '@material-ui/core';
+import {
+  Button,
+  CardActions,
+  CardContent,
+  Paper,
+  Stack,
+} from '@material-ui/core';
 
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { Tag, User } from '@geist-ui/react';
-
-// @ts-ignore
-import ava from '../assets/ava.jpg';
+import Folder from '@geist-ui/react-icons/folder';
 
 /**
  * 首页博客卡片布局
@@ -27,21 +31,28 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
                 name="梁典典"
                 style={{ marginLeft: -12 }}
               />{' '}
-              <Tag type="lite">{blog.category.name}</Tag> · {blog.dateString}
+              <Tag type="lite">
+                <Folder /> {blog.category.name}
+              </Tag>
+              {blog.tags.map((value) => (
+                <Tag key={value.id} type="lite">
+                  {value.name}
+                </Tag>
+              ))}
+              · {blog.dateString}
             </div>
           </CardContent>
           <CardActions>
-            <Button
-              size="small"
-              onClick={() => {
-                history.push('/detail?id=' + blog.id);
-              }}
-            >
-              阅读全文
-            </Button>
-            {/*{*/}
-            {/*  blog.tags.map(value => <span key={value.id}>{value.name}</span>)*/}
-            {/*}*/}
+            <Stack direction={'row'} spacing={2}>
+              <Button
+                size="small"
+                onClick={() => {
+                  history.push('/detail?id=' + blog.id);
+                }}
+              >
+                阅读全文
+              </Button>
+            </Stack>
           </CardActions>
         </div>
       </div>
