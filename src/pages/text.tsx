@@ -14,6 +14,7 @@ import { message } from 'antd';
 import { SimpleValueModel } from '@/model/SimpleValueModel';
 import { blogApi } from '@/util/request';
 import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
+import BaseLayout from '@/components/BaseLayout';
 
 /**
  * 特殊文本页面
@@ -46,8 +47,7 @@ const SimpleTextView: React.FC = () => {
   console.log(simpleValue);
 
   return (
-    <>
-      <BlogAppBar current={'about'} />
+    <BaseLayout appbarCurrent={'about'}>
       <Container maxWidth={'lg'} style={{ marginTop: 30 }}>
         <Card>
           <CardContent>
@@ -56,7 +56,7 @@ const SimpleTextView: React.FC = () => {
           </CardContent>
         </Card>
       </Container>
-    </>
+    </BaseLayout>
   );
 };
 

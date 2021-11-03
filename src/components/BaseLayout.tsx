@@ -39,11 +39,13 @@ const BaseLayout: React.FC<Props> = ({
 
   return (
     <>
-      {/*<BlogAppBar current={appbarCurrent} />*/}
-      <BootStrapAppbar />
+      <main>
+        {/*<BlogAppBar current={appbarCurrent} />*/}
+        <BootStrapAppbar />
 
-      {full && <div>{children}</div>}
-      {!full && renderColumnContainer}
+        {full && <div>{children}</div>}
+        {!full && renderColumnContainer}
+      </main>
       <StickyFooter />
     </>
   );

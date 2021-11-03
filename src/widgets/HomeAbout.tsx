@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import '../global.css';
-import {
-  IconButton,
-  Paper,
-  Popover,
-  Stack,
-  Typography,
-} from '@material-ui/core';
-import { GithubFilled, QqCircleFilled, WechatFilled } from '@ant-design/icons';
+import { SimpleTag } from '@/widgets/MyTag';
+
+/// 我的信息
+const person = {
+  name: '梁典典',
+  avatar: 'https://i.imgur.com/kbYvbMt.jpeg',
+  desc: '你好陌生人，欢迎来到我的个人博客。我叫梁典典，性别女，19岁，我正在学习swift ui',
+  theme: {
+    backgroundColor: '#fff',
+  },
+};
+
+/// 我的技能
+const list = ['Java', 'Flutter', 'Typescript', 'Android'];
 
 // 首页关于我的小卡片
 const HomeAbout: React.FC = () => {
@@ -25,54 +31,14 @@ const HomeAbout: React.FC = () => {
   };
 
   return (
-    <Paper className={'about'} elevation={0}>
-      <h6 className={'title'}>关于我</h6>
-      <p className={'about-desc'}>
-        梁典典,目前在广州做全职Flutter开发,会一点java和前端
-      </p>
-      <Stack
-        direction="row"
-        spacing={2}
-        style={{ textAlign: 'center', marginTop: 12 }}
-      >
-        <IconButton
-          color={'info'}
-          onClick={(event) => {
-            setNumber('413153189');
-            setQqEl(event.currentTarget);
-          }}
-        >
-          <QqCircleFilled />
-        </IconButton>
-
-        <IconButton
-          color="primary"
-          onClick={(event) => {
-            setNumber('flutter-null');
-            setQqEl(event.currentTarget);
-          }}
-        >
-          <WechatFilled />
-        </IconButton>
-        <IconButton color="secondary" onClick={toGithub}>
-          <GithubFilled />
-        </IconButton>
-      </Stack>
-
-      {/*qq号*/}
-      <Popover
-        open={isOpen}
-        id={id}
-        onClose={() => setQqEl(null)}
-        anchorEl={qqEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Typography>{number}</Typography>
-      </Popover>
-    </Paper>
+    <div style={person.theme}>
+      <img className="avatar" src={person.avatar} alt={person.name} />
+      <h1>{person.name}</h1>
+      <p>{person.desc}</p>
+      {list.map((v) => (
+        <SimpleTag title={v} key={v} />
+      ))}
+    </div>
   );
 };
 

@@ -25,6 +25,9 @@ const CategoryPage: React.FC = () => {
   /// 加载博客列表中
   const [loading, setLoading] = useState<boolean>(false);
 
+  /// 是否加载完数据
+  const [loaded, setLoaded] = useState<boolean>(false);
+
   /// 存放博客列表的数据
   const [blogs, setBlogs] = useState<BlogData[]>([]);
 
@@ -37,6 +40,15 @@ const CategoryPage: React.FC = () => {
   const {
     query: { t },
   } = useLocation() as any;
+
+  let showInfoText =
+    blogs.length == 0
+      ? loaded
+        ? '暂无博客'
+        : loading
+        ? '加载中...'
+        : '在右侧选择要查看的内容'
+      : '';
 
   /// 获取页面的类型
   const getPageType = (): ArchiveShowType => {
@@ -72,6 +84,7 @@ const CategoryPage: React.FC = () => {
     page: number,
     key: any,
   ): Promise<Result<Page<BlogData>>> => {
+    setLoaded(false);
     let pageType = getPageType();
     switch (pageType) {
       case ArchiveShowType.Category:
@@ -93,6 +106,7 @@ const CategoryPage: React.FC = () => {
       setPager(data?.page);
     });
     setLoading(false);
+    setLoaded(true);
   };
 
   return (
@@ -134,6 +148,8 @@ const CategoryPage: React.FC = () => {
       }
     >
       {initIng && <Loading />}
+
+      {showInfoText && !initIng && <span>{showInfoText}</span>}
 
       {/*博客列表显示区域*/}
       <BlogListComponent

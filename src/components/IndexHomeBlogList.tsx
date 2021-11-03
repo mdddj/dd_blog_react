@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CircularProgress } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import styles from './components.less';
 import { useBoolean, useMount } from '@umijs/hooks';
@@ -8,6 +7,7 @@ import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
 import BlogCardLayout from '@/components/BlogCardLayout';
+import { Loading } from '@geist-ui/react';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
@@ -41,13 +41,13 @@ const IndexHomeBlogList: React.FC = () => {
 
         {state ? (
           <Box sx={{ display: 'flex' }} className={styles.loading}>
-            <CircularProgress />
+            <Loading />
           </Box>
         ) : (
           <span />
         )}
 
-        {
+        {!state && (
           <div style={{ textAlign: 'center', padding: 12 }}>
             <Pager
               count={maxCount}
@@ -57,7 +57,7 @@ const IndexHomeBlogList: React.FC = () => {
               }}
             />
           </div>
-        }
+        )}
       </div>
     </>
   );

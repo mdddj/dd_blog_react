@@ -1,5 +1,6 @@
 import { Box, Container, Link, Typography } from '@material-ui/core';
 import * as React from 'react';
+import '../global.css';
 
 function Copyright() {
   return (
@@ -17,6 +18,7 @@ function Copyright() {
 export default function StickyFooter() {
   return (
     <Box
+      className={'footer'}
       sx={{
         display: 'flex',
         flexDirection: 'column',
