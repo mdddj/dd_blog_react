@@ -1,9 +1,8 @@
-
 /*导航的样式*/
 .top-bar {
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
   flex-direction: row;
   align-items: center;
   display: flex;
@@ -21,16 +20,17 @@
 }
 
 /*网站导航菜单区域*/
-.top-bar nav{
+.top-bar nav {
   margin-right: 1rem;
   margin-bottom: 0;
 }
 
 /*导航项目*/
-.top-bar nav a {
+.top-bar a {
   color: #343a40;
   padding: 0.5rem;
 }
+
 /* 高亮 */
 .nav-active {
   color: rgba(8, 126, 164, 1) !important;

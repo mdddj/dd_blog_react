@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../global.css';
 import { SimpleTag } from '@/widgets/MyTag';
-import { IconButton, Stack } from '@material-ui/core';
+import {
+  Dialog,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
+} from '@material-ui/core';
 import Github from '@geist-ui/react-icons/github';
 import MessageCircle from '@geist-ui/react-icons/messageCircle';
 
@@ -18,6 +26,8 @@ const list = ['Java', 'Flutter', 'Typescript', 'Android'];
 
 // 首页关于我的小卡片
 const HomeAbout: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
   /// 跳转到github
   const toGithub = () => {
     window.location.href = 'https://github.com/mdddj';
@@ -32,13 +42,29 @@ const HomeAbout: React.FC = () => {
         <SimpleTag title={v} key={v} />
       ))}
       <Stack direction={'row'} sx={{ mt: 2 }}>
-        <IconButton aria-label="微信">
+        <IconButton aria-label="联系方式" onClick={() => setOpen(true)}>
           <MessageCircle />
         </IconButton>
         <IconButton aria-label="github" onClick={toGithub}>
           <Github />
         </IconButton>
       </Stack>
+
+      {/*  联系方式弹窗  */}
+      <Dialog onClose={() => setOpen(false)} open={open} fullWidth={true}>
+        <DialogTitle>联系方式</DialogTitle>
+        <List sx={{ pt: 0 }}>
+          <ListItem button>
+            <ListItemText primary={'QQ:413153189'} />
+          </ListItem>
+          <ListItem button>
+            <ListItemText primary={'微信:flutter-null'} />
+          </ListItem>
+          <ListItem button>
+            <ListItemText primary={'QQ群:667186542'} />
+          </ListItem>
+        </List>
+      </Dialog>
     </div>
   );
 };
