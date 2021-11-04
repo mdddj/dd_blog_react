@@ -4,8 +4,8 @@ import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
 
 const MOOSE_REACT_LEARN_ACCESS_TOKEN = 'auth_token';
 
-// const host = 'https://itbug.shop';
-const host = 'http://localhost';
+const host = 'https://itbug.shop';
+// const host = 'http://localhost';
 /**
  * 淘客api接口
  */
