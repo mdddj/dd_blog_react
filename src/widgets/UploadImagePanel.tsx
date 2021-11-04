@@ -11,7 +11,7 @@ import {
   Popover,
   Stack,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import Cloud from '@geist-ui/react-icons/cloud';
 import File from '@geist-ui/react-icons/file';
 

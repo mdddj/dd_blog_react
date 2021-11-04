@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Button, Stack, TextField } from '@material-ui/core';
+import { Button, Stack, TextField } from '@mui/material';
 import Editor from 'react-markdown-editor-lite';
 import CustomImageUpload from '@/components/plugin/CustomImageUpload';
 import CustomAuthTip from '@/components/plugin/CustomAuthTip';

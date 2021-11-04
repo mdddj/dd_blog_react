@@ -2,7 +2,7 @@ import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultD
 import React from 'react';
 import BlogCardLayout from '@/components/BlogCardLayout';
 import { PagerModel } from 'dd_server_api_web/apis/utils/ResultUtil';
-import { Pagination } from '@material-ui/core';
+import { Pagination } from '@mui/material';
 
 type BlogListParams = {
   /// 要显示的博客列表

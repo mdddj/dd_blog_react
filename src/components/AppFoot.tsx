@@ -1,4 +1,4 @@
-import { Box, Container, Link, Typography } from '@material-ui/core';
+import { Box, Container, Link, Typography } from '@mui/material';
 import * as React from 'react';
 import '../global.css';
 

@@ -1,11 +1,6 @@
 import BlogAppBar from '@/components/AppBar';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import {
-  Card,
-  CardContent,
-  CircularProgress,
-  Container,
-} from '@material-ui/core';
+import { Card, CardContent, CircularProgress, Container } from '@mui/material';
 import { useMount } from '@umijs/hooks';
 import React from 'react';
 import { useState } from 'react';

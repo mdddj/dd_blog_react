@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination } from '@material-ui/core';
+import { Pagination } from '@mui/material';
 
 /**
  * 分类组件

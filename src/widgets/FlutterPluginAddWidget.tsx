@@ -6,7 +6,7 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { FlutterPluginInfo } from '@/model/FlutterPluginModel';

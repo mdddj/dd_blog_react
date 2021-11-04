@@ -1,6 +1,6 @@
 import React from 'react';
 import { Result } from 'dd_server_api_web/apis/utils/ResultUtil';
-import { Alert } from '@material-ui/core';
+import { Alert } from '@mui/material';
 
 type Props = {
   result?: Result<any>;

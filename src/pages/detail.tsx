@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { history, useLocation } from 'umi';
+import { useLocation } from 'umi';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Avatar, Button, Paper, Typography } from '@material-ui/core';
+import { Avatar, Paper, Typography } from '@mui/material';
 import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
-// @ts-ignore
 import MarkdownNavbar from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import BaseLayout from '@/components/BaseLayout';
-import SizedBox from '@/widgets/SizedBox';
 import CustomLoading from '@/widgets/CustomLoading';
-import { ArrowBackIos } from '@material-ui/icons';
-// @ts-ignore
-import ava from '/src/assets/ava.jpg';
 import { defaultElevation } from '@/config/server';
 
 const api = blogApi();
@@ -60,7 +55,7 @@ const BlogDetailPage: React.FC = () => {
       hideRight={false}
       rightContainer={
         <div className="navigation mt box">
-          <MarkdownNavbar source={blog?.content} />
+          <MarkdownNavbar source={blog?.content ?? ''} />
         </div>
       }
     >

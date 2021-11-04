@@ -9,7 +9,7 @@ import {
   ListItem,
   ListItemText,
   Stack,
-} from '@material-ui/core';
+} from '@mui/material';
 import Github from '@geist-ui/react-icons/github';
 import MessageCircle from '@geist-ui/react-icons/messageCircle';
 

@@ -4,13 +4,13 @@ import {
   Box,
   Button,
   Container,
+  createTheme,
   CssBaseline,
   Link,
   TextField,
   ThemeProvider,
   Typography,
-} from '@material-ui/core';
-import { createTheme } from '@material-ui/core/styles';
+} from '@mui/material';
 import { blogApi, saveAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { useState } from 'react';

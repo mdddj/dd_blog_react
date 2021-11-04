@@ -1,9 +1,9 @@
-import { Alert, Box } from '@material-ui/core';
 import React, { useState } from 'react';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useMount } from '@umijs/hooks';
 import { blogApi, getAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
+import { Alert, Box } from '@mui/material';
 
 /// 用户状态的检测
 const UserStateTipWidget: React.FC<{

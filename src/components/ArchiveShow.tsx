@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import '../global.css';
 import { useRequest } from '@umijs/hooks';
 import { blogApi } from '@/util/request';

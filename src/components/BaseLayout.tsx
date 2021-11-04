@@ -1,4 +1,4 @@
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@mui/material';
 import React, { ReactNode } from 'react';
 import StickyFooter from '@/components/AppFoot';
 import BootStrapAppbar from '@/components/appbar/BootStrapAppbar';

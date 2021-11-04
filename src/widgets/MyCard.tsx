@@ -3,11 +3,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  Chip,
   Paper,
   Stack,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 
 /**
  * 简单卡片

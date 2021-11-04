@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Box from '@material-ui/core/Box';
 import styles from './components.less';
 import { useBoolean, useMount } from '@umijs/hooks';
 import Pager from './Pager';
@@ -8,6 +7,7 @@ import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultD
 import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
 import BlogCardLayout from '@/components/BlogCardLayout';
 import { Loading } from '@geist-ui/react';
+import { Box } from '@mui/material';
 
 const IndexHomeBlogList: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
