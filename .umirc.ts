@@ -12,10 +12,16 @@ export default defineConfig({
     react: 'window.React',
     'react-dom': 'window.ReactDOM',
   },
-  scripts: [
-    'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
-    'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-  ],
+  scripts:
+    process.env.NODE_ENV === 'development'
+      ? [
+          'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.development.js',
+          'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.development.js',
+        ]
+      : [
+          'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
+          'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+        ],
   esbuild: {},
   dynamicImport: {
     loading: '@/Loading',

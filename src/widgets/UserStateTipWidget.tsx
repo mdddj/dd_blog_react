@@ -7,7 +7,7 @@ import { Alert, Box } from '@mui/material';
 
 /// 用户状态的检测
 const UserStateTipWidget: React.FC<{
-  logined?: React.ReactNode;
+  logined?: (user: User) => React.ReactNode;
 }> = ({ children, logined }) => {
   /// 是否正在向服务器请求用户数据中
   const [loading, setLoading] = useState(true);
@@ -48,7 +48,11 @@ const UserStateTipWidget: React.FC<{
 
   return (
     <>
-      {!children && !hasAdminRole ? noAuth : hasAdminRole ? logined : children}
+      {!children && !hasAdminRole
+        ? noAuth
+        : hasAdminRole
+        ? logined!!(user)
+        : children}
     </>
   );
 };

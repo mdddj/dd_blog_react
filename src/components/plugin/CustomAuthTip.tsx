@@ -8,16 +8,18 @@ export default class CustomAuthTip extends PluginComponent {
   render() {
     return (
       <UserStateTipWidget
-        logined={
-          <span
-            style={{
-              color: 'green',
-              marginLeft: 12,
-            }}
-          >
-            管理员
-          </span>
-        }
+        logined={(user) => {
+          return (
+            <span
+              style={{
+                color: 'green',
+                marginLeft: 12,
+              }}
+            >
+              {user.nickName}
+            </span>
+          );
+        }}
       >
         <span
           style={{

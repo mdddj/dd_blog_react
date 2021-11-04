@@ -1,6 +1,17 @@
 import React from 'react';
+import { Loading } from '@geist-ui/react';
 
-const Loading: React.FC = () => {
-  return <>加载中，请稍后</>;
+const LoadingView: React.FC = () => {
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: 500,
+        textAlign: 'center',
+      }}
+    >
+      <Loading />
+    </div>
+  );
 };
-export default Loading;
+export default LoadingView;

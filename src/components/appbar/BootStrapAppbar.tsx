@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './appbar.css';
 import { history, Link } from 'umi';
+import UserStateTipWidget from '@/widgets/UserStateTipWidget';
+import { Menu, MenuItem } from '@mui/material';
+import { blogApi } from '@/util/request';
 
 //参数
 type Props = {
@@ -9,6 +12,11 @@ type Props = {
 
 //网站导航条
 const BootStrapAppbar: React.FC<Props> = ({ current }) => {
+  const [menuEl, setMenuEl] = useState<HTMLElement | null>();
+
+  const isOpen = Boolean(menuEl);
+  const id = isOpen ? 'menu-id' : undefined;
+
   /// 获取高亮样式
   const getStyle = (routeName: string): string => {
     return current && current == routeName ? 'nav-active' : '';
@@ -36,9 +44,48 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
           关于
         </Link>
       </nav>
-      <Link to="/login" className={getStyle('login')}>
-        登录
-      </Link>
+      <UserStateTipWidget
+        logined={(user) => {
+          return (
+            <span
+              onClick={(e) => {
+                setMenuEl(e.currentTarget);
+              }}
+            >
+              欢迎你:{user.nickName}
+            </span>
+          );
+        }}
+      >
+        <Link to="/login" className={getStyle('login')}>
+          登录
+        </Link>
+      </UserStateTipWidget>
+      <Menu
+        id="basic-menu"
+        anchorEl={menuEl}
+        open={isOpen}
+        onClose={() => setMenuEl(null)}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            history.push('/push-blog');
+          }}
+        >
+          发布博客
+        </MenuItem>
+        <MenuItem onClick={() => {}}>设置</MenuItem>
+        <MenuItem
+          onClick={async () => {
+            await blogApi().logout();
+          }}
+        >
+          退出登录
+        </MenuItem>
+      </Menu>
     </div>
   );
 };
