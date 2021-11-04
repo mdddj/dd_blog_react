@@ -15,8 +15,6 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
   const [menuEl, setMenuEl] = useState<HTMLElement | null>();
 
   const isOpen = Boolean(menuEl);
-  const id = isOpen ? 'menu-id' : undefined;
-
   /// 获取高亮样式
   const getStyle = (routeName: string): string => {
     return current && current == routeName ? 'nav-active' : '';

@@ -1,5 +1,9 @@
 # 典典博客
 
+
+预览: [https://itbug.shop](https://itbug.shop)
+
+
 ## 安装
 
 进入项目根目录安装依赖
