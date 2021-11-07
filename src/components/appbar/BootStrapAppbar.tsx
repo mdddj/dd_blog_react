@@ -29,6 +29,9 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
         <Link to="/" className={getStyle('index')}>
           首页
         </Link>
+        <Link to="/dynamic" className={getStyle('动态')}>
+          动态
+        </Link>
         <Link to="/category?t=c" className={getStyle('分类')}>
           分类
         </Link>

@@ -6,4 +6,5 @@ export default [
   { path: '/login', component: '@/pages/login' },
   { path: '/r', component: '@/pages/write' },
   { path: '/push-blog', component: '@/pages/markdown' },
+  { path: '/dynamic', component: '@/pages/dynamic' },
 ];
