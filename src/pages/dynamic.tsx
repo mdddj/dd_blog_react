@@ -1,4 +1,5 @@
 import BaseLayout from '@/components/BaseLayout';
+import { blogApi } from '@/util/request';
 import { Button, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
@@ -9,7 +10,12 @@ const DynamicPage: React.FC = () => {
   const [content, setContent] = useState('');
 
   // 提交数据
-  const onSubmit = () => {};
+  const onSubmit = async () => {
+    let result = await blogApi().saveOrUpdateResourcesModel({
+      content: content,
+    } as any);
+    console.log(result);
+  };
 
   return (
     <BaseLayout appbarCurrent="动态">
