@@ -204,3 +204,17 @@ code span {
   background: rgba(8, 126, 164, 1);
   color: #ffffff;
 }
+
+/* 动态页面的列表显示卡片 */
+.dynamic-card {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  padding: 1rem;
+}
+
+/*底部下划线样式*/
+.border-bottom{
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
