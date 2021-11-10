@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { history } from 'umi';
+import { history, useLocation } from 'umi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -31,6 +31,8 @@ import { blogApi, DefaultResult } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import ResultMessageWidget from '@/widgets/ResultMessageWidget';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
+import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
+import SizedBox from '@/widgets/SizedBox';
 
 const filter = createFilterOptions<Category>();
 Editor.use(CustomImageUpload);
@@ -39,6 +41,9 @@ Editor.use(CustomAuthTip);
 
 /// 发布博客页面
 const MarkdownPage: React.FC = () => {
+  const {
+    query: { id },
+  } = useLocation() as any;
   const [categorys, setCategorys] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectCategory, setSelectCategory] = useState<Category>();
@@ -60,6 +65,20 @@ const MarkdownPage: React.FC = () => {
           setCategorys(data.categoryList);
         });
       });
+
+    console.log(id);
+    if (id) {
+      blogApi()
+        .getBlogDetailById(id)
+        .then((r) => {
+          successResultHandle<BlogData>(r, (data) => {
+            setSelectCategory(data.category);
+            setTitle(data.title);
+            setContent(data.content);
+            setTags(data.tags);
+          });
+        });
+    }
   });
 
   /// 博文内容被更改
@@ -77,13 +96,17 @@ const MarkdownPage: React.FC = () => {
     ) {
       return;
     }
-    /// 提交数据到服务器
-    let d = await blogApi().pushNewBlog({
+    let data = {
       categoryId: selectCategory!.id,
       content: content,
       tags: selectTags,
       title: title,
-    });
+    } as any;
+    if (id) {
+      data.id = id;
+    }
+    /// 提交数据到服务器
+    let d = await blogApi().pushNewBlog(data);
     setPushState(true);
     setResult(d);
   };
@@ -99,6 +122,7 @@ const MarkdownPage: React.FC = () => {
             fullWidth={true}
             label={'请输入文章标题...'}
             variant={'standard'}
+            value={title}
             sx={{
               border: 'none',
             }}
@@ -125,13 +149,25 @@ const MarkdownPage: React.FC = () => {
           </Stack>
         </div>
       </header>
+
+      {/*博客内容编写*/}
       <div className={'markdown-edit'}>
         <Editor
           style={{ height: '100%' }}
           renderHTML={(text) => <BlogPreview content={text} />}
           onChange={handleEditorChange}
+          value={content}
         />
       </div>
+
+      {/*底部设置区域 已废弃*/}
+      {/*<div className={'push-bottom-action'}>*/}
+      {/*  <div>*/}
+      {/*    <span className={'text-small text-tint mr'}>选项:</span>*/}
+      {/*    <Button>添加分类</Button>*/}
+      {/*    <Button>添加标签</Button>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
       {/*  选择分类，标签，主图，和短链的选项弹窗 */}
       <Popover
@@ -142,7 +178,10 @@ const MarkdownPage: React.FC = () => {
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
         onClose={() => setSettingEl(null)}
       >
-        <Stack style={{ width: 500, minHeight: 500 }}>
+        <div style={{ textAlign: 'center', marginTop: 20 }}>
+          <Typography variant={'h5'}>博客设置</Typography>
+        </div>
+        <Stack style={{ width: 550, minHeight: 500 }}>
           <Box sx={{ p: 2 }}>
             {/*选择分类或者标签区域*/}
             <Stack
@@ -150,79 +189,113 @@ const MarkdownPage: React.FC = () => {
               direction={'column'}
               style={{ padding: '12px 0' }}
             >
+              {/*分类flex版本*/}
+              <div className={'category-flex-item'}>
+                <div className={'c-title'}>
+                  <span>分类</span>
+                </div>
+                <div className={'c-items'}>
+                  {categorys.map((value) => (
+                    <span
+                      key={value.id}
+                      className={
+                        selectCategory && selectCategory.id == value.id
+                          ? 'c-active'
+                          : ''
+                      }
+                      onClick={() => {
+                        setSelectCategory(value);
+                      }}
+                    >
+                      {value.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <SizedBox height={12} />
+
+              {/*添加标签flex版本*/}
+              <div className={'category-flex-item'}>
+                <div className={'c-title'}>
+                  <span>标签</span>
+                </div>
+                <div className={'c-items'}>11</div>
+              </div>
+
               {/*分类*/}
-              <Autocomplete<Category>
-                disablePortal
-                fullWidth={true}
-                options={categorys}
-                getOptionLabel={(option) => option.name}
-                renderOption={(props, option) => (
-                  <Box
-                    key={option.id}
-                    component="li"
-                    sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                    {...props}
-                  >
-                    <Stack direction={'row'} spacing={2}>
-                      <span>
-                        {option.logo && option.logo != '' ? (
-                          <Avatar
-                            src={option.logo}
-                            sx={{ width: 30, height: 30 }}
-                          />
-                        ) : (
-                          <Avatar sx={{ width: 30, height: 30, fontSize: 13 }}>
-                            {option.name[0]}
-                          </Avatar>
-                        )}
-                      </span>
-                      <Typography>{option.name}</Typography>
-                    </Stack>
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" label="文章分类" />
-                )}
-                onChange={(e, v, _, __) => {
-                  setSelectCategory(v as Category);
-                }}
-                filterOptions={(options, params) => {
-                  /// 如果没有一个分类的时候，通过接口创建一个新的分类
-                  const filted = filter(options, params);
-                  if (params.inputValue != '') {
-                    filted.push({
-                      createTime: Date.parse(new Date().toDateString()),
-                      id: -1,
-                      intro: '',
-                      logo: '',
-                      name: `${params.inputValue}`,
-                    });
-                  }
-                  return filted;
-                }}
-              />
-              {/*标签*/}
-              <Autocomplete<Tag>
-                options={tags}
-                // @ts-ignore
-                multiple
-                fullWidth={true}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="standard"
-                    label="添加文章标签"
-                    placeholder="标签"
-                  />
-                )}
-                onChange={(e, v, _, __) => {
-                  let tagNames = (v as unknown as Tag[]).map(
-                    (value) => value.name,
-                  );
-                  setSelectTags(tagNames);
-                }}
-              />
+              {/*<Autocomplete<Category>*/}
+              {/*  disablePortal*/}
+              {/*  fullWidth={true}*/}
+              {/*  options={categorys}*/}
+              {/*  getOptionLabel={(option) => option.name}*/}
+              {/*  renderOption={(props, option) => (*/}
+              {/*    <Box*/}
+              {/*      key={option.id}*/}
+              {/*      component="li"*/}
+              {/*      sx={{'& > img': {mr: 2, flexShrink: 0}}}*/}
+              {/*      {...props}*/}
+              {/*    >*/}
+              {/*      <Stack direction={'row'} spacing={2}>*/}
+              {/*        <span>*/}
+              {/*          {option.logo && option.logo != '' ? (*/}
+              {/*            <Avatar*/}
+              {/*              src={option.logo}*/}
+              {/*              sx={{width: 30, height: 30}}*/}
+              {/*            />*/}
+              {/*          ) : (*/}
+              {/*            <Avatar sx={{width: 30, height: 30, fontSize: 13}}>*/}
+              {/*              {option.name[0]}*/}
+              {/*            </Avatar>*/}
+              {/*          )}*/}
+              {/*        </span>*/}
+              {/*        <Typography>{option.name}</Typography>*/}
+              {/*      </Stack>*/}
+              {/*    </Box>*/}
+              {/*  )}*/}
+              {/*  renderInput={(params) => (*/}
+              {/*    <TextField {...params} variant="standard" label="文章分类"/>*/}
+              {/*  )}*/}
+              {/*  onChange={(e, v, _, __) => {*/}
+              {/*    setSelectCategory(v as Category);*/}
+              {/*  }}*/}
+              {/*  filterOptions={(options, params) => {*/}
+              {/*    /// 如果没有一个分类的时候，通过接口创建一个新的分类*/}
+              {/*    const filted = filter(options, params);*/}
+              {/*    if (params.inputValue != '') {*/}
+              {/*      filted.push({*/}
+              {/*        createTime: Date.parse(new Date().toDateString()),*/}
+              {/*        id: -1,*/}
+              {/*        intro: '',*/}
+              {/*        logo: '',*/}
+              {/*        name: `${params.inputValue}`,*/}
+              {/*      });*/}
+              {/*    }*/}
+              {/*    return filted;*/}
+              {/*  }}*/}
+              {/*/>*/}
+              {/*/!*标签*!/*/}
+              {/*<Autocomplete<Tag>*/}
+              {/*  options={tags}*/}
+              {/*  // @ts-ignore*/}
+              {/*  multiple*/}
+              {/*  fullWidth={true}*/}
+              {/*  getOptionLabel={(option) => option.name}*/}
+              {/*  renderInput={(params) => (*/}
+              {/*    <TextField*/}
+              {/*      {...params}*/}
+              {/*      variant="standard"*/}
+              {/*      label="添加文章标签"*/}
+              {/*      placeholder="标签"*/}
+              {/*    />*/}
+              {/*  )}*/}
+              {/*  onChange={(e, v, _, __) => {*/}
+              {/*    let tagNames = (v as unknown as Tag[]).map(*/}
+              {/*      (value) => value.name,*/}
+              {/*    );*/}
+              {/*    setSelectTags(tagNames);*/}
+              {/*  }}*/}
+              {/*/>*/}
             </Stack>
           </Box>
         </Stack>

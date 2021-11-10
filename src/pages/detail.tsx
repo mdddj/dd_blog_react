@@ -6,10 +6,14 @@ import { useBoolean, useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import MarkdownNavbar from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import BaseLayout from '@/components/BaseLayout';
 import CustomLoading from '@/widgets/CustomLoading';
 import { defaultElevation } from '@/config/server';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { history } from 'umi';
+import IconSpan from '@/widgets/IconSpan';
 
 const api = blogApi();
 
@@ -49,6 +53,13 @@ const BlogDetailPage: React.FC = () => {
   useMount(async () => {
     await fetchData();
   });
+
+  // 重新编辑
+  const onEdit = () => {
+    if (blog) {
+      history.push('/push-blog?id=' + blog.id);
+    }
+  };
 
   return (
     <BaseLayout
@@ -96,7 +107,7 @@ const BlogDetailPage: React.FC = () => {
                 发布于 {blog?.dateString}
               </Typography>
 
-              <span>编辑</span>
+              <IconSpan text={'编辑'} icon={faEdit} onClick={onEdit} />
             </div>
 
             <BlogPreview content={blog.content} />

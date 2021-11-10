@@ -5,6 +5,11 @@ const DynamicCard: React.FC<{ item: ResourceModel }> = ({ item }) => {
   if (item.type == 'simple-text') {
     return <SimpleDynamicCard dynamic={item} />;
   }
+
+  /// 如果没有用户信息，则返回一个空的
+  if (!item.user) {
+    return <></>;
+  }
   return <div>{item.content}</div>;
 };
 

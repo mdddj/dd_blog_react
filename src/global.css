@@ -207,14 +207,14 @@ code span {
 
 /* 动态页面的列表显示卡片 */
 .dynamic-card {
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
   border-radius: 0.25rem;
   background-color: #ffffff;
   padding: 1rem;
 }
 
 /*底部下划线样式*/
-.border-bottom{
+.border-bottom {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #dee2e6;
 }
@@ -234,6 +234,7 @@ code span {
   margin-right: 0.5rem;
   border-radius: 0.25rem;
 }
+
 /*动态的正文内容区域*/
 .dynamic-content {
   padding-bottom: 1rem;
@@ -243,7 +244,94 @@ code span {
   font-size: 80%;
 }
 
+/* 动态的用户昵称 */
 .dynamic-content strong {
   display: block;
   font-weight: bolder;
+}
+
+/*博客页面的编辑按钮样式*/
+.blog-edit-icon {
+  margin-left: 12px;
+  cursor: pointer;
+  color: #6c757d;
+  font-weight: 400;
+  font-size: 80%;
+}
+
+/*文字加图标*/
+.blog-edit-icon svg {
+  margin-right: 0.07rem;
+}
+
+/*发布博客页面底部的操作区域*/
+.push-bottom-action {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: gainsboro;
+}
+
+.push-bottom-action button {
+  margin-right: 0.5rem;
+}
+
+.text-small {
+  font-size: 80%;
+}
+
+.text-tint {
+  color: #6c757d;
+}
+
+.mr {
+  margin-right: 0.5rem;
+}
+
+/* 博客分类flex版本的布局*/
+.category-flex-item {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.category-flex-item .c-title {
+  width: 120px;
+  font-size: 14px;
+  color: #6c757d;
+  margin-right: 12px;
+  text-align: right;
+}
+
+.category-flex-item .c-items {
+  flex: auto;
+}
+
+.category-flex-item .c-items span {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 30px;
+  background: #f4f5f5;
+  text-align: center;
+  color: #86909c;
+  border-radius: 3px;
+  padding: 0 0.1rem;
+  line-height: 30px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.category-flex-item .c-items span:hover {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.032), 0 3px 7px rgba(0, 0, 0, 0.048), 0 8px 8px rgba(0, 0, 0, 0.08);
+}
+
+/*选中状态*/
+.c-active {
+  color: rgba(235, 236, 240, 1) !important;
+  background: rgba(8, 126, 164, 1) !important;
 }
