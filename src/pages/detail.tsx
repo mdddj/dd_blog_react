@@ -95,6 +95,8 @@ const BlogDetailPage: React.FC = () => {
                 <span style={{ marginRight: 12, fontWeight: 500 }}>梁典典</span>{' '}
                 发布于 {blog?.dateString}
               </Typography>
+
+              <span>编辑</span>
             </div>
 
             <BlogPreview content={blog.content} />

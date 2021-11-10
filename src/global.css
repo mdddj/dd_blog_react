@@ -218,3 +218,32 @@ code span {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #dee2e6;
 }
+
+/*动态的每一项布局*/
+.dynamic-item-wrap {
+  color: #6c757d;
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+/*动态的头像*/
+.dynamic-avator {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+  border-radius: 0.25rem;
+}
+/*动态的正文内容区域*/
+.dynamic-content {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  flex: 1;
+  font-weight: 400;
+  font-size: 80%;
+}
+
+.dynamic-content strong {
+  display: block;
+  font-weight: bolder;
+}

@@ -11,10 +11,11 @@ import {
 } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { ResourceModel } from 'dd_server_api_web/apis/model/ResourceModel';
 import SizedBox from '@/widgets/SizedBox';
+import { DynamicCard } from '@/widgets/dynamic/SimpleDynamicCard';
 
 type DynamicListResultModel = {
   page: PagerModel;
-  data: ResourceModel[];
+  list: ResourceModel[];
 };
 
 /// 动态的页面
@@ -43,9 +44,9 @@ const DynamicPage: React.FC = () => {
         pageSize: 10,
       },
     );
-    console.log(result);
+    console.log(result.data?.list);
     if (responseIsSuccess<DynamicListResultModel>(result)) {
-      let list = result.data?.data ?? [];
+      let list = result.data?.list ?? [];
       setDynamicList(list);
     }
   };
@@ -85,6 +86,13 @@ const DynamicPage: React.FC = () => {
         <Typography variant="h5" className={'border-bottom'}>
           动态
         </Typography>
+
+        {/*  列表区域*/}
+        <div>
+          {dynamicList.map((value, index, array) => (
+            <DynamicCard item={value} key={index} />
+          ))}
+        </div>
       </div>
       {/*  标题区域end */}
     </BaseLayout>
