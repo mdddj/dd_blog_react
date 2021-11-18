@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'umi';
+import { useLocation, useParams } from 'umi';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { Avatar, Paper, Typography } from '@mui/material';
 import { useBoolean, useMount } from '@umijs/hooks';
@@ -20,10 +20,9 @@ const api = blogApi();
 const BlogDetailPage: React.FC = () => {
   const [blog, setBlog] = useState<BlogData | undefined>();
   const { state, setTrue, setFalse } = useBoolean(false);
+  const params = useParams<{ id: string }>();
 
-  const {
-    query: { id, alias },
-  } = useLocation() as any;
+  const { id } = params;
 
   // 根据id
   const fetchBlogData = async (id: number) => {
@@ -40,10 +39,7 @@ const BlogDetailPage: React.FC = () => {
     let _blog;
     setTrue();
     if (id) {
-      _blog = await fetchBlogData(id as number);
-    }
-    if (alias) {
-      _blog = await fetchBlogWithAlias(alias as string);
+      _blog = await fetchBlogData(id as any as number);
     }
     setBlog(_blog?.data);
     setFalse();

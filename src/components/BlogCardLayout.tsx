@@ -41,7 +41,7 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
             <Stack direction={'row'} spacing={2}>
               <MyButton
                 onClick={() => {
-                  history.push('/detail?id=' + blog.id);
+                  history.push('/post/' + blog.id);
                 }}
                 text="阅读全文"
               />
