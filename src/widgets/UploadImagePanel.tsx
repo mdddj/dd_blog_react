@@ -145,9 +145,10 @@ const UploadImagePanel: React.FC = () => {
                 textAlign: 'center',
               }}
               onClick={async () => {
+                // 如果只能选择图片 ['image/*']
                 const sf = await fileOpen({
                   multiple: false,
-                  mimeTypes: ['image/*'],
+                  mimeTypes: [],
                 });
                 if (sf) {
                   setFile(sf);
