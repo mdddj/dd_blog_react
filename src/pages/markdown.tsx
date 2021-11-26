@@ -3,7 +3,8 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { history, useLocation } from 'umi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
+
 import {
   Autocomplete,
   Avatar,
@@ -13,6 +14,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   IconButton,
   Popover,
@@ -33,11 +35,14 @@ import ResultMessageWidget from '@/widgets/ResultMessageWidget';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import SizedBox from '@/widgets/SizedBox';
+import { MyTag } from '@/widgets/MyTag';
 
 const filter = createFilterOptions<Category>();
 Editor.use(CustomImageUpload);
 Editor.use(FlutterPlugin);
 Editor.use(CustomAuthTip);
+
+var _ = require('lodash');
 
 /// 发布博客页面
 const MarkdownPage: React.FC = () => {
@@ -53,6 +58,7 @@ const MarkdownPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [pushState, setPushState] = useState(false);
   const [result, setResult] = useState<Result<any>>(DefaultResult);
+  const [showCreateTagDialog, setShowCreateTagDialog] = useState(false);
 
   /// 组件加载成功生命周期，请求服务器获取分类和标签数据
   useMount(() => {
@@ -111,6 +117,12 @@ const MarkdownPage: React.FC = () => {
 
   const isOpen = Boolean(settingEl);
   const ppId = isOpen ? 'pp-id' : undefined;
+
+  /// 判断一个标签是否被选中
+  // 返回true表示已选中
+  const tagIsSelect = (tagName: string): boolean => {
+    return selectTags.indexOf(tagName) > -1;
+  };
 
   return (
     <div>
@@ -220,37 +232,45 @@ const MarkdownPage: React.FC = () => {
                 </div>
                 <div className={'c-items'}>
                   {/* 先遍历服务器的已存在标签列表 */}
-                  {tags.map((value) => (
-                    <span
-                      key={value.id}
-                      onClick={() => {
-                        /// 将标签添加到标签数组
-                        let newTags = selectTags;
-                        let t = newTags.concat(value.name);
-                        setSelectTags(t);
-                      }}
-                    >
-                      {value.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* 已选择的标签列表 */}
-              <div className="box">
-                {selectTags.map((value, index, _) => (
-                  <span className="selected-tag">
-                    {value}{' '}
-                    <span
-                      onClick={() => {
-                        let n = selectTags.splice(index - 1, 1);
-                        setSelectTags(n);
-                      }}
-                    >
-                      ❌
-                    </span>
+                  {tags.map((value) => {
+                    let isselect = tagIsSelect(value.name);
+                    return (
+                      <span
+                        key={value.id}
+                        className={isselect ? 'c-active' : ''}
+                        onClick={() => {
+                          /// 判断是否存在,如果是选中状态，需要删除
+                          if (tagIsSelect(value.name)) {
+                            let newarr = [...selectTags];
+                            _.remove(newarr, function (n: string) {
+                              return n == value.name;
+                            });
+                            setSelectTags(newarr);
+                          } else {
+                            /// 将标签添加到标签数组
+                            let newTags = selectTags;
+                            let t = newTags.concat(value.name);
+                            setSelectTags(t);
+                          }
+                        }}
+                      >
+                        {value.name}
+                      </span>
+                    );
+                  })}
+                  <span
+                    style={{ background: 'white' }}
+                    onClick={() => {
+                      setShowCreateTagDialog(true);
+                    }}
+                  >
+                    {' '}
+                    <MyTag
+                      title="创建"
+                      icon={<FontAwesomeIcon icon={faPlus} />}
+                    />
                   </span>
-                ))}
+                </div>
               </div>
             </Stack>
           </Box>
@@ -265,6 +285,40 @@ const MarkdownPage: React.FC = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setPushState(false)}>我知道了</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* 创建新标签弹窗 */}
+      <Dialog
+        open={showCreateTagDialog}
+        onClose={() => {
+          setShowCreateTagDialog(false);
+        }}
+      >
+        <DialogTitle>添加文章标签</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            添加的标签会在服务器中自动创建，如果已存在将会引用已存在的标签
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="tagname"
+            label="标签名"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setShowCreateTagDialog(false);
+            }}
+          >
+            关闭
+          </Button>
+          <Button onClick={() => {}}>添加</Button>
         </DialogActions>
       </Dialog>
     </div>

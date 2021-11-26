@@ -10,7 +10,7 @@ type Props = {
 const MyTag: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <button className={'tag'}>
-      <span>{props.icon}</span>
+      <i>{props.icon}</i>
       {props.title}
     </button>
   );

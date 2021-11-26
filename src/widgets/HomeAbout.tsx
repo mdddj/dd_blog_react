@@ -17,7 +17,7 @@ import MessageCircle from '@geist-ui/react-icons/messageCircle';
 const person = {
   name: '梁典典',
   avatar: 'https://i.imgur.com/kbYvbMt.jpeg',
-  desc: '你好陌生人，欢迎来到我的个人博客。目前在广州一家外贸公司做全职Flutter开发',
+  desc: '你好陌生人，欢迎来到我的个人博客。',
   theme: {},
 };
 

@@ -136,14 +136,14 @@ code span {
 }
 
 /* 带图标按钮 */
-.tag span {
+.tag i {
   display: inline;
   margin-right: 0.25rem;
   position: relative;
   top: 0.125rem;
 }
 
-.tag span svg {
+.tag i svg {
   width: 13px;
   height: 13px;
 }
@@ -296,18 +296,19 @@ code span {
 }
 
 .category-flex-item .c-title {
-  width: 110px;
+  width: 80px;
   font-size: 14px;
   color: #6c757d;
   margin-right: 12px;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .category-flex-item .c-items {
   flex: auto;
 }
 
-.category-flex-item .c-items span {
+ .c-items span {
   display: inline-block;
   margin-right: 5px;
   margin-bottom: 5px;
