@@ -8,4 +8,5 @@ export default [
   { path: '/dynamic', component: '@/pages/dynamic' },
   { exact: true, path: '/post/:id', component: '@/pages/post/[id]' },
   { path: '/friends', component: '@/pages/friends' },
+  { path: '/setting', component: '@/pages/setting' },
 ];

@@ -81,7 +81,13 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
         >
           发布博客
         </MenuItem>
-        <MenuItem onClick={() => {}}>设置</MenuItem>
+        <MenuItem
+          onClick={() => {
+            history.push('/setting');
+          }}
+        >
+          设置
+        </MenuItem>
         <MenuItem
           onClick={async () => {
             await blogApi().logout();
