@@ -71,20 +71,20 @@ const MarkdownPage: React.FC = () => {
         successResultHandle<ArchiveModel>(r, (data) => {
           setTags(data.tags);
           setCategorys(data.categoryList);
+          if (id) {
+            blogApi()
+              .getBlogDetailById(id)
+              .then((r) => {
+                successResultHandle<BlogData>(r, (data) => {
+                  setSelectCategory(data.category);
+                  setTitle(data.title);
+                  setContent(data.content);
+                  setSelectTags(data.tags.map((v) => v.name));
+                });
+              });
+          }
         });
       });
-    if (id) {
-      blogApi()
-        .getBlogDetailById(id)
-        .then((r) => {
-          successResultHandle<BlogData>(r, (data) => {
-            setSelectCategory(data.category);
-            setTitle(data.title);
-            setContent(data.content);
-            setTags(data.tags);
-          });
-        });
-    }
   });
 
   /// 博文内容被更改
@@ -94,18 +94,21 @@ const MarkdownPage: React.FC = () => {
 
   /// 提交博客到服务器
   const submit = async () => {
+    let _all_tags = selectTags.concat(newTags);
+
     if (
       !selectCategory ||
-      tags.length == 0 ||
+      _all_tags.length == 0 ||
       title.length == 0 ||
       content.length <= 20
     ) {
       return;
     }
+
     let data = {
       categoryId: selectCategory!.id,
       content: content,
-      tags: selectTags,
+      tags: _all_tags,
       title: title,
     } as any;
     if (id) {
