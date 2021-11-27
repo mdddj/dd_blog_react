@@ -130,6 +130,14 @@ code span {
   align-items: center;
 }
 
+.mr{
+  margin-right: 12px;
+}
+
+.ml {
+  margin-left: 12px;
+}
+
 /* 我的自定义标签 */
 .tag {
   font-size: 13px;
