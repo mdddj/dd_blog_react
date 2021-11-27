@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import {
-  Autocomplete,
-  Avatar,
   Box,
   Button,
   createFilterOptions,
@@ -59,6 +57,10 @@ const MarkdownPage: React.FC = () => {
   const [pushState, setPushState] = useState(false);
   const [result, setResult] = useState<Result<any>>(DefaultResult);
   const [showCreateTagDialog, setShowCreateTagDialog] = useState(false);
+  const [newTagName, setNewTagName] = useState('');
+
+  // 新添加的标签
+  const [newTags, setNewTags] = useState<string[]>([]);
 
   /// 组件加载成功生命周期，请求服务器获取分类和标签数据
   useMount(() => {
@@ -258,6 +260,26 @@ const MarkdownPage: React.FC = () => {
                       </span>
                     );
                   })}
+
+                  {/* 遍历新添加的标签 */}
+                  {newTags.map((value) => {
+                    return (
+                      <span
+                        key={value}
+                        className="c-active"
+                        onClick={() => {
+                          let _newtags = [...newTags];
+                          _.remove(_newtags, function (n: string) {
+                            return n == value;
+                          });
+                          setNewTags(_newtags);
+                        }}
+                      >
+                        {value}
+                      </span>
+                    );
+                  })}
+
                   <span
                     style={{ background: 'white' }}
                     onClick={() => {
@@ -308,6 +330,10 @@ const MarkdownPage: React.FC = () => {
             type="text"
             fullWidth
             variant="standard"
+            value={newTagName}
+            onChange={(e) => {
+              setNewTagName(e.target.value);
+            }}
           />
         </DialogContent>
         <DialogActions>
@@ -318,7 +344,16 @@ const MarkdownPage: React.FC = () => {
           >
             关闭
           </Button>
-          <Button onClick={() => {}}>添加</Button>
+          <Button
+            onClick={() => {
+              let _tags = [...newTags, newTagName];
+              setNewTags(_tags);
+              setShowCreateTagDialog(false);
+              setNewTagName('');
+            }}
+          >
+            添加
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
