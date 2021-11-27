@@ -7,4 +7,5 @@ export default [
   { path: '/push-blog', component: '@/pages/markdown' },
   { path: '/dynamic', component: '@/pages/dynamic' },
   { exact: true, path: '/post/:id', component: '@/pages/post/[id]' },
+  { path: '/friends', component: '@/pages/friends' },
 ];

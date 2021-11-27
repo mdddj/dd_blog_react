@@ -41,6 +41,9 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
         <Link to="/category?t=t" className={getStyle('标签')}>
           标签
         </Link>
+        <Link to="/friends" className={getStyle('友链')}>
+          友链
+        </Link>
         <Link to="/simple?name=about" className={getStyle('about')}>
           关于
         </Link>

@@ -30,6 +30,7 @@
     "@mui/material": "^5.0.6",
     "@umijs/hooks": "^1.9.3",
     "@umijs/plugin-esbuild": "^1.4.1",
+    "antd": "^4.17.2",
     "browser-fs-access": "^0.21.0",
     "browserslist": "^4.17.6",
     "caniuse-lite": "^1.0.30001276",

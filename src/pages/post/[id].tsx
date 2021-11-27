@@ -106,7 +106,9 @@ const BlogDetailPage: React.FC = () => {
               <IconSpan text={'编辑'} icon={faEdit} onClick={onEdit} />
             </div>
 
-            <BlogPreview content={blog.content} />
+            <div style={{ width: '100%', display: 'block' }}>
+              <BlogPreview content={blog.content} />
+            </div>
           </div>
         </Paper>
       )}

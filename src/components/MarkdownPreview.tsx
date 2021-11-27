@@ -3,7 +3,7 @@ import React from 'react';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
-// import 'github-markdown-css/github-markdown.css';
+import 'github-markdown-css/github-markdown.css';
 import '../global.css';
 
 /**
