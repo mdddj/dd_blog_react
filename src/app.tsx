@@ -1,5 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material';
-
+import { ChakraProvider } from '@chakra-ui/react';
 const theme = createTheme({
   palette: {
     primary: {
@@ -25,5 +25,10 @@ const theme = createTheme({
 });
 
 export function rootContainer(container: JSX.Element): JSX.Element {
-  return <ThemeProvider theme={theme}>{container}</ThemeProvider>;
+  return (
+    <ChakraProvider>
+      {' '}
+      <ThemeProvider theme={theme}>{container}</ThemeProvider>
+    </ChakraProvider>
+  );
 }
