@@ -1,7 +1,7 @@
 body {
   background-color: #fff;
-  font-family: 'LXGW WenKai', sans-serif;
-  font-size: 1rem;
+  /* font-family: 'LXGW WenKai', sans-serif; */
+  /* font-size: 1rem; */
 }
 img{
 	width: auto;
@@ -16,7 +16,7 @@ img{
   display: flex;
 }
 
-pre {
+/* pre {
   padding-left: 5px !important;
   padding-right: 5px !important;
   padding-top: 5px !important;
@@ -34,7 +34,7 @@ code {
 
 code span {
   font-style: normal !important;
-}
+} */
 
 .markdown-header {
   height: 50px;
@@ -357,3 +357,4 @@ code span {
   margin-bottom: 12px;
  display: inline-block;
 }
+
