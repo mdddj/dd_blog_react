@@ -2,24 +2,23 @@ import {
   Alert,
   Box,
   Button,
+  Card,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Divider,
+  Grid,
   Popover,
   Stack,
   Typography,
 } from '@mui/material';
-import Cloud from '@geist-ui/react-icons/cloud';
-import File from '@geist-ui/react-icons/file';
 
 import React, { useState } from 'react';
 import { useMount } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import { ResCategory } from 'dd_server_api_web/src/model/ResCategory';
-import { Card, Grid, Loading, useClipboard } from '@geist-ui/react';
 import SizedBox from '@/widgets/SizedBox';
 import { fileOpen } from 'browser-fs-access';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
@@ -29,7 +28,6 @@ import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 
 /// 自定义上传图片面板
 const UploadImagePanel: React.FC = () => {
-  const { copy } = useClipboard();
   const [loading, setLoading] = useState(true);
   const [cates, setCates] = useState<ResCategory[]>([]);
   const [el, setEl] = useState<HTMLElement | null>(null);
@@ -95,7 +93,7 @@ const UploadImagePanel: React.FC = () => {
         className={'button button-type-clear'}
         onClick={(e) => setEl(e.currentTarget)}
       >
-        <Cloud />
+        <span>上传</span>
       </span>
 
       <Popover
@@ -115,15 +113,12 @@ const UploadImagePanel: React.FC = () => {
         <Box sx={{ p: 4, width: 520 }}>
           <Stack spacing="5" direction={'column'}>
             <Typography variant={'body1'}>选择上传到哪个文件夹</Typography>
-            {loading && <Loading />}
-            <Grid.Container gap={1} justify="flex-start">
+            {loading && <span>加载中</span>}
+            <Grid>
               {cates.map((value) => (
                 <Grid key={value.id}>
                   <Card
-                    shadow
-                    width={'100%'}
                     style={{ textAlign: 'center' }}
-                    type={currCate?.id == value.id ? 'success' : undefined}
                     onClick={() => {
                       setCurrCate(value);
                       setErrorMsg('');
@@ -133,12 +128,11 @@ const UploadImagePanel: React.FC = () => {
                   </Card>
                 </Grid>
               ))}
-            </Grid.Container>
+            </Grid>
 
             <SizedBox height={30} />
             <Typography variant={'body1'}>选择上传的图片</Typography>
             <Card
-              shadow
               style={{
                 paddingTop: 50,
                 paddingBottom: 50,
@@ -157,7 +151,7 @@ const UploadImagePanel: React.FC = () => {
               }}
             >
               <div>
-                <File />
+                <span>点我选择文件</span>
               </div>
               <div>选择图片</div>
             </Card>
@@ -171,7 +165,7 @@ const UploadImagePanel: React.FC = () => {
             )}
 
             <SizedBox height={12} />
-            {uploadIng && <Loading />}
+            {uploadIng && <span>处理中</span>}
             <ResultMessageWidget result={result} />
 
             {result && (
@@ -208,7 +202,8 @@ const UploadImagePanel: React.FC = () => {
           <Button onClick={() => setDialogState(false)}>关闭</Button>
           <Button
             onClick={() => {
-              copy(result?.data?.url ?? '');
+              //TODO 复制并关闭
+              // copy(result?.data?.url ?? '');
               setDialogState(false);
             }}
             autoFocus

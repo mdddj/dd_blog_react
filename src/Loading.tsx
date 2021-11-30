@@ -1,5 +1,4 @@
 import React from 'react';
-import { Loading } from '@geist-ui/react';
 
 const LoadingView: React.FC = () => {
   return (
@@ -10,7 +9,7 @@ const LoadingView: React.FC = () => {
         textAlign: 'center',
       }}
     >
-      <Loading />
+      <span>加载中</span>
     </div>
   );
 };

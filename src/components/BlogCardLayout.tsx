@@ -6,10 +6,10 @@ import 'dayjs/locale/zh-cn';
 
 import { CardActions, CardContent, Paper, Stack } from '@mui/material';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
-import { User } from '@geist-ui/react';
-import Folder from '@geist-ui/react-icons/folder';
 import { SimpleTag, MyTag } from '@/widgets/MyTag';
 import MyButton from '@/widgets/MyButton';
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * 首页博客卡片布局
@@ -25,12 +25,15 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
           <CardContent>
             <div className={styles.blogTitle}>{blog.title}</div>
             <div className={styles.blogDataString}>
-              <User
+              {/* <User
                 src={'https://i.imgur.com/kbYvbMt.jpeg'}
                 name="梁典典"
                 style={{ marginLeft: -12 }}
-              />{' '}
-              <MyTag title={blog.category.name} icon={<Folder />} />
+              />{' '} */}
+              <MyTag
+                title={blog.category.name}
+                icon={<FontAwesomeIcon icon={faFolder} />}
+              />
               {blog.tags.map((value) => (
                 <SimpleTag key={value.id} title={value.name} />
               ))}

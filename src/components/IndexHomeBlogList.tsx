@@ -6,7 +6,6 @@ import { blogApi } from '@/util/request';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { responseIsSuccess } from 'dd_server_api_web/apis/utils/ResultUtil';
 import BlogCardLayout from '@/components/BlogCardLayout';
-import { Loading } from '@geist-ui/react';
 import { Box } from '@mui/material';
 
 const IndexHomeBlogList: React.FC = () => {
@@ -36,14 +35,7 @@ const IndexHomeBlogList: React.FC = () => {
         {!state &&
           blogs.map((item) => <BlogCardLayout key={item.id} blog={item} />)}
 
-        {state ? (
-          <Box className={styles.loading}>
-            加载中
-            <Loading />
-          </Box>
-        ) : (
-          <span />
-        )}
+        {state ? <Box className={styles.loading}>加载中</Box> : <span />}
 
         {!state && (
           <div style={{ textAlign: 'center', padding: 12 }}>

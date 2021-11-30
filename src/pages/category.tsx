@@ -11,7 +11,6 @@ import {
 import BaseLayout from '@/components/BaseLayout';
 import { useLocation } from 'umi';
 import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
-import { Loading, Spinner } from '@geist-ui/react';
 import '../global.css';
 
 /**
@@ -118,7 +117,7 @@ const CategoryPage: React.FC = () => {
             title={
               <span>
                 {getPageTitle()}{' '}
-                {loading && <Spinner className={'loading-flex'} />}
+                {loading && <span className={'loading-flex'} />}
               </span>
             }
             type={getPageType()}
@@ -150,14 +149,13 @@ const CategoryPage: React.FC = () => {
       {initIng && (
         <div style={{ textAlign: 'center' }}>
           <span>加载中</span>
-          <Loading />
         </div>
       )}
 
       {showInfoText && !initIng && (
         <div style={{ textAlign: 'center' }}>
           <span>{showInfoText}</span>
-          {showInfoText == '加载中...' ? <Loading /> : <></>}
+          {showInfoText == '加载中...' ? <span>加载中</span> : <></>}
         </div>
       )}
 

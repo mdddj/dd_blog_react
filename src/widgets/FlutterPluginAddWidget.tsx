@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
+  Card,
   Popover,
   Stack,
   TextField,
@@ -10,7 +11,6 @@ import {
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { FlutterPluginInfo } from '@/model/FlutterPluginModel';
-import { Card } from '@geist-ui/react';
 
 type Props = {
   insertText: (val: string) => void;
@@ -63,7 +63,7 @@ const FlutterPluginAddWidget: React.FC<Props> = ({ insertText }) => {
 
             <Box>
               {flutter && (
-                <Card shadow={true}>
+                <Card>
                   <Typography variant={'h4'}>{flutter.pubspec.name}</Typography>
                   <p>{flutter.pubspec.description}</p>
                 </Card>

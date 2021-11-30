@@ -10,8 +10,6 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
-import Github from '@geist-ui/react-icons/github';
-import MessageCircle from '@geist-ui/react-icons/messageCircle';
 
 /// 我的信息
 const person = {
@@ -43,10 +41,10 @@ const HomeAbout: React.FC = () => {
       ))}
       <Stack direction={'row'} sx={{ mt: 2 }}>
         <IconButton aria-label="联系方式" onClick={() => setOpen(true)}>
-          <MessageCircle />
+          <span>联系方式</span>
         </IconButton>
         <IconButton aria-label="github" onClick={toGithub}>
-          <Github />
+          <span>GitHub</span>
         </IconButton>
       </Stack>
 

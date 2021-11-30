@@ -1,15 +1,14 @@
 import BaseLayout from '@/components/BaseLayout';
 import MarkdownText from '@/widgets/MarkdownText';
 import SizedBox from '@/widgets/SizedBox';
-import { Button } from '@chakra-ui/react';
 import { Typography } from '@mui/material';
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 
 /// 友链页面
 const Friends: React.FC = () => {
   return (
     <BaseLayout appbarCurrent="友链" rightContainer={<FriendForm />}>
-      <Button colorScheme="blue">申请友链</Button>
+      <Button>申请友链</Button>
       <MarkdownText findKey="friend-page-desc" />
     </BaseLayout>
   );
