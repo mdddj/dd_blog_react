@@ -94,6 +94,9 @@ const FriendForm: React.FC<{ success: () => void }> = (props) => {
             提交审核
           </Button>
         </Form.Item>
+        <p>
+          注意：如果重复提交，会先删除以前包含审核通过）的提交记录。如果填写邮箱，会发送审核结果到该邮箱。
+        </p>
       </Form>
     </div>
   );

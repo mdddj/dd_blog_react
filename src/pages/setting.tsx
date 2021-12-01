@@ -8,11 +8,20 @@ import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { TextModel } from 'dd_server_api_web/apis/model/TextModel';
 import SizedBox from '@/widgets/SizedBox';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 import { Category } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import { useMount } from '@umijs/hooks';
 import { Friend } from 'dd_server_api_web/apis/model/friend';
+import SendEmail from '@/widgets/SendEmail';
 
 function TabPanel(props: {
   [x: string]: any;
@@ -87,6 +96,8 @@ export default SettingPage;
 /// 友链的审核
 const FriendShenhe: React.FC = () => {
   const [list, setList] = useState<Friend[]>([]);
+  const [dialogOpenState, setDialogOpenState] = useState(false);
+  const [email, setEmail] = useState('');
 
   useMount(() => {
     fetch();
@@ -137,7 +148,15 @@ const FriendShenhe: React.FC = () => {
               >
                 审核通过
               </Button>
-              <Button disabled={!v.email || v.email == ''}>邮件通知</Button>
+              <Button
+                disabled={!v.email || v.email == ''}
+                onClick={() => {
+                  setEmail(v.email ?? '');
+                  setDialogOpenState(true);
+                }}
+              >
+                邮件通知
+              </Button>
               <Button
                 type="dashed"
                 onClick={() => {
@@ -161,6 +180,28 @@ const FriendShenhe: React.FC = () => {
           </div>
         );
       })}
+
+      {/* 发送邮件的弹窗 */}
+      <Dialog
+        open={dialogOpenState}
+        onClose={() => setDialogOpenState(false)}
+        maxWidth={'lg'}
+        fullWidth
+      >
+        <DialogTitle>发送邮件</DialogTitle>
+        <DialogContent>
+          <SendEmail
+            email={email}
+            title={'梁典典的博客友链审核结果通知:【】'}
+            content={
+              '🎉恭喜，你在https://itbug.shop梁典典的博客中申请的友链已经通过。'
+            }
+            success={() => {
+              setDialogOpenState(false);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
