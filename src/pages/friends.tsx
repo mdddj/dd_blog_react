@@ -18,7 +18,7 @@ const Friends: React.FC = () => {
   const id = isopen ? 'fr-pp' : undefined;
 
   return (
-    <BaseLayout appbarCurrent="友链">
+    <BaseLayout appbarCurrent="友链" hideRight={true}>
       <Center>
         <Button
           onClick={(e) => {
@@ -71,7 +71,7 @@ const FriendForm: React.FC<{ success: () => void }> = (props) => {
 
   return (
     <div className="base-card" style={{ width: 600 }}>
-      <Typography variant="h2">申请友链</Typography>
+      <Typography variant="h4">申请友链</Typography>
       <SizedBox height={12} />
       <Form layout="vertical" onFinish={submit}>
         <Form.Item label="名称" name="name" required>
@@ -90,7 +90,9 @@ const FriendForm: React.FC<{ success: () => void }> = (props) => {
           <Input type="email" />
         </Form.Item>
         <Form.Item>
-          <Button htmlType="submit">提交审核</Button>
+          <Button htmlType="submit" type={'primary'}>
+            提交审核
+          </Button>
         </Form.Item>
       </Form>
     </div>

@@ -81,10 +81,10 @@ code span {
   font-size: 16px;
 }
 
-/* 博客详情页面替换它的默认字体 */
+/* 博客详情页面替换它的默认字体
 .markdown-navigation {
   font-family: 'LXGW WenKai', sans-serif !important;
-}
+} */
 
 .title-anchor {
   padding-left: 0 !important;
@@ -167,11 +167,10 @@ code span {
 /*简单的普通标签样式*/
 .simple-tag {
   color: rgba(64, 71, 86, 1);
-  padding: 1px 0.25rem;
+  padding: 3px 0.5rem;
   background: rgba(153, 161, 179, 0.1);
   border-radius: 0.375rem;
   margin: 0 0.25rem;
-  font-size: 13px;
 }
 
 /* 使Spinner 加载中组件和span在同一行 */
@@ -299,6 +298,10 @@ code span {
 
 .mr {
   margin-right: 0.5rem;
+}
+
+.mt {
+  margin-top: 0.5rem;
 }
 
 /* 博客分类flex版本的布局*/

@@ -4,7 +4,6 @@ import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import 'github-markdown-css/github-markdown.css';
-import '../global.css';
 
 /**
  * 博客预览组件
@@ -15,7 +14,7 @@ export const BlogPreview: React.FC<{ content: string }> = ({ content }) => {
   return (
     <>
       <ReactMarkdown
-        className={'markdown-body my-pre'}
+        className={'markdown-body'}
         children={content}
         remarkPlugins={[remarkGfm]}
         components={{
