@@ -2,7 +2,7 @@ import BaseLayout from '@/components/BaseLayout';
 import 'react-markdown-editor-lite/lib/index.css';
 import MdEditor from 'react-markdown-editor-lite';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Button, Form, Input, message, Space } from 'antd';
+import { Button, Form, Input, message, Popover, Select, Space } from 'antd';
 import { useState } from 'react';
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
@@ -22,7 +22,7 @@ import { Category } from 'dd_server_api_web/apis/model/result/BlogPushNewResultD
 import { useMount } from '@umijs/hooks';
 import { Friend } from 'dd_server_api_web/apis/model/friend';
 import SendEmail from '@/widgets/SendEmail';
-
+const { Option } = Select;
 function TabPanel(props: {
   [x: string]: any;
   children: any;
@@ -299,12 +299,25 @@ const CategoryForm: React.FC = () => {
 const TextForm: React.FC = () => {
   const [content, setContent] = useState('');
   const [model, setModel] = useState<TextModel | undefined>();
+  const [list, setList] = useState<TextModel[]>([]);
+  const [openP, setOpenP] = useState(false);
 
   const [form] = Form.useForm();
   /// 处理变化
   function handleEditorChange(data: { html: string; text: string }) {
     setContent(data.text);
   }
+
+  useMount(() => fetch());
+
+  const fetch = () => {
+    blogApi()
+      .getTextList(0, 1000)
+      .then((r) => {
+        setList(r.data?.list ?? []);
+        message.success('加载成功');
+      });
+  };
 
   return (
     <Box>
@@ -329,7 +342,13 @@ const TextForm: React.FC = () => {
         }}
       >
         <Form.Item name="name">
-          <Input placeholder="输入关键字" />
+          <Select style={{ width: 120 }} onChange={(v) => {}}>
+            {list.map((item) => (
+              <Option value={item.name} key={item.id}>
+                {item.name}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit">加载</Button>
@@ -343,6 +362,49 @@ const TextForm: React.FC = () => {
           >
             重置
           </Button>
+
+          <Button
+            onClick={() => {
+              fetch();
+            }}
+            className={'ml'}
+          >
+            刷新
+          </Button>
+
+          <Popover
+            content={
+              <a
+                onClick={() => {
+                  if (model) {
+                    blogApi()
+                      .deleteTextById(`${model.id}`)
+                      .then((r) => {
+                        successResultHandle(
+                          r,
+                          (d) => {
+                            message.success(d);
+                            fetch();
+                          },
+                          message.error,
+                        );
+                      });
+                  }
+                }}
+              >
+                删除
+              </a>
+            }
+            title="确定删除吗？"
+            visible={openP}
+            onVisibleChange={(v) => {
+              setOpenP(v);
+            }}
+          >
+            <Button onClick={() => {}} className={'ml'}>
+              删除
+            </Button>
+          </Popover>
         </Form.Item>
       </Form>
 
@@ -377,6 +439,8 @@ const TextForm: React.FC = () => {
         <Form.Item label="关键字" name="name">
           <Input />
         </Form.Item>
+
+        {model && model.intro && <BlogPreview content={model.intro} showCopy />}
 
         <MdEditor
           style={{ height: '300px' }}

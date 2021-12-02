@@ -20,14 +20,15 @@
     ]
   },
   "dependencies": {
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
+    "@mui/icons-material": "^5.2.0",
     "@mui/material": "^5.0.6",
     "@umijs/hooks": "^1.9.3",
     "@umijs/plugin-esbuild": "^1.4.1",
-    "@emotion/styled": "^11.6.0",
-    "@emotion/react":"^11.7.0",
     "browser-fs-access": "^0.21.0",
     "browserslist": "^4.17.6",
     "dayjs": "^1.10.7",
@@ -44,7 +45,8 @@
     "react-syntax-highlighter": "^15.4.4",
     "remark-gfm": "^2.0.0",
     "umi": "^3.5.20",
-    "umi-plugin-keep-alive": "^0.0.1-beta.29"
+    "umi-plugin-keep-alive": "^0.0.1-beta.29",
+    "use-clippy": "^1.0.8"
   },
   "devDependencies": {
     "@types/markdown-navbar": "^1.4.0",

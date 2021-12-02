@@ -14,6 +14,7 @@ import { defaultElevation } from '@/config/server';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { history } from 'umi';
 import IconSpan from '@/widgets/IconSpan';
+import Pay from '@/widgets/Pay';
 
 const api = blogApi();
 
@@ -109,6 +110,8 @@ const BlogDetailPage: React.FC = () => {
             <div style={{ width: '100%', display: 'block' }}>
               <BlogPreview content={blog.content} />
             </div>
+
+            <Pay />
           </div>
         </Paper>
       )}

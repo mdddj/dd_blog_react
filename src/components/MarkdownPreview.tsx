@@ -3,6 +3,7 @@ import React from 'react';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import useClippy from 'use-clippy';
 import 'github-markdown-css/github-markdown.css';
 import '../markdown.css';
 
@@ -11,9 +12,22 @@ import '../markdown.css';
  * @param content 预览的内容 markdown 文本
  * @constructor
  */
-export const BlogPreview: React.FC<{ content: string }> = ({ content }) => {
+export const BlogPreview: React.FC<{ content: string; showCopy?: boolean }> = ({
+  content,
+  showCopy,
+}) => {
+  const [_, setClipboard] = useClippy();
   return (
     <>
+      {showCopy && (
+        <a
+          onClick={() => {
+            setClipboard(content);
+          }}
+        >
+          copy
+        </a>
+      )}
       <ReactMarkdown
         className={'markdown-body'}
         children={content}
@@ -33,8 +47,8 @@ export const BlogPreview: React.FC<{ content: string }> = ({ content }) => {
                   border: 'none',
                   fontSize: 15,
                   backgroundColor: 'rgba(27,31,35,.05)',
-                  fontFamily:
-                    '"JetBrains Mono", HYZhengYuan, "Fira Code", Menlo, "Ubuntu Mono", Consolas',
+                  fontFamily: 'Fira Code',
+                  lineHeight: 1.5,
                 }}
                 {...props}
               />

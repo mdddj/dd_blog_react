@@ -10,7 +10,8 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
-
+import GitHubIcon from '@mui/icons-material/GitHub';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 /// 我的信息
 const person = {
   name: '梁典典',
@@ -41,10 +42,10 @@ const HomeAbout: React.FC = () => {
       ))}
       <Stack direction={'row'} sx={{ mt: 2 }}>
         <IconButton aria-label="联系方式" onClick={() => setOpen(true)}>
-          <span>联系方式</span>
+          <QuestionAnswerIcon />
         </IconButton>
         <IconButton aria-label="github" onClick={toGithub}>
-          <span>GitHub</span>
+          <GitHubIcon />
         </IconButton>
       </Stack>
 
