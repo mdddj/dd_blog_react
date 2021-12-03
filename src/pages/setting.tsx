@@ -2,7 +2,16 @@ import BaseLayout from '@/components/BaseLayout';
 import 'react-markdown-editor-lite/lib/index.css';
 import MdEditor from 'react-markdown-editor-lite';
 import { BlogPreview } from '@/components/MarkdownPreview';
-import { Button, Form, Input, message, Popover, Select, Space } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  message,
+  Popover,
+  Select,
+  Space,
+  Tabs,
+} from 'antd';
 import { useState } from 'react';
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
@@ -13,8 +22,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Tab,
-  Tabs,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -22,7 +29,10 @@ import { Category } from 'dd_server_api_web/apis/model/result/BlogPushNewResultD
 import { useMount } from '@umijs/hooks';
 import { Friend } from 'dd_server_api_web/apis/model/friend';
 import SendEmail from '@/widgets/SendEmail';
+import ResourceCategorySetting from '@/components/setting/ResourceCategorySetting';
 const { Option } = Select;
+const { TabPane } = Tabs;
+
 function TabPanel(props: {
   [x: string]: any;
   children: any;
@@ -66,26 +76,20 @@ const SettingPage: React.FC = () => {
   return (
     <BaseLayout hideRight>
       <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="字典" {...a11yProps(0)} />
-            <Tab label="分类" {...a11yProps(1)} />
-            <Tab label="友链审核" {...a11yProps(2)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <TextForm />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <CategoryForm />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <FriendShenhe />
-        </TabPanel>
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="字典" key="1">
+            <TextForm />
+          </TabPane>
+          <TabPane tab="分类" key="2">
+            <CategoryForm />
+          </TabPane>
+          <TabPane tab="友链" key="3">
+            <FriendShenhe />
+          </TabPane>
+          <TabPane tab="资源" key="4">
+            <ResourceCategorySetting />
+          </TabPane>
+        </Tabs>
       </Box>
     </BaseLayout>
   );
@@ -119,6 +123,7 @@ const FriendShenhe: React.FC = () => {
 
   return (
     <>
+      {list.length == 0 && <span>暂无需要审核的友链</span>}
       {list.map((v) => {
         return (
           <div key={v.id} className="border-bottom mt">
