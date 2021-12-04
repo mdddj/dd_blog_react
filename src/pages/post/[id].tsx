@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useParams } from 'umi';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { Avatar, Paper, Typography } from '@mui/material';
-import { useBoolean, useMount } from '@umijs/hooks';
+import { useBoolean, useMount, useScroll } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import MarkdownNavbar from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
@@ -22,7 +22,6 @@ const BlogDetailPage: React.FC = () => {
   const [blog, setBlog] = useState<BlogData | undefined>();
   const { state, setTrue, setFalse } = useBoolean(false);
   const params = useParams<{ id: string }>();
-
   const { id } = params;
 
   // 根据id
@@ -111,7 +110,7 @@ const BlogDetailPage: React.FC = () => {
               <BlogPreview content={blog.content} />
             </div>
 
-            <Pay />
+            {/* <Pay /> */}
           </div>
         </Paper>
       )}

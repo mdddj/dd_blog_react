@@ -49,11 +49,23 @@ export const BlogPreview: React.FC<{ content: string; showCopy?: boolean }> = ({
                   backgroundColor: 'rgba(27,31,35,.05)',
                   fontFamily: 'Fira Code',
                   lineHeight: 1.5,
+                  margin: 0,
                 }}
                 {...props}
               />
             ) : (
-              <code className={className} {...props}>
+              <code
+                className={className}
+                {...props}
+                style={{
+                  border: 'none',
+                  fontSize: 15,
+                  backgroundColor: 'rgba(27,31,35,.05)',
+                  fontFamily: 'Fira Code',
+                  lineHeight: 1.5,
+                  margin: 0,
+                }}
+              >
                 {children}
               </code>
             );

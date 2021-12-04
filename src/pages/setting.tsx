@@ -67,12 +67,6 @@ function a11yProps(index: number) {
 
 /// 设置页面
 const SettingPage: React.FC = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: any, newValue: React.SetStateAction<number>) => {
-    setValue(newValue);
-  };
-
   return (
     <BaseLayout hideRight>
       <Box sx={{ width: '100%' }}>
@@ -252,6 +246,24 @@ const CategoryForm: React.FC = () => {
           >
             重置
           </Button>
+          <Button
+            onClick={() => {
+              category &&
+                blogApi()
+                  .deleteBlogCategory(category.id)
+                  .then((r) => {
+                    successResultHandle(
+                      r,
+                      (d) => {
+                        message.success(d);
+                      },
+                      message.error,
+                    );
+                  });
+            }}
+          >
+            删除
+          </Button>
         </Form.Item>
       </Form>
 
@@ -347,7 +359,7 @@ const TextForm: React.FC = () => {
         }}
       >
         <Form.Item name="name">
-          <Select style={{ width: 120 }} onChange={(v) => {}}>
+          <Select style={{ width: 200 }} onChange={(v) => {}}>
             {list.map((item) => (
               <Option value={item.name} key={item.id}>
                 {item.name}

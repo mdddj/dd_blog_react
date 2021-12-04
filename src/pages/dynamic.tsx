@@ -8,10 +8,12 @@ import {
   PagerModel,
   responseIsSuccess,
   Result,
+  successResultHandle,
 } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { ResourceModel } from 'dd_server_api_web/apis/model/ResourceModel';
 import SizedBox from '@/widgets/SizedBox';
 import { DynamicCard } from '@/widgets/dynamic/SimpleDynamicCard';
+import { message } from 'antd';
 
 type DynamicListResultModel = {
   page: PagerModel;
@@ -33,6 +35,13 @@ const DynamicPage: React.FC = () => {
       type: 'simple-text',
     } as any);
     console.log(result);
+    successResultHandle(
+      result,
+      (d) => {
+        message.success(result.message);
+      },
+      message.error,
+    );
   };
 
   // 获取列表
