@@ -15,6 +15,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { history } from 'umi';
 import IconSpan from '@/widgets/IconSpan';
 import Pay from '@/widgets/Pay';
+import { Anchor } from 'antd';
 
 const api = blogApi();
 
@@ -62,7 +63,9 @@ const BlogDetailPage: React.FC = () => {
       hideRight={false}
       rightContainer={
         <div className="navigation mt box">
-          <MarkdownNavbar source={blog?.content ?? ''} />
+          <Anchor>
+            <MarkdownNavbar source={blog?.content ?? ''} />
+          </Anchor>
         </div>
       }
     >
