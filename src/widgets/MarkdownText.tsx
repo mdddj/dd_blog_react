@@ -17,6 +17,9 @@ const MarkdownText: React.FC<{ findKey: string }> = (props) => {
       });
   });
 
+  if (markdown == '') {
+    return <span>无内容</span>;
+  }
   return <>{markdown != '' && <BlogPreview content={markdown} />}</>;
 };
 export default MarkdownText;

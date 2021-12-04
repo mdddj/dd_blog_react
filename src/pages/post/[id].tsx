@@ -16,6 +16,7 @@ import { history } from 'umi';
 import IconSpan from '@/widgets/IconSpan';
 import Pay from '@/widgets/Pay';
 import { Anchor } from 'antd';
+import DetailFoot from '@/widgets/DetailFoot';
 
 const api = blogApi();
 
@@ -114,6 +115,7 @@ const BlogDetailPage: React.FC = () => {
             </div>
 
             {/* <Pay /> */}
+            <DetailFoot />
           </div>
         </Paper>
       )}
