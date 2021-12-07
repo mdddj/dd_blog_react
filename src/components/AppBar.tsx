@@ -1,15 +1,21 @@
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
-import Toolbar from '@material-ui/core/Toolbar';
 import { history } from 'umi';
-import Typography from '@material-ui/core/Typography';
-import { AppBar, Avatar, Menu, MenuItem, Stack } from '@material-ui/core';
 import { useMount } from '@umijs/hooks';
 import { blogApi, getAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useState } from 'react';
-import { Loading } from '@geist-ui/react';
+import Loading from '@/Loading';
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Menu,
+  MenuItem,
+  Stack,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 
 /**
  * 通用导航栏组件

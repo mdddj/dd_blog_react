@@ -46,7 +46,6 @@
     "react-syntax-highlighter": "^15.4.4",
     "remark-gfm": "^2.0.0",
     "umi": "^3.5.20",
-    "umi-plugin-keep-alive": "^0.0.1-beta.29",
     "use-clippy": "^1.0.8"
   },
   "devDependencies": {
