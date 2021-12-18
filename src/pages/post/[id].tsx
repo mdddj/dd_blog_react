@@ -6,7 +6,6 @@ import { useBoolean, useMount, useScroll } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
 import MarkdownNavbar from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import BaseLayout from '@/components/BaseLayout';
 import CustomLoading from '@/widgets/CustomLoading';
@@ -14,7 +13,6 @@ import { defaultElevation } from '@/config/server';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { history } from 'umi';
 import IconSpan from '@/widgets/IconSpan';
-import Pay from '@/widgets/Pay';
 import { Anchor } from 'antd';
 import DetailFoot from '@/widgets/DetailFoot';
 
@@ -61,7 +59,7 @@ const BlogDetailPage: React.FC = () => {
 
   return (
     <BaseLayout
-      hideRight={false}
+      hideRight={true}
       rightContainer={
         <div className="navigation mt box">
           <Anchor>

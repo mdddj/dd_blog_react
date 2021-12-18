@@ -3,19 +3,45 @@ import { blogApi } from '@/util/request';
 import Center from '@/widgets/Center';
 import MarkdownText from '@/widgets/MarkdownText';
 import SizedBox from '@/widgets/SizedBox';
-import { Popover, Typography } from '@mui/material';
+import {
+  Avatar,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Popover,
+  Typography,
+} from '@mui/material';
+import { useMount } from '@umijs/hooks';
 import { Button, Form, Input, message } from 'antd';
+import { Friend } from 'dd_server_api_web/apis/model/friend';
 import {
   Result,
   successResultHandle,
 } from 'dd_server_api_web/src/utils/ResultUtil';
-import { ReactHTMLElement, useState } from 'react';
+import React, { ReactHTMLElement, useState } from 'react';
 
 /// 友链页面
 const Friends: React.FC = () => {
   const [ell, setell] = useState<null | HTMLElement>(null);
   const isopen = Boolean(ell);
   const id = isopen ? 'fr-pp' : undefined;
+
+  // 已通过审核的友链列表
+  const [friends, setFriends] = useState<Friend[]>([]);
+
+  useMount(() => {
+    fetchAllFriends();
+  });
+
+  /// 获取全部友链
+  const fetchAllFriends = async () => {
+    let result = await blogApi().getFriends({ status: 1 });
+    console.log(result);
+    setFriends(result?.data ?? []);
+  };
 
   return (
     <BaseLayout appbarCurrent="友链" hideRight={true}>
@@ -30,6 +56,17 @@ const Friends: React.FC = () => {
       </Center>
 
       <MarkdownText findKey="friend-page-desc" />
+
+      {/* 显示友链的列表 */}
+      <SizedBox height={20} />
+      <Typography variant="h4" gutterBottom component="div">
+        友链
+      </Typography>
+      <List>
+        {friends.map((v) => (
+          <FriendItemLayout friend={v} key={v.id} />
+        ))}
+      </List>
 
       <Popover
         open={isopen}
@@ -54,6 +91,39 @@ const Friends: React.FC = () => {
 };
 
 export default Friends;
+
+/// 友链的item布局
+const FriendItemLayout: React.FC<{ friend: Friend }> = ({ friend }) => {
+  return (
+    <>
+      <ListItemButton
+        alignItems="flex-start"
+        onClick={() => {
+          window.open(friend.url, '_blank');
+        }}
+      >
+        <ListItemAvatar>
+          <Avatar alt={friend.name} src={friend.logo} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={friend.name}
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              ></Typography>
+              {friend.intro}
+            </React.Fragment>
+          }
+        />
+      </ListItemButton>
+      <Divider variant="inset" component="li" />
+    </>
+  );
+};
 
 /// 提交友链的表单
 const FriendForm: React.FC<{ success: () => void }> = (props) => {

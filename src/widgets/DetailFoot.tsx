@@ -29,7 +29,6 @@ const DetailFoot: React.FC = () => {
           onClick={() => {
             setShow(true);
           }}
-          fullWidth
         >
           打赏
         </Button>
