@@ -94,16 +94,19 @@ export default SettingPage;
 /// 友链的审核
 const FriendShenhe: React.FC = () => {
   const [list, setList] = useState<Friend[]>([]);
+  /// 当前显示的是什么状态的。
+  const [currentState, setCurrentState] = useState(0);
   const [dialogOpenState, setDialogOpenState] = useState(false);
   const [email, setEmail] = useState('');
 
   useMount(() => {
-    fetch();
+    fetch(0);
   });
 
-  const fetch = () => {
+  const fetch = (state: number) => {
+    setCurrentState(state);
     blogApi()
-      .getFriends({ state: 0 })
+      .getFriends({ state })
       .then((r) => {
         successResultHandle(
           r,
@@ -117,6 +120,16 @@ const FriendShenhe: React.FC = () => {
 
   return (
     <>
+      <div>
+        <Button
+          onClick={() => {
+            fetch(1);
+          }}
+        >
+          已审核通过的友链
+        </Button>
+      </div>
+
       {list.length == 0 && <span>暂无需要审核的友链</span>}
       {list.map((v) => {
         return (
@@ -127,26 +140,28 @@ const FriendShenhe: React.FC = () => {
             <div>logo：{v.logo}</div>
             <div>邮箱：{v.email}</div>
             <Space>
-              <Button
-                type="primary"
-                onClick={() => {
-                  v.state = 1;
-                  blogApi()
-                    .updateFriendsObject(v)
-                    .then((r) => {
-                      successResultHandle(
-                        r,
-                        (d) => {
-                          message.success(r.message);
-                          fetch();
-                        },
-                        message.error,
-                      );
-                    });
-                }}
-              >
-                审核通过
-              </Button>
+              {currentState == 0 && (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    v.state = 1;
+                    blogApi()
+                      .updateFriendsObject(v)
+                      .then((r) => {
+                        successResultHandle(
+                          r,
+                          (d) => {
+                            message.success(r.message);
+                            fetch(0);
+                          },
+                          message.error,
+                        );
+                      });
+                  }}
+                >
+                  审核通过
+                </Button>
+              )}
               <Button
                 disabled={!v.email || v.email == ''}
                 onClick={() => {
@@ -166,7 +181,7 @@ const FriendShenhe: React.FC = () => {
                         r,
                         (d) => {
                           message.success(r.data);
-                          fetch();
+                          fetch(0);
                         },
                         message.error,
                       );

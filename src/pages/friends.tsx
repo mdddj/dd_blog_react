@@ -38,7 +38,7 @@ const Friends: React.FC = () => {
 
   /// 获取全部友链
   const fetchAllFriends = async () => {
-    let result = await blogApi().getFriends({ status: 1 });
+    let result = await blogApi().getFriends({ state: 1 });
     console.log(result);
     setFriends(result?.data ?? []);
   };

@@ -9,4 +9,5 @@ export default [
   { exact: true, path: '/post/:id', component: '@/pages/post/[id]' },
   { path: '/friends', component: '@/pages/friends' },
   { path: '/setting', component: '@/pages/setting' },
+  { exact: true, path: '/user/:id', component: '@/pages/user/[id]' },
 ];

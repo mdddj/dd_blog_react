@@ -4,6 +4,7 @@ import { history, Link } from 'umi';
 import UserStateTipWidget from '@/widgets/UserStateTipWidget';
 import { Menu, MenuItem } from '@mui/material';
 import { blogApi } from '@/util/request';
+import { User } from 'dd_server_api_web/apis/model/UserModel';
 
 //参数
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 //网站导航条
 const BootStrapAppbar: React.FC<Props> = ({ current }) => {
   const [menuEl, setMenuEl] = useState<HTMLElement | null>();
+  const [user, setUser] = useState<User | undefined>();
 
   const isOpen = Boolean(menuEl);
   /// 获取高亮样式
@@ -50,6 +52,7 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
       </nav>
       <UserStateTipWidget
         logined={(user) => {
+          setUser(user);
           return (
             <span
               onClick={(e) => {
@@ -80,6 +83,13 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
           }}
         >
           发布博客
+        </MenuItem>
+        <MenuItem
+          onClick={async () => {
+            history.push('/user/' + user?.id);
+          }}
+        >
+          个人中心
         </MenuItem>
         <MenuItem
           onClick={() => {
