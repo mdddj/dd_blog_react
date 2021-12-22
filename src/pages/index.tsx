@@ -5,22 +5,32 @@ import MeituanCoupon from '@/components/ad/meituan';
 import WebSiteResource from '@/widgets/WebSiteResource';
 import BaseLayout from '@/components/BaseLayout';
 import MiniAppWidget from '@/widgets/MiniAppWidget';
+import { useMediaQuery } from 'react-responsive';
+import PhoneIndex from './phone/home';
 
 export default function IndexPage() {
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+
   return (
-    <BaseLayout
-      appbarCurrent={'index'}
-      rightContainer={
-        <>
-          <HomeAbout />
-          {/*<WeChatApp />*/}
-          <MiniAppWidget />
-          <MeituanCoupon />
-          <WebSiteResource />
-        </>
-      }
-    >
-      <IndexHomeBlogList />
-    </BaseLayout>
+    <>
+      {!isTabletOrMobile && (
+        <BaseLayout
+          appbarCurrent={'index'}
+          rightContainer={
+            <>
+              <HomeAbout />
+              {/*<WeChatApp />*/}
+              <MiniAppWidget />
+              <MeituanCoupon />
+              <WebSiteResource />
+            </>
+          }
+        >
+          <IndexHomeBlogList />
+        </BaseLayout>
+      )}
+
+      {isTabletOrMobile && <PhoneIndex />}
+    </>
   );
 }

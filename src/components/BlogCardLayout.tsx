@@ -10,6 +10,11 @@ import { SimpleTag, MyTag } from '@/widgets/MyTag';
 import MyButton from '@/widgets/MyButton';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMediaQuery } from 'react-responsive';
+import { Button, Card, Toast } from 'antd-mobile';
+import { RightOutline } from 'antd-mobile-icons';
+import { BlogPreview } from './MarkdownPreview';
+import ReactMarkdown from 'react-markdown';
 
 /**
  * 首页博客卡片布局
@@ -18,6 +23,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  */
 const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
   let da = dayjs(blog.dateString, 'zh-cn').format('YYYY-MM-DD');
+
+  /// 适配手机版本
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+
+  /// 手机版本博客卡片
+  if (isTabletOrMobile) {
+    return (
+      <>
+        <Card
+          title={<div>{blog.title}</div>}
+          style={{
+            margin: 12,
+          }}
+        >
+          <div className={styles.content} style={{ height: 50 }}>
+            {blog.content.substring(0, 50)}
+          </div>
+        </Card>
+      </>
+    );
+  }
+
+  /// 电脑版本博客卡片
   return (
     <Paper elevation={0} className={styles.blogWrap}>
       <div className={styles.blogRoot}>

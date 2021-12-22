@@ -2,6 +2,7 @@ import { Container, Grid } from '@mui/material';
 import React, { ReactNode } from 'react';
 import StickyFooter from '@/components/AppFoot';
 import BootStrapAppbar from '@/components/appbar/BootStrapAppbar';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = {
   appbarCurrent?: string;
@@ -18,7 +19,8 @@ const BaseLayout: React.FC<Props> = ({
   hideRight,
   full,
 }) => {
-  const mainXs = hideRight ? 12 : 8;
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  let mainXs = hideRight || isTabletOrMobile ? 12 : 8;
   const maxWidth = hideRight ? 'md' : 'lg';
 
   const renderColumnContainer = (
@@ -27,7 +29,7 @@ const BaseLayout: React.FC<Props> = ({
         <Grid item xs={mainXs}>
           {children}
         </Grid>
-        {!hideRight && (
+        {!hideRight && !isTabletOrMobile && (
           <Grid item xs={4}>
             {rightContainer}
           </Grid>
