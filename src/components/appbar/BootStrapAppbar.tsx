@@ -5,24 +5,32 @@ import UserStateTipWidget from '@/widgets/UserStateTipWidget';
 import { Menu, MenuItem } from '@mui/material';
 import { blogApi } from '@/util/request';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
-
+import { useMediaQuery } from 'react-responsive';
+import {
+  AppOutline,
+  MessageFill,
+  MessageOutline,
+  UnorderedListOutline,
+  UserOutline,
+} from 'antd-mobile-icons';
+import { Badge, TabBar } from 'antd-mobile';
 //参数
 type Props = {
   current?: string;
 };
 
-//网站导航条
+//网站导航条---
 const BootStrapAppbar: React.FC<Props> = ({ current }) => {
   const [menuEl, setMenuEl] = useState<HTMLElement | null>();
   const [user, setUser] = useState<User | undefined>();
-
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' }); ///检测设备在手机模式下。
   const isOpen = Boolean(menuEl);
   /// 获取高亮样式
   const getStyle = (routeName: string): string => {
     return current && current == routeName ? 'nav-active' : '';
   };
 
-  return (
+  const appbar = (
     <div className={'top-bar'}>
       <h5 className={'top-bar-h5'} onClick={() => history.push('/')}>
         梁典典的博客
@@ -108,6 +116,53 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
       </Menu>
     </div>
   );
+
+  return (
+    <>
+      {!isTabletOrMobile && appbar}
+      {isTabletOrMobile && <PhoneNavbar />}
+    </>
+  );
 };
 
 export default BootStrapAppbar;
+
+/// 手机端导航栏
+
+const PhoneNavbar: React.FC = () => {
+  const tabs = [
+    {
+      key: 'home',
+      title: '首页',
+      icon: <AppOutline />,
+    },
+    {
+      key: 'todo',
+      title: '我的待办',
+      icon: <UnorderedListOutline />,
+      badge: '5',
+    },
+    {
+      key: 'message',
+      title: '我的消息',
+      icon: (active: boolean) =>
+        active ? <MessageFill /> : <MessageOutline />,
+      badge: '99+',
+    },
+    {
+      key: 'personalCenter',
+      title: '个人中心',
+      icon: <UserOutline />,
+    },
+  ];
+
+  return (
+    <>
+      <TabBar>
+        {tabs.map((item) => (
+          <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+        ))}
+      </TabBar>
+    </>
+  );
+};

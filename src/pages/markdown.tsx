@@ -40,7 +40,7 @@ Editor.use(CustomImageUpload);
 Editor.use(FlutterPlugin);
 Editor.use(CustomAuthTip);
 
-var _ = require('lodash');
+import { remove } from 'lodash';
 
 /// 发布博客页面
 const MarkdownPage: React.FC = () => {
@@ -247,7 +247,7 @@ const MarkdownPage: React.FC = () => {
                           /// 判断是否存在,如果是选中状态，需要删除
                           if (tagIsSelect(value.name)) {
                             let newarr = [...selectTags];
-                            _.remove(newarr, function (n: string) {
+                            remove(newarr, function (n: string) {
                               return n == value.name;
                             });
                             setSelectTags(newarr);
@@ -272,7 +272,7 @@ const MarkdownPage: React.FC = () => {
                         className="c-active"
                         onClick={() => {
                           let _newtags = [...newTags];
-                          _.remove(_newtags, function (n: string) {
+                          remove(_newtags, function (n: string) {
                             return n == value;
                           });
                           setNewTags(_newtags);

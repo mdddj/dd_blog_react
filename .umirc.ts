@@ -9,7 +9,7 @@ export default defineConfig({
   },
   routes: routers,
   fastRefresh: {},
-  mfsu: {},
+  // mfsu: {},
   externals: {
     react: 'window.React',
     'react-dom': 'window.ReactDOM',

@@ -3,7 +3,7 @@ import routes from './routers';
 
 export default defineConfig({
   routes,
-  mfsu: {},
+  // mfsu: {},
   externals: {
     react: 'window.React',
     'react-dom': 'window.ReactDOM',

@@ -1,4 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material';
+import 'antd-mobile/es/global';
 const theme = createTheme({
   palette: {
     primary: {
