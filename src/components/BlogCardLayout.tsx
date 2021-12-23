@@ -11,7 +11,6 @@ import MyButton from '@/widgets/MyButton';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMediaQuery } from 'react-responsive';
-import { Card } from 'antd-mobile';
 
 /**
  * 首页博客卡片布局
@@ -28,11 +27,17 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
   if (isTabletOrMobile) {
     return (
       <>
-        <Card
-          title={<div>{blog.title}</div>}
-          style={{
-            margin: 12,
+        <p
+          onClick={() => {
+            history.push('/post/' + blog.id);
           }}
+        >
+          {blog.title}
+        </p>
+
+        {/* <Card
+          title={<div>{blog.title}</div>}
+          style={{ fontWeight: 'normal' }}
           onHeaderClick={() => {
             history.push('/post/' + blog.id);
           }}
@@ -40,7 +45,7 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
           <div className={styles.content} style={{ height: 50 }}>
             {blog.content.substring(0, 50)}
           </div>
-        </Card>
+        </Card> */}
       </>
     );
   }
