@@ -15,10 +15,14 @@ import { history } from 'umi';
 import IconSpan from '@/widgets/IconSpan';
 import { Anchor } from 'antd';
 import DetailFoot from '@/widgets/DetailFoot';
+import { useMediaQuery } from 'react-responsive';
+import { Divider, NavBar } from 'antd-mobile';
+import SizedBox from '@/widgets/SizedBox';
 
 const api = blogApi();
 
 const BlogDetailPage: React.FC = () => {
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
   const [blog, setBlog] = useState<BlogData | undefined>();
   const { state, setTrue, setFalse } = useBoolean(false);
   const params = useParams<{ id: string }>();
@@ -58,66 +62,99 @@ const BlogDetailPage: React.FC = () => {
   };
 
   return (
-    <BaseLayout
-      hideRight={true}
-      rightContainer={
-        <div className="navigation mt box">
-          <Anchor>
-            <MarkdownNavbar source={blog?.content ?? ''} />
-          </Anchor>
-        </div>
-      }
-    >
-      {state && <CustomLoading />}
-
-      {blog && (
-        <Paper elevation={defaultElevation}>
-          {state && <div>加载中</div>}
-
-          <div style={{ padding: 0 }}>
-            <Typography
-              variant={'h4'}
-              style={{ fontWeight: 800, marginBottom: 32 }}
-            >
-              {blog.title}
-            </Typography>
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: 38,
-              }}
-            >
-              <Avatar
-                alt="梁典典"
-                src={'https://i.imgur.com/kbYvbMt.jpeg'}
-                sx={{ width: 36, height: 36 }}
-              />
-
-              <Typography
-                style={{
-                  color: 'rgb(105, 105, 105)',
-                  marginLeft: 5,
-                }}
-              >
-                <span style={{ marginRight: 12, fontWeight: 500 }}>梁典典</span>{' '}
-                发布于 {blog?.dateString}
-              </Typography>
-
-              <IconSpan text={'编辑'} icon={faEdit} onClick={onEdit} />
+    <>
+      {!isTabletOrMobile && (
+        <BaseLayout
+          hideRight={true}
+          rightContainer={
+            <div className="navigation mt box">
+              <Anchor>
+                <MarkdownNavbar source={blog?.content ?? ''} />
+              </Anchor>
             </div>
+          }
+        >
+          {state && <CustomLoading />}
 
-            <div style={{ width: '100%', display: 'block' }}>
-              <BlogPreview content={blog.content} />
-            </div>
+          {blog && (
+            <Paper elevation={defaultElevation}>
+              {state && <div>加载中</div>}
 
-            {/* <Pay /> */}
-            <DetailFoot />
-          </div>
-        </Paper>
+              <div style={{ padding: 0 }}>
+                <Typography
+                  variant={'h4'}
+                  style={{ fontWeight: 800, marginBottom: 32 }}
+                >
+                  {blog.title}
+                </Typography>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: 38,
+                  }}
+                >
+                  <Avatar
+                    alt="梁典典"
+                    src={'https://i.imgur.com/kbYvbMt.jpeg'}
+                    sx={{ width: 36, height: 36 }}
+                  />
+
+                  <Typography
+                    style={{
+                      color: 'rgb(105, 105, 105)',
+                      marginLeft: 5,
+                    }}
+                  >
+                    <span style={{ marginRight: 12, fontWeight: 500 }}>
+                      梁典典
+                    </span>{' '}
+                    发布于 {blog?.dateString}
+                  </Typography>
+
+                  <IconSpan text={'编辑'} icon={faEdit} onClick={onEdit} />
+                </div>
+
+                <div style={{ width: '100%', display: 'block' }}>
+                  <BlogPreview content={blog.content} />
+                </div>
+
+                {/* <Pay /> */}
+                <DetailFoot />
+              </div>
+            </Paper>
+          )}
+        </BaseLayout>
       )}
-    </BaseLayout>
+      {isTabletOrMobile && (
+        <>
+          {/* 导航 */}
+          <NavBar
+            back="返回"
+            onBack={() => {
+              history.goBack();
+            }}
+            left="首页"
+          >
+            {blog?.title ?? ''}
+          </NavBar>
+
+          <SizedBox height={20} />
+
+          <Divider />
+
+          {/* 正文内容 */}
+          <div
+            style={{
+              padding: 12,
+            }}
+          >
+            <BlogPreview content={blog?.content ?? ''} />
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
