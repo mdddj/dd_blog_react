@@ -4,8 +4,6 @@ import { BlogPreview } from '@/components/MarkdownPreview';
 import { Avatar, Paper, Typography } from '@mui/material';
 import { useBoolean, useMount, useScroll } from '@umijs/hooks';
 import { blogApi } from '@/util/request';
-import MarkdownNavbar from 'markdown-navbar';
-import 'markdown-navbar/dist/navbar.css';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import BaseLayout from '@/components/BaseLayout';
 import CustomLoading from '@/widgets/CustomLoading';
@@ -13,7 +11,6 @@ import { defaultElevation } from '@/config/server';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { history } from 'umi';
 import IconSpan from '@/widgets/IconSpan';
-import { Anchor } from 'antd';
 import DetailFoot from '@/widgets/DetailFoot';
 import { useMediaQuery } from 'react-responsive';
 import { Divider, NavBar } from 'antd-mobile';
@@ -66,13 +63,7 @@ const BlogDetailPage: React.FC = () => {
       {!isTabletOrMobile && (
         <BaseLayout
           hideRight={true}
-          rightContainer={
-            <div className="navigation mt box">
-              <Anchor>
-                <MarkdownNavbar source={blog?.content ?? ''} />
-              </Anchor>
-            </div>
-          }
+          rightContainer={<div className="navigation mt box"></div>}
         >
           {state && <CustomLoading />}
 

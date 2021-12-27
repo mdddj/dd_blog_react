@@ -19,6 +19,7 @@ export const BlogPreview: React.FC<{ content: string; showCopy?: boolean }> = ({
   showCopy,
 }) => {
   const [_, setClipboard] = useClippy();
+  // const html = marked.parse(content);
   return (
     <>
       {showCopy && (
@@ -30,6 +31,7 @@ export const BlogPreview: React.FC<{ content: string; showCopy?: boolean }> = ({
           copy
         </a>
       )}
+      {/* <div dangerouslySetInnerHTML={{ __html: html }} /> */}
       <ReactMarkdown
         className={'markdown-body'}
         children={content}

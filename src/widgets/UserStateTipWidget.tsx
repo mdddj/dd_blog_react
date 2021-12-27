@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useMount } from '@umijs/hooks';
 import { blogApi, getAccessToken } from '@/util/request';
@@ -35,7 +35,7 @@ const UserStateTipWidget: React.FC<{
   });
 
   if (loading) {
-    return <>加载用户信息中</>;
+    return <span>加载用户信息中</span>;
   }
 
   const noAuth = (
@@ -51,7 +51,7 @@ const UserStateTipWidget: React.FC<{
       {!children && !hasAdminRole
         ? noAuth
         : hasAdminRole
-        ? logined!!(user)
+        ? logined && logined(user)
         : children}
     </>
   );
