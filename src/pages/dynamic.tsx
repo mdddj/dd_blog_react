@@ -14,6 +14,8 @@ import { ResourceModel } from 'dd_server_api_web/apis/model/ResourceModel';
 import SizedBox from '@/widgets/SizedBox';
 import { DynamicCard } from '@/widgets/dynamic/SimpleDynamicCard';
 import { message } from 'antd';
+import PicUploadWidget from '@/widgets/PicUploadWidget';
+import { UploadFile } from 'antd/lib/upload/interface';
 
 type DynamicListResultModel = {
   page: PagerModel;
@@ -28,20 +30,28 @@ const DynamicPage: React.FC = () => {
   /// 动态列表
   const [dynamicList, setDynamicList] = useState<ResourceModel[]>([]);
 
+  /// 图片列表
+  const [showFileList, setShowFileList] = useState<UploadFile[]>([]);
+
   // 提交数据
   const onSubmit = async () => {
-    let result = await blogApi().saveOrUpdateResourcesModel({
-      content: content,
-      type: 'simple-text',
-    } as any);
-    console.log(result);
-    successResultHandle(
-      result,
-      (d) => {
-        message.success(result.message);
-      },
-      message.error,
-    );
+    if (showFileList.length == 0) {
+      /// 普通文字发布模式。
+      let result = await blogApi().saveOrUpdateResourcesModel({
+        content: content,
+        type: 'simple-text',
+      } as any);
+      console.log(result);
+      successResultHandle(
+        result,
+        (d) => {
+          message.success(result.message);
+        },
+        message.error,
+      );
+    } else {
+      /// 发布动态模式，带图片。
+    }
   };
 
   // 获取列表
@@ -53,7 +63,6 @@ const DynamicPage: React.FC = () => {
         pageSize: 10,
       },
     );
-    console.log(result.data?.list);
     if (responseIsSuccess<DynamicListResultModel>(result)) {
       let list = result.data?.list ?? [];
       setDynamicList(list);
@@ -79,7 +88,12 @@ const DynamicPage: React.FC = () => {
             setContent(e.target.value);
           }}
         />
-
+        <PicUploadWidget
+          onChange={function (files: UploadFile<any>[]): void {
+            setShowFileList(files);
+          }}
+          fileList={showFileList}
+        />
         <Button
           sx={{ mt: 2, textAlign: 'right' }}
           variant="contained"
