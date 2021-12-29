@@ -16,6 +16,8 @@ import { DynamicCard } from '@/widgets/dynamic/SimpleDynamicCard';
 import { message } from 'antd';
 import PicUploadWidget from '@/widgets/PicUploadWidget';
 import { UploadFile } from 'antd/lib/upload/interface';
+import AllResCategoryWidget from '@/widgets/AllResCategory';
+import { ResCategory } from 'dd_server_api_web/apis/model/ResCategory';
 
 type DynamicListResultModel = {
   page: PagerModel;
@@ -33,8 +35,16 @@ const DynamicPage: React.FC = () => {
   /// 图片列表
   const [showFileList, setShowFileList] = useState<UploadFile[]>([]);
 
+  const [resCategory, setResCategory] = useState<ResCategory | undefined>(
+    undefined,
+  );
+
   // 提交数据
   const onSubmit = async () => {
+    if (content.length == 0) {
+      message.error('请输入内容');
+      return;
+    }
     if (showFileList.length == 0) {
       /// 普通文字发布模式。
       let result = await blogApi().saveOrUpdateResourcesModel({
@@ -51,6 +61,34 @@ const DynamicPage: React.FC = () => {
       );
     } else {
       /// 发布动态模式，带图片。
+      /// 组装数据。
+      if (!resCategory) {
+        message.error('请先选择发布的分类');
+      }
+      const formData = new FormData();
+
+      showFileList.forEach((item) => {
+        formData.append('pictures', item.originFileObj!);
+      });
+      // 发布的正文内容
+      formData.set('content', content);
+
+      // 分类ID
+      formData.set('categoryId', `${resCategory!.id}`);
+
+      // 获取ID
+      blogApi()
+        .publishPost(formData)
+        .then((result) => {
+          successResultHandle(
+            result,
+            (da) => {
+              message.success(result.message);
+              console.log(da);
+            },
+            message.error,
+          );
+        });
     }
   };
 
@@ -88,11 +126,19 @@ const DynamicPage: React.FC = () => {
             setContent(e.target.value);
           }}
         />
+        <SizedBox height={12} />
         <PicUploadWidget
           onChange={function (files: UploadFile<any>[]): void {
             setShowFileList(files);
           }}
           fileList={showFileList}
+        />
+        <SizedBox height={12} />
+        <AllResCategoryWidget
+          onSelect={(v) => {
+            setResCategory(v);
+          }}
+          current={resCategory}
         />
         <Button
           sx={{ mt: 2, textAlign: 'right' }}
