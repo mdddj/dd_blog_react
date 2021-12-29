@@ -308,8 +308,8 @@ code span {
 
 /*动态的头像*/
 .dynamic-avator {
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
   margin-right: 0.5rem;
   border-radius: 0.25rem;
 }
@@ -327,6 +327,7 @@ code span {
 .dynamic-content strong {
   display: block;
   font-weight: bolder;
+  font-size: 16px;
 }
 
 /*博客页面的编辑按钮样式*/
