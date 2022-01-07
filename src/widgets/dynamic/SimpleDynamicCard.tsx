@@ -1,4 +1,4 @@
-import { Button, Stack } from '@mui/material';
+import { Button } from '@mui/material';
 import { Image, message, Tag } from 'antd';
 import { ResourceModel } from 'dd_server_api_web/apis/model/ResourceModel';
 import React from 'react';

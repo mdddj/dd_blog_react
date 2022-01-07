@@ -6,14 +6,6 @@ import { Menu, MenuItem } from '@mui/material';
 import { blogApi } from '@/util/request';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useMediaQuery } from 'react-responsive';
-import {
-  AppOutline,
-  MessageFill,
-  MessageOutline,
-  UnorderedListOutline,
-  UserOutline,
-} from 'antd-mobile-icons';
-import { Badge, TabBar } from 'antd-mobile';
 //参数
 type Props = {
   current?: string;
@@ -50,6 +42,9 @@ const BootStrapAppbar: React.FC<Props> = ({ current }) => {
         </Link>
         <Link to="/category?t=t" className={getStyle('标签')}>
           标签
+        </Link>
+        <Link to="/docs" className={getStyle('教程')}>
+          教程
         </Link>
         <Link to="/friends" className={getStyle('友链')}>
           友链

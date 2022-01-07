@@ -9,5 +9,7 @@ export default [
   { exact: true, path: '/post/:id', component: '@/pages/post/[id]' },
   { path: '/friends', component: '@/pages/friends' },
   { path: '/setting', component: '@/pages/setting' },
+  { path: '/docs', component: '@/pages/docs', title: '梁典典 文档' },
   { exact: true, path: '/user/:id', component: '@/pages/user/[id]' },
+  { exact: true, path: '/doc/:id', component: '@/pages/doc/[id]' },
 ];
