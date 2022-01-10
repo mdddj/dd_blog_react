@@ -3,7 +3,14 @@ import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/src/utils/ResultUtil';
 import { message } from 'antd';
 import { useMount } from 'ahooks';
-import { Box, CssBaseline, Drawer, Toolbar, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CssBaseline,
+  Drawer,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { TreeItem, TreeView } from '@mui/lab';
@@ -19,6 +26,7 @@ type Props = {
 const DocDrawerComponent: React.FC<Props> = ({ id }) => {
   // 目录树
   const [myTree, setMyTree] = useState<TreeFolders>();
+  const [value, setValue] = React.useState(0);
 
   //启动执行
   useMount(async () => {
@@ -39,6 +47,7 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
     );
   };
 
+  // 目录树
   const getTreeView = (model: TreeFolders) => {
     console.log(model.children);
 
@@ -52,9 +61,18 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
       >
         {(model.children?.length ?? 0) > 0 &&
           model.children?.map((value) => getTreeView(value))}
+        {/*文章*/}
+        {model.resources.length > 0 &&
+          model.resources.map((value) => {
+            return <TreeItem nodeId={`${value.id}`} label={value.title} />;
+          })}
+        {}
       </TreeItem>
     );
   };
+
+  // 创建新的文章
+  const createNew = () => {};
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -82,7 +100,10 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
+        {/*操作区域*/}
+        <Button variant="contained" onClick={createNew}>
+          创建新的
+        </Button>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
