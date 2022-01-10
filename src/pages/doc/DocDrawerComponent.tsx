@@ -1,19 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/src/utils/ResultUtil';
 import { message } from 'antd';
 import { useMount } from 'ahooks';
-import {
-  Box,
-  CssBaseline,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { Box, CssBaseline, Drawer, Toolbar, Typography } from '@mui/material';
+import FolderIcon from '@mui/icons-material/Folder';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import { TreeItem, TreeView } from '@mui/lab';
+import { TreeFolders } from 'dd_server_api_web/src/model/ResourceTreeModel';
 
 const drawerWidth = 240;
 
@@ -23,6 +17,9 @@ type Props = {
 
 /// 文档的抽屉栏组件
 const DocDrawerComponent: React.FC<Props> = ({ id }) => {
+  // 目录树
+  const [myTree, setMyTree] = useState<TreeFolders>();
+
   //启动执行
   useMount(async () => {
     await fetchMenus();
@@ -36,8 +33,26 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
       result,
       (data) => {
         console.log(data);
+        setMyTree(data?.folders);
       },
       message.error,
+    );
+  };
+
+  const getTreeView = (model: TreeFolders) => {
+    console.log(model.children);
+
+    return (
+      <TreeItem
+        nodeId={`${model.id}`}
+        label={`${model.title}`}
+        key={model.id}
+        expandIcon={<FolderIcon />}
+        collapseIcon={<FolderOpenIcon />}
+      >
+        {(model.children?.length ?? 0) > 0 &&
+          model.children?.map((value) => getTreeView(value))}
+      </TreeItem>
     );
   };
 
@@ -58,21 +73,12 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
       >
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+          <TreeView
+            aria-label="file system navigator"
+            sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+          >
+            {myTree && getTreeView(myTree)}
+          </TreeView>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
