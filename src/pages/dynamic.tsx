@@ -2,7 +2,7 @@ import BaseLayout from '@/components/BaseLayout';
 import { blogApi } from '@/util/request';
 import { Button, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMount } from '@umijs/hooks';
 import {
   PagerModel,
@@ -51,10 +51,9 @@ const DynamicPage: React.FC = () => {
         content: content,
         type: 'simple-text',
       } as any);
-      console.log(result);
       successResultHandle(
         result,
-        (d) => {
+        (_) => {
           message.success(result.message);
         },
         message.error,
@@ -93,7 +92,7 @@ const DynamicPage: React.FC = () => {
   };
 
   // 获取列表
-  const fetchList = async (page: number) => {
+  const fetchList = async (_: number) => {
     const result = await blogApi().requestT<Result<DynamicListResultModel>>(
       '/api/resource/list',
       {
@@ -128,7 +127,7 @@ const DynamicPage: React.FC = () => {
         />
         <SizedBox height={12} />
         <PicUploadWidget
-          onChange={function (files: UploadFile<any>[]): void {
+          onChange={function (files: UploadFile[]): void {
             setShowFileList(files);
           }}
           fileList={showFileList}
@@ -158,7 +157,7 @@ const DynamicPage: React.FC = () => {
 
         {/*  列表区域*/}
         <div>
-          {dynamicList.map((value, index, array) => (
+          {dynamicList.map((value, index, _) => (
             <DynamicCard item={value} key={index} />
           ))}
         </div>

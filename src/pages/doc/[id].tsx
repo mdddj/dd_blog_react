@@ -19,8 +19,6 @@ const DocDetail: React.FC = () => {
     blogApi().getResourceCategory({ id: id } as any),
   );
 
-  console.log(data);
-
   let cate = data?.data;
 
   return (

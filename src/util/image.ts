@@ -9,7 +9,6 @@ import { message } from 'antd';
  * @param file
  */
 const onEditImageUpload = async (file: File) => {
-  console.log(file);
   return new Promise<String>(async (resolve) => {
     let formData = new FormData();
     formData.append('file', file);

@@ -16,18 +16,23 @@ Editor.use(CustomImageUpload);
 Editor.use(FlutterPlugin);
 Editor.use(CustomAuthTip);
 
+type Prop = {
+  categoryId: number;
+};
+
 // 添加一篇文档
-const CreateDocView: React.FC = () => {
+const CreateDocView: React.FC<Prop> = ({ categoryId }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   // 提交
   const submitDoc = async () => {
-    let result = await blogApi().saveOrUpdateResourcesModel({
+    let result = await blogApi().publishPost({
       title,
       content,
+      categoryId,
       type: 'doc-post',
-    } as any);
+    });
     successResultHandle(
       result,
       (_) => {
