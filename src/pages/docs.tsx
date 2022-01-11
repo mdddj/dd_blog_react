@@ -18,6 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 import { history } from 'umi';
+import { selectImageFile } from '@/util/image';
 
 /// 教程或者文档
 const Docs: React.FC = () => {
@@ -40,6 +41,22 @@ const Docs: React.FC = () => {
       },
       message.error,
     );
+  };
+
+  // 切换图片
+  const updateImage = async (value: ResCategory) => {
+    let url = await selectImageFile();
+    if (url) {
+      value.logo = url;
+      let result = await blogApi().saveOrUpdateResourceCategory(value);
+      successResultHandle(
+        result,
+        (_) => {
+          message.success(result.message);
+        },
+        message.error,
+      );
+    }
   };
 
   return (
@@ -67,6 +84,15 @@ const Docs: React.FC = () => {
                   查看教程
                 </Button>
                 <Button size="small">分享</Button>
+                <Button
+                  variant="text"
+                  size={'small'}
+                  onClick={() => {
+                    updateImage(value);
+                  }}
+                >
+                  更换图片
+                </Button>
               </CardActions>
             </Card>
           </Grid>

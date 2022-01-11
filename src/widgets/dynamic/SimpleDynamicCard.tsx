@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import { Image, message, Tag } from 'antd';
 import { ResourceModel } from 'dd_server_api_web/apis/model/ResourceModel';
 import React from 'react';
@@ -12,6 +12,9 @@ const DynamicCard: React.FC<{ item: ResourceModel }> = ({ item }) => {
   }
   if (item.type == 'post') {
     return <SimpleDynamicCard dynamic={item} />;
+  }
+  if (item.type == 'doc-post') {
+    return <DocPost dynamic={item} />;
   }
 
   /// 如果没有用户信息，则返回一个空的
@@ -117,7 +120,7 @@ const DeleteDynamicButton: React.FC<{ id: number }> = ({ id }) => {
               successResultHandle<string>(
                 value,
                 (data) => {
-                  message.success(data).then((r) => {});
+                  message.success(data).then((_) => {});
                 },
                 message.error,
               );
@@ -126,6 +129,20 @@ const DeleteDynamicButton: React.FC<{ id: number }> = ({ id }) => {
       >
         删除
       </Button>
+    </>
+  );
+};
+
+//文档类型的消息
+const DocPost: React.FC<{ dynamic: ResourceModel }> = ({ dynamic }) => {
+  return (
+    <>
+      <p>发布一篇文档</p>
+      <p>
+        <span>{`>>>`}</span>
+        <a href={'/'}>{dynamic.title}</a>
+      </p>
+      <Divider />
     </>
   );
 };
