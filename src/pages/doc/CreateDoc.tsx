@@ -52,6 +52,7 @@ const CreateDocView: React.FC<Prop> = ({ categoryId }) => {
         label="标题"
         variant="outlined"
         fullWidth={true}
+        value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
       <SizedBox height={12} />
@@ -63,6 +64,14 @@ const CreateDocView: React.FC<Prop> = ({ categoryId }) => {
         value={content}
       />
       <Button onClick={submitDoc}>提交</Button>
+      <Button
+        onClick={() => {
+          setTitle('');
+          setContent('');
+        }}
+      >
+        重置
+      </Button>
     </>
   );
 };
