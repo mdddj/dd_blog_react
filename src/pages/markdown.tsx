@@ -3,12 +3,11 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { BlogPreview } from '@/components/MarkdownPreview';
 import { history, useLocation } from 'umi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {
   Box,
   Button,
-  createFilterOptions,
   Dialog,
   DialogActions,
   DialogContent,
@@ -34,13 +33,12 @@ import { Result } from 'dd_server_api_web/src/utils/ResultUtil';
 import { BlogData } from 'dd_server_api_web/apis/model/result/BlogPushNewResultData';
 import SizedBox from '@/widgets/SizedBox';
 import { MyTag } from '@/widgets/MyTag';
+import { remove } from 'lodash';
+import { onEditImageUpload } from '@/util/image';
 
-const filter = createFilterOptions<Category>();
 Editor.use(CustomImageUpload);
 Editor.use(FlutterPlugin);
 Editor.use(CustomAuthTip);
-
-import { remove } from 'lodash';
 
 /// 发布博客页面
 const MarkdownPage: React.FC = () => {
@@ -171,6 +169,7 @@ const MarkdownPage: React.FC = () => {
           style={{ height: '100%' }}
           renderHTML={(text) => <BlogPreview content={text} />}
           onChange={handleEditorChange}
+          onImageUpload={onEditImageUpload}
           value={content}
         />
       </div>
@@ -253,8 +252,7 @@ const MarkdownPage: React.FC = () => {
                             setSelectTags(newarr);
                           } else {
                             /// 将标签添加到标签数组
-                            let newTags = selectTags;
-                            let t = newTags.concat(value.name);
+                            let t = selectTags.concat(value.name);
                             setSelectTags(t);
                           }
                         }}
