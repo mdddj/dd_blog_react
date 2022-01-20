@@ -3,7 +3,19 @@ import { blogApi } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/src/utils/ResultUtil';
 import { Drawer as AntdDrawer, message } from 'antd';
 import { useMount } from 'ahooks';
-import { Box, Button, CssBaseline, Drawer, Toolbar } from '@mui/material';
+import {
+  Box,
+  Button,
+  CssBaseline,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Drawer,
+  TextField,
+  Toolbar,
+} from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -28,7 +40,9 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
   const [showResource, setShowResource] = useState<ResourceModel | undefined>(
     undefined,
   );
-  const [showNodes, setShowNodes] = useState<string[]>([]);
+  const [showNodes, setShowNodes] = useState<string[]>([]); // 初始化显示的节点
+  const [openCreateNewDirDialog, setOpenCreateNewDirDialog] = useState(false); //显示创建新目录的弹窗
+  const [inputDirName, setInputDirName] = useState(''); // 用户输入的新目录名字
 
   //启动执行
   useMount(async () => {
@@ -126,6 +140,32 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
     return arr;
   };
 
+  //创建新的目录
+  const createNewDirectory = () => {
+    setOpenCreateNewDirDialog(true);
+  };
+
+  // 提交创建新的目录
+  const submitNewDir = async () => {
+    if (inputDirName.length === 0) {
+      message.error('请输入名称');
+      return;
+    }
+    let result = await blogApi().createOrUpdateDocDirectory({
+      name: inputDirName,
+      parentNodeId: categoryId,
+    });
+    successResultHandle(
+      result,
+      (data) => {
+        console.log(data);
+        setOpenCreateNewDirDialog(false);
+        message.success(result.message);
+      },
+      message.error,
+    );
+  };
+
   return (
     <>
       <Box sx={{ display: 'flex' }}>
@@ -180,10 +220,20 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
               创建新的
             </Button>
           )}
+          {categoryId && (
+            <Button
+              variant="contained"
+              onClick={createNewDirectory}
+              disabled={!categoryId}
+            >
+              创建目录
+            </Button>
+          )}
 
           {showResource && <BlogPreview content={showResource.content} />}
         </Box>
       </Box>
+
       {/* 编写文档的弹窗 */}
       <AntdDrawer
         visible={showCreateDocView}
@@ -194,6 +244,34 @@ const DocDrawerComponent: React.FC<Props> = ({ id }) => {
       >
         <CreateDoc categoryId={categoryId!!} />
       </AntdDrawer>
+
+      {/*  创建新目录的弹窗 */}
+      <Dialog
+        open={openCreateNewDirDialog}
+        onClose={() => setOpenCreateNewDirDialog(false)}
+        maxWidth={'sm'}
+        fullWidth={true}
+      >
+        <DialogTitle>创建新的目录</DialogTitle>
+        <DialogContent>
+          <DialogContentText>在该目录下创建一个新的子目录.</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="请输入子目录的名称"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(event) => setInputDirName(event.target.value)}
+            value={inputDirName}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenCreateNewDirDialog(false)}>关闭</Button>
+          <Button onClick={submitNewDir}>创建</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
