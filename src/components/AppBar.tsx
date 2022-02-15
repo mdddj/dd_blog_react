@@ -5,60 +5,76 @@ import { blogApi, getAccessToken } from '@/util/request';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useState } from 'react';
-import Loading from '@/Loading';
 import {
   AppBar,
   Avatar,
   Box,
+  IconButton,
   Menu,
   MenuItem,
-  Stack,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material';
+
+interface NavPageRouter {
+  label: string;
+  router: string;
+}
+
+const pages: NavPageRouter[] = [
+  {
+    label: '首页',
+    router: '/',
+  },
+  {
+    label: '动态',
+    router: '/dynamic',
+  },
+  {
+    label: '分类',
+    router: '/category?t=c',
+  },
+  {
+    label: '归档',
+    router: '/category?t=a',
+  },
+  {
+    label: '标签',
+    router: '/category?t=t',
+  },
+  {
+    label: '教程',
+    router: '/docs',
+  },
+  {
+    label: '友链',
+    router: '/friends',
+  },
+  {
+    label: '关于',
+    router: '/simple?name=about',
+  },
+];
 
 /**
  * 通用导航栏组件
  * @returns
  */
-const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
+const BlogAppBar: React.FC<{ current?: string }> = (_) => {
   /// 存放用户信息，以此来判断用户是否登录成功
   const [user, setUser] = useState<User>();
 
   /// 菜单的el节点
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>();
 
-  /// 加载中
-  const [loading, setLoading] = useState<boolean>(false);
-
   /// 当点击头像后弹出更多操作的菜单
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    if (!user) {
+      history.push('/login');
+      return;
+    }
     setAnchorEl(event.currentTarget);
-  };
-
-  // 跳转首页
-  const toIndex = () => {
-    history.push('/');
-  };
-
-  // 跳转到分类
-  const toCategory = () => {
-    history.push('/category');
-  };
-
-  // 跳转到归档页面
-  const toArchive = () => {
-    history.push('/archive');
-  };
-
-  // 跳转到标签页面
-  const toTags = () => {
-    history.push('/tags');
-  };
-
-  // 前往关于页面
-  const toAbout = () => {
-    history.push('/simple?name=about');
   };
 
   useMount(() => {
@@ -96,18 +112,34 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
     </Menu>
   );
 
+  ///头像区域
+  const renderAvatar = () => {
+    return (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="账号设置">
+          <IconButton onClick={handleProfileMenuOpen} sx={{ p: 0 }}>
+            {user == undefined ? (
+              <Avatar alt="U" />
+            ) : (
+              <Avatar alt="Remy Sharp" src={user.picture} />
+            )}
+          </IconButton>
+        </Tooltip>
+        {renderMenu}
+      </Box>
+    );
+  };
+
   /// 加载用户信息
   const fetchUserInfo = () => {
     let token = getAccessToken();
     if (token.length != 0) {
-      setLoading(true);
       blogApi()
         .getUserInfo(token)
         .then((r) => {
           successResultHandle<User>(r, (data) => {
             setUser(data);
           });
-          setLoading(false);
         });
     }
   };
@@ -119,58 +151,30 @@ const BlogAppBar: React.FC<{ current?: string }> = ({ current }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             典典博客
           </Typography>
-          <Stack
-            direction={'row'}
-            spacing={2}
-            sx={{ display: { xs: 'none', md: 'flex' } }}
-          >
-            <span
-              onClick={toIndex}
-              color={current && current === 'index' ? undefined : 'blue'}
-            >
-              首页
-            </span>
-            <span
-              color={current && current === 'category' ? undefined : 'blue'}
-              onClick={toCategory}
-            >
-              分类
-            </span>
-            <span
-              color={current && current === 'archive' ? undefined : 'blue'}
-              onClick={toArchive}
-            >
-              归档
-            </span>
-            <span
-              color={current && current === 'tags' ? undefined : 'blue'}
-              onClick={toTags}
-            >
-              标签
-            </span>
-            <span
-              color={current && current === 'about' ? undefined : 'blue'}
-              onClick={toAbout}
-            >
-              关于
-            </span>
-            {!user && !loading && (
-              <span
-                color="blue"
-                onClick={loading ? undefined : () => history.push('/login')}
-              >
-                登录
-              </span>
-            )}
-            {loading && <Loading />}
-            {user && (
-              <Avatar src={user.picture} onClick={handleProfileMenuOpen} />
-            )}
-          </Stack>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((value) => (
+              <NavMenuItem key={value.label} value={value} />
+            ))}
+          </Box>
+
+          {renderAvatar()}
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </Box>
+  );
+};
+
+const NavMenuItem: React.FC<{ value: NavPageRouter }> = ({ value }) => {
+  return (
+    <MenuItem
+      key={value.label}
+      onClick={() => {
+        history.push(value.router);
+      }}
+    >
+      <Typography textAlign="center">{value.label}</Typography>
+    </MenuItem>
   );
 };
 

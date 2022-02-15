@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import StickyFooter from '@/components/AppFoot';
 import BootStrapAppbar from '@/components/appbar/BootStrapAppbar';
 import { useMediaQuery } from 'react-responsive';
+import BlogAppBar from '@/components/AppBar';
 
 type Props = {
   appbarCurrent?: string;
@@ -41,8 +42,8 @@ const BaseLayout: React.FC<Props> = ({
   return (
     <>
       <main>
-        {/*<BlogAppBar current={appbarCurrent} />*/}
-        <BootStrapAppbar current={appbarCurrent} />
+        <BlogAppBar current={appbarCurrent} />
+        {/*<BootStrapAppbar current={appbarCurrent} />*/}
 
         {full && <div>{children}</div>}
         {!full && renderColumnContainer}
