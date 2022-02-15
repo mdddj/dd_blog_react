@@ -22,6 +22,8 @@ interface NavPageRouter {
   router: string;
 }
 
+const kLogoutNavMenuKey = 'action:logout';
+
 const pages: NavPageRouter[] = [
   {
     label: '首页',
@@ -56,6 +58,27 @@ const pages: NavPageRouter[] = [
     router: '/simple?name=about',
   },
 ];
+
+const userActions = (user?: User): NavPageRouter[] => {
+  return [
+    {
+      label: '发布博客',
+      router: '/push-blog',
+    },
+    {
+      label: '个人中心',
+      router: '/user/' + user?.id,
+    },
+    {
+      label: '设置',
+      router: '/setting',
+    },
+    {
+      label: '退出登录',
+      router: kLogoutNavMenuKey,
+    },
+  ];
+};
 
 /**
  * 通用导航栏组件
@@ -101,14 +124,9 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem
-        onClick={() => {
-          history.push('/r');
-        }}
-      >
-        发布博客
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>退出登录</MenuItem>
+      {userActions(user).map((value) => (
+        <NavMenuItem value={value} key={value.label} />
+      ))}
     </Menu>
   );
 
@@ -169,7 +187,12 @@ const NavMenuItem: React.FC<{ value: NavPageRouter }> = ({ value }) => {
   return (
     <MenuItem
       key={value.label}
-      onClick={() => {
+      onClick={async () => {
+        if (value.label == kLogoutNavMenuKey) {
+          //退出登录
+          await blogApi().logout();
+          return;
+        }
         history.push(value.router);
       }}
     >
