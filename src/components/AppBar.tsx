@@ -108,6 +108,8 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
   };
   const isMenuOpen = Boolean(anchorEl);
   const profilMenuId = 'primary-search-account-menu';
+
+  /// 用户菜单
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -116,11 +118,6 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
         horizontal: 'right',
       }}
       id={profilMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -143,7 +140,6 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
             )}
           </IconButton>
         </Tooltip>
-        {renderMenu}
       </Box>
     );
   };
@@ -163,23 +159,22 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            典典博客
-          </Typography>
+    <AppBar>
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          典典博客
+        </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((value) => (
-              <NavMenuItem key={value.label} value={value} />
-            ))}
-          </Box>
+        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          {pages.map((value) => (
+            <NavMenuItem key={value.label} value={value} />
+          ))}
+        </Box>
 
-          {renderAvatar()}
-        </Toolbar>
-      </AppBar>
-    </Box>
+        {renderAvatar()}
+        {renderMenu}
+      </Toolbar>
+    </AppBar>
   );
 };
 
@@ -201,4 +196,6 @@ const NavMenuItem: React.FC<{ value: NavPageRouter }> = ({ value }) => {
   );
 };
 
-export default BlogAppBar;
+export default React.forwardRef<{}, { current?: string }>((props, _) => (
+  <BlogAppBar {...props} current={props.current} />
+));
