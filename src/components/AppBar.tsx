@@ -6,7 +6,6 @@ import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { useState } from 'react';
 import {
-  AppBar,
   Avatar,
   Box,
   IconButton,
@@ -136,7 +135,7 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
             {user == undefined ? (
               <Avatar alt="U" />
             ) : (
-              <Avatar alt="Remy Sharp" src={user.picture} />
+              <Avatar alt={user.nickName} src={user.picture} />
             )}
           </IconButton>
         </Tooltip>
@@ -159,22 +158,20 @@ const BlogAppBar: React.FC<{ current?: string }> = (_) => {
   };
 
   return (
-    <AppBar>
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          典典博客
-        </Typography>
+    <Toolbar>
+      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        典典博客
+      </Typography>
 
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          {pages.map((value) => (
-            <NavMenuItem key={value.label} value={value} />
-          ))}
-        </Box>
+      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        {pages.map((value) => (
+          <NavMenuItem key={value.label} value={value} />
+        ))}
+      </Box>
 
-        {renderAvatar()}
-        {renderMenu}
-      </Toolbar>
-    </AppBar>
+      {renderAvatar()}
+      {renderMenu}
+    </Toolbar>
   );
 };
 

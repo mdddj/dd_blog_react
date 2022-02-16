@@ -1,4 +1,5 @@
 import {
+  AppBar,
   Container,
   CssBaseline,
   Grid,
@@ -9,6 +10,7 @@ import React, { ReactNode } from 'react';
 import StickyFooter from '@/components/AppFoot';
 import { useMediaQuery } from 'react-responsive';
 import BlogAppBar from '@/components/AppBar';
+import SizedBox from '@/widgets/SizedBox';
 
 type Props = {
   appbarCurrent?: string;
@@ -32,15 +34,14 @@ function HideOnScroll(props: WindowProps) {
   // will default to window.
   // This is only being set here because the demo is in an iframe.
   const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
+    disableHysteresis: true,
+    threshold: 0,
   });
   console.log('开关' + trigger);
 
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      <>{children}</>
-    </Slide>
-  );
+  return React.cloneElement(children, {
+    elevation: trigger ? 10 : 0,
+  });
 }
 /// 页面基础布局
 const BaseLayout: React.FC<Props> = (props) => {
@@ -68,8 +69,11 @@ const BaseLayout: React.FC<Props> = (props) => {
     <React.Fragment>
       <main>
         <HideOnScroll {...props}>
-          <BlogAppBar current={appbarCurrent} />
+          <AppBar position={'fixed'}>
+            <BlogAppBar current={appbarCurrent} />
+          </AppBar>
         </HideOnScroll>
+        <SizedBox height={100} />
         {full && <div>{children}</div>}
         {!full && renderColumnContainer}
       </main>
