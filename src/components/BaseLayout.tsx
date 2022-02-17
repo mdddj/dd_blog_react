@@ -25,6 +25,7 @@ import { history } from '@@/core/history';
 import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { useMount } from '@umijs/hooks';
+import ReactDOM from 'react-dom';
 
 interface NavPageRouter {
   label: string;
@@ -101,7 +102,7 @@ interface WindowProps {
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window?: () => Window;
+  window?: () => Window | undefined | Node;
   children: React.ReactElement;
 }
 
@@ -110,8 +111,9 @@ function ScrollTop(props: WindowProps) {
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
+
   const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
+    target: undefined,
     disableHysteresis: true,
     threshold: 100,
   });
@@ -143,11 +145,13 @@ function ScrollTop(props: WindowProps) {
 }
 
 function HideOnScroll(props: WindowProps) {
-  const { children } = props;
+  const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({});
+  const trigger = useScrollTrigger({
+    target: undefined,
+  });
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>
@@ -167,6 +171,11 @@ const BaseLayout: React.FC<Props> = (props) => {
 
   /// 菜单的el节点
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>();
+
+  // please keep it undefined here to not make useScrollTrigger throw an error on first render
+  const [scrollTarget, setScrollTarget] = useState<Node | Window | undefined>(
+    undefined,
+  );
 
   useMount(() => {
     fetchUserInfo();
@@ -251,44 +260,53 @@ const BaseLayout: React.FC<Props> = (props) => {
   };
 
   return (
-    <React.Fragment>
-      <main>
-        <HideOnScroll {...props}>
-          <AppBar position={'sticky'} id="back-to-top-anchor">
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                典典博客
-              </Typography>
+    <div
+      className={'root-container'}
+      ref={(node) => {
+        if (node) {
+          setScrollTarget(node);
+        }
+      }}
+    >
+      <React.Fragment>
+        <main>
+          <HideOnScroll {...props}>
+            <AppBar position={'sticky'} id="back-to-top-anchor">
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mr: 2 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  典典博客
+                </Typography>
 
-              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((value) => (
-                  <NavMenuItem key={value.label} value={value} />
-                ))}
-              </Box>
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                  {pages.map((value) => (
+                    <NavMenuItem key={value.label} value={value} />
+                  ))}
+                </Box>
 
-              {renderAvatar()}
-              {renderMenu}
-            </Toolbar>
-          </AppBar>
-        </HideOnScroll>
-        {full && <div>{children}</div>}
-        {!full && renderColumnContainer}
-      </main>
-      <StickyFooter />
-      <ScrollTop {...props}>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
-    </React.Fragment>
+                {renderAvatar()}
+                {renderMenu}
+              </Toolbar>
+            </AppBar>
+          </HideOnScroll>
+          {full && <div>{children}</div>}
+          {!full && renderColumnContainer}
+        </main>
+        <StickyFooter />
+        <ScrollTop {...props}>
+          <Fab color="secondary" size="small" aria-label="scroll back to top">
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </ScrollTop>
+      </React.Fragment>
+    </div>
   );
 };
 

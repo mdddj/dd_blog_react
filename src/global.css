@@ -57,12 +57,11 @@ img {
   max-width: 100%;
   max-height: 100%;
 }
-
-#root {
+.root-container {
   height: 100%;
   flex-direction: column;
   display: flex;
-  overflow: scroll;
+  /*overflow: scroll;*/
 }
 
 pre {
