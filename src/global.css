@@ -62,7 +62,7 @@ img {
   height: 100%;
   flex-direction: column;
   display: flex;
-  /*overflow: scroll;*/
+  overflow: scroll;
 }
 
 pre {

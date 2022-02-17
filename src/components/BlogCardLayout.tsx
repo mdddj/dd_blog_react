@@ -54,15 +54,13 @@ const BlogCardLayout: React.FC<{ blog: BlogData }> = ({ blog }) => {
     <Card sx={{ mb: 2.5 }} variant={'outlined'}>
       <CardContent>
         {/*分类*/}
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          <Chip
-            color="primary"
-            avatar={<Avatar src={blog.category.logo} />}
-            label={blog.category.name}
-            size={'small'}
-            variant={'outlined'}
-          />
-        </Typography>
+        <Chip
+          color="primary"
+          avatar={<Avatar src={blog.category.logo} />}
+          label={blog.category.name}
+          size={'small'}
+          variant={'outlined'}
+        />
 
         {/*  标题*/}
         <Typography variant="h5" component="div">

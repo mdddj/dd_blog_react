@@ -16,6 +16,7 @@ export default function IndexPage() {
       {!isTabletOrMobile && (
         <BaseLayout
           appbarCurrent={'index'}
+          hideRight={true}
           rightContainer={
             <>
               <HomeAbout />
