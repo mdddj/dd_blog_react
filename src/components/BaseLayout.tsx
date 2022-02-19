@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   Container,
+  Drawer,
   Fab,
   Grid,
   IconButton,
@@ -26,6 +27,11 @@ import { User } from 'dd_server_api_web/apis/model/UserModel';
 import { successResultHandle } from 'dd_server_api_web/apis/utils/ResultUtil';
 import { useMount } from '@umijs/hooks';
 import ReactDOM from 'react-dom';
+import { Anchor } from 'antd';
+import HomeAbout from '@/widgets/HomeAbout';
+import MiniAppWidget from '@/widgets/MiniAppWidget';
+import MeituanCoupon from '@/components/ad/meituan';
+import WebSiteResource from '@/widgets/WebSiteResource';
 
 interface NavPageRouter {
   label: string;
@@ -172,14 +178,34 @@ const BaseLayout: React.FC<Props> = (props) => {
   /// 菜单的el节点
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>();
 
+  /// 抽屉打开状态
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+
   // please keep it undefined here to not make useScrollTrigger throw an error on first render
   const [scrollTarget, setScrollTarget] = useState<Node | Window | undefined>(
     undefined,
   );
 
+  ///抽屉菜单
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+
+      setDrawerIsOpen(open);
+    };
+
+  ///组件挂载完毕
   useMount(() => {
     fetchUserInfo();
   });
+
+  ///菜单关闭
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -278,6 +304,7 @@ const BaseLayout: React.FC<Props> = (props) => {
                   color="inherit"
                   aria-label="menu"
                   sx={{ mr: 2 }}
+                  onClick={() => setDrawerIsOpen(true)}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -298,6 +325,13 @@ const BaseLayout: React.FC<Props> = (props) => {
           </HideOnScroll>
           {full && <div>{children}</div>}
           {!full && renderColumnContainer}
+          <Drawer
+            anchor={'left'}
+            open={drawerIsOpen}
+            onClose={() => toggleDrawer(false)}
+          >
+            <BaseDrawerLayout boxClick={() => setDrawerIsOpen(false)} />
+          </Drawer>
         </main>
         <StickyFooter />
         <ScrollTop {...props}>
@@ -307,6 +341,22 @@ const BaseLayout: React.FC<Props> = (props) => {
         </ScrollTop>
       </React.Fragment>
     </div>
+  );
+};
+
+const BaseDrawerLayout: React.FC<{ boxClick?: () => void }> = ({
+  boxClick,
+}) => {
+  return (
+    <Box sx={{ width: 500, p: 2 }} onClick={boxClick} role="presentation">
+      <>
+        <HomeAbout />
+        {/*<WeChatApp />*/}
+        <MiniAppWidget />
+        <MeituanCoupon />
+        <WebSiteResource />
+      </>
+    </Box>
   );
 };
 
